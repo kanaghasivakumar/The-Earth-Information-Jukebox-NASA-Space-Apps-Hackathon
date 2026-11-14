@@ -43,10 +43,10 @@
  "timeline": "timeline.json",
  "controls": "controls.json",
  "fidelity": {
-  "r2": 0.9784,
+  "r2": 0.9782,
   "pearson_r": 0.9898,
-  "mae": 0.0135,
-  "control_r2": -1.1345
+  "mae": 0.0136,
+  "control_r2": -1.0322
  },
  "data_source": {
   "music": "pixel inversion of the SVS movie with the SVS -4..+4 degC colorbar",

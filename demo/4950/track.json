@@ -57,10 +57,10 @@
  "timeline": "timeline.json",
  "controls": "controls.json",
  "fidelity": {
-  "r2": 0.982,
+  "r2": 0.9818,
   "pearson_r": 0.9913,
-  "mae": 0.2905,
-  "control_r2": -1.3876
+  "mae": 0.2938,
+  "control_r2": -1.3245
  },
  "data_source": {
   "music": "pixel inversion of the SVS movie with the SVS 0-50 m colorbar",

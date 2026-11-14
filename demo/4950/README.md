@@ -6,4 +6,4 @@
 - **Masks:** off-disc, limb (ρ > 0.92), ocean, night side, burned-in colorbar, and non-vegetated pixels (< 3 m). Pixels are area-weighted by 1/cos(view angle). Valid pixels: 47% of land (GEDI swath gaps and the night side fail), 82% of the disc.
 - **Melody:** mean canopy height of the visible vegetation, 14–24 m. **Bands:** the same value for the upper, middle and lower thirds of the disc (screen thirds, not true latitude).
 - **Controls:** biophony = height × cover in view; geophony = ocean share; brightness = share of trees ≥ 25 m.
-- **Audio round-trip:** melody R² 0.982 (r 0.991, MAE 0.29 m); bands R² 0.91–0.95; shuffled control R² −1.39.
+- **Audio round-trip:** melody R² 0.982 (r 0.991, MAE 0.29 m); bands R² 0.90–0.94; shuffled control R² −1.32.
