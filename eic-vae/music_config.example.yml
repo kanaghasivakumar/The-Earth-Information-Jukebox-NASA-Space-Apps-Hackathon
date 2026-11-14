@@ -1,0 +1,21 @@
+music:
+  style: cinematic
+  tempo: null
+  key: C
+  scale: null
+  timing_mode: match_video
+  seed: 42
+  smoothing: 1
+  movement_weight: 1.0
+  flow_weight: 1.0
+  batch_size: 8
+memory:
+  enabled: true
+  clusters: 4
+  motif_bars: 2
+  variation_strength: 0.25
+  minimum_cluster_duration: 2.0
+  hysteresis: 0.5
+output:
+  directory: results
+  soundfont: null

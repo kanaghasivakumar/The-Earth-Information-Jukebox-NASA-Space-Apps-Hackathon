@@ -1,0 +1,10 @@
+torch
+numpy
+opencv-python-headless
+Pillow
+matplotlib
+pytest
+tqdm
+pretty_midi
+scikit-learn
+PyYAML

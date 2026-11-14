@@ -1,0 +1,38 @@
+{
+  "validation_rgb_mse": 0.013546732254326344,
+  "validation_flow_mse": 0.04027528315782547,
+  "validation_mean_kl": 0.18452274799346924,
+  "all_frame_latent_mean": [
+    -0.008056135848164558,
+    -0.0033929503988474607,
+    0.013136001303792,
+    -0.0040328907780349255,
+    -0.013015509583055973,
+    -0.006263609975576401,
+    0.007370065897703171,
+    0.0484701432287693
+  ],
+  "all_frame_latent_std": [
+    0.019756432622671127,
+    0.020840810611844063,
+    0.03790443018078804,
+    0.018934570252895355,
+    0.05463779345154762,
+    0.03328566625714302,
+    0.037895433604717255,
+    0.7443966865539551
+  ],
+  "mean_temporal_distance": 0.06302188336849213,
+  "mean_temporal_velocity": 0.3151094281099257,
+  "latent_velocity_flow_magnitude_correlation": 0.22640875423857523,
+  "mean_second_difference_acceleration": 0.10258692502975464,
+  "split": {
+    "mode": "exploratory",
+    "requested_mode": "auto",
+    "val_fraction": 0.2,
+    "gap": 2,
+    "seed": 42
+  },
+  "best_epoch": 50,
+  "validation_samples": 266
+}
