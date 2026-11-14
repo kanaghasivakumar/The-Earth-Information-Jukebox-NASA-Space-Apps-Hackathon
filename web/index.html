@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Earth Information Jukebox</title>
+<meta name="description" content="Three Voices of the Planet: NASA Earth visualizations you can listen to. Every note is a data value; keyboard and screen reader friendly.">
+<meta name="color-scheme" content="dark light">
+<link rel="stylesheet" href="css/style.css">
+<script type="module" src="js/app.js"></script>
+</head>
+<body>
+<a class="skip" href="#player">Skip to player</a>
+
+<header class="site">
+  <div>
+    <h1>Earth Information Jukebox</h1>
+    <p class="tagline">Three Voices of the Planet. Every note is a NASA data value.</p>
+  </div>
+  <button type="button" id="help-btn" aria-keyshortcuts="Shift+Slash" aria-haspopup="dialog">Keyboard help <kbd>?</kbd></button>
+</header>
+
+<main id="main">
+  <nav class="jukebox" aria-labelledby="jukebox-h">
+    <h2 id="jukebox-h">Tracks</h2>
+    <ul id="track-list" class="track-list"><li>Loading tracks…</li></ul>
+  </nav>
+
+  <section id="player" class="player" aria-labelledby="track-title" tabindex="-1">
+    <div class="track-head">
+      <h2 id="track-title">Choose a track</h2>
+      <p id="track-voice" class="badge" hidden></p>
+    </div>
+    <p id="track-desc" class="desc"></p>
+    <p id="load-status" class="status"></p>
+
+    <div class="stage">
+      <figure class="video-wrap">
+        <video id="video" muted playsinline preload="metadata"
+               aria-describedby="track-desc video-note"></video>
+        <figcaption id="video-note">Video streams from NASA SVS and has no sound; the music plays in sync with it.</figcaption>
+      </figure>
+
+      <div class="readout" aria-hidden="true">
+        <div class="readout-value"><span id="value-big">–</span> <span id="units-big"></span></div>
+        <div class="readout-time"><span id="time-big">0:00</span> / <span id="dur-big">0:00</span></div>
+      </div>
+    </div>
+
+    <div class="transport" role="group" aria-label="Playback">
+      <button type="button" id="back-btn" aria-keyshortcuts="ArrowLeft" title="Back 5 seconds (Left arrow)">
+        <span aria-hidden="true">«</span> 5 s<span class="sr"> back</span></button>
+      <button type="button" id="prev-note-btn" aria-keyshortcuts="Shift+ArrowLeft" title="Previous lead note (Shift+Left)">
+        <span aria-hidden="true">‹</span> Note<span class="sr">: previous</span></button>
+      <button type="button" id="play-btn" class="primary" aria-keyshortcuts="Space" disabled>Play</button>
+      <button type="button" id="next-note-btn" aria-keyshortcuts="Shift+ArrowRight" title="Next lead note (Shift+Right)">
+        Note <span aria-hidden="true">›</span><span class="sr">: next</span></button>
+      <button type="button" id="fwd-btn" aria-keyshortcuts="ArrowRight" title="Forward 5 seconds (Right arrow)">
+        5 s <span aria-hidden="true">»</span><span class="sr"> forward</span></button>
+    </div>
+    <label class="scrub">
+      <span class="sr">Position</span>
+      <input type="range" id="pos" min="0" max="60" step="0.5" value="0" disabled>
+    </label>
+
+    <div class="roll-wrap">
+      <canvas id="roll" aria-hidden="true"></canvas>
+      <p id="roll-text" class="roll-text"></p>
+      <details>
+        <summary>Data table: every lead note</summary>
+        <div class="table-wrap" tabindex="0" role="region" aria-label="Lead notes table">
+          <table id="note-table">
+            <caption>Lead melody notes with the data value each one encodes</caption>
+            <thead><tr><th scope="col">#</th><th scope="col">Time</th><th scope="col">Value</th><th scope="col">Pitch</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </details>
+    </div>
+
+    <div class="panels">
+      <section class="panel" aria-labelledby="listen-h">
+        <h3 id="listen-h">Listening tools</h3>
+        <div class="tool-grid">
+          <button type="button" id="legend-btn" aria-keyshortcuts="L">Spoken legend <kbd>L</kbd></button>
+          <button type="button" id="value-btn" aria-keyshortcuts="V">Say value <kbd>V</kbd></button>
+          <button type="button" id="sweep-btn" aria-keyshortcuts="S">Sweep <kbd>S</kbd></button>
+          <button type="button" id="overview-btn" aria-keyshortcuts="Shift+S">Overview <kbd>⇧S</kbd></button>
+          <button type="button" id="ab-btn" aria-pressed="false" aria-keyshortcuts="A">Shuffled control <kbd>A</kbd></button>
+          <button type="button" id="polarity-btn" aria-pressed="false" aria-keyshortcuts="P">Flip polarity <kbd>P</kbd></button>
+          <button type="button" id="hrtf-btn" aria-pressed="false" aria-keyshortcuts="H">Headphones 3D <kbd>H</kbd></button>
+          <button type="button" id="mute-btn" aria-pressed="false" aria-keyshortcuts="M">Mute all <kbd>M</kbd></button>
+        </div>
+        <div class="settings">
+          <label>Announce while playing
+            <select id="announce-sel">
+              <option value="0">Off</option>
+              <option value="5" selected>Every 5 seconds</option>
+              <option value="10">Every 10 seconds</option>
+              <option value="note">Each lead note (at most every 1.5 s)</option>
+            </select>
+          </label>
+          <label class="check"><input type="checkbox" id="speech-chk"> Also speak announcements with the browser voice</label>
+          <label class="check"><input type="checkbox" id="motion-chk" checked> Play the video (turn off to reduce motion)</label>
+        </div>
+      </section>
+
+      <section class="panel" aria-labelledby="mixer-h">
+        <h3 id="mixer-h">Mixer</h3>
+        <p class="hint">Keys <kbd>1</kbd>–<kbd>7</kbd> mute a group.</p>
+        <ul id="mixer" class="mixer"></ul>
+      </section>
+
+      <section class="panel" aria-labelledby="legend-h">
+        <h3 id="legend-h">Legend</h3>
+        <dl id="legend" class="legend"></dl>
+        <p id="pitch-range" class="hint"></p>
+      </section>
+
+      <section class="panel" aria-labelledby="fid-h">
+        <h3 id="fid-h">Does the music follow the data?</h3>
+        <p id="fid-text"></p>
+        <div id="fid-bars" class="fid-bars" aria-hidden="true"></div>
+        <p id="fid-detail" class="hint"></p>
+      </section>
+    </div>
+
+    <section class="panel source" aria-labelledby="src-h">
+      <h3 id="src-h">Data source</h3>
+      <p id="data-source"></p>
+      <p><a id="svs-link" href="#" rel="noopener">NASA SVS page</a> · <a id="mix-link" href="#" download>Download the mix (MP3)</a></p>
+      <audio id="fallback-audio" controls preload="none" hidden></audio>
+    </section>
+  </section>
+</main>
+
+<footer class="site">
+  <p>Earth Information Jukebox, NASA Space Apps. Visualizations: NASA Scientific Visualization Studio.</p>
+</footer>
+
+<div id="live" class="sr" aria-live="polite" aria-atomic="true"></div>
+<div id="live-status" class="sr" role="status" aria-atomic="true"></div>
+
+<dialog id="help" aria-labelledby="help-h">
+  <h2 id="help-h">Keyboard shortcuts</h2>
+  <p>Shortcuts work anywhere on the page except inside form fields. With a screen reader, switch to focus or forms mode first (NVDA: Insert+Space; JAWS: Enter on the player), or use the buttons.</p>
+  <table class="keys">
+    <caption class="sr">Shortcut keys</caption>
+    <thead><tr><th scope="col">Key</th><th scope="col">Action</th></tr></thead>
+    <tbody>
+      <tr><td><kbd>Space</kbd></td><td>Play or pause</td></tr>
+      <tr><td><kbd>←</kbd> <kbd>→</kbd></td><td>Scrub 5 seconds back or forward</td></tr>
+      <tr><td><kbd>Shift</kbd>+<kbd>←</kbd> <kbd>→</kbd></td><td>Step to the previous or next lead note and hear it</td></tr>
+      <tr><td><kbd>Home</kbd></td><td>Back to the start</td></tr>
+      <tr><td><kbd>L</kbd></td><td>Spoken legend with calibration tones (lowest, middle, highest)</td></tr>
+      <tr><td><kbd>V</kbd></td><td>Say the current time and value</td></tr>
+      <tr><td><kbd>S</kbd></td><td>Sweep: hear every latitude band at this moment, north to south</td></tr>
+      <tr><td><kbd>Shift</kbd>+<kbd>S</kbd></td><td>Overview: the whole lead melody in about 8 seconds</td></tr>
+      <tr><td><kbd>P</kbd></td><td>Flip polarity: higher values play lower (lead is synthesized live)</td></tr>
+      <tr><td><kbd>A</kbd></td><td>A/B: real data or the shuffled control</td></tr>
+      <tr><td><kbd>H</kbd></td><td>Headphones 3D sound (binaural, HRTF)</td></tr>
+      <tr><td><kbd>1</kbd>–<kbd>7</kbd></td><td>Mute group: 1 melody, 2 bands, 3 events, 4 harmony, 5 geophony, 6 anthrophony, 7 biophony</td></tr>
+      <tr><td><kbd>M</kbd></td><td>Mute or unmute everything</td></tr>
+      <tr><td><kbd>Esc</kbd></td><td>Stop speech, sweep or overview; close this dialog</td></tr>
+      <tr><td><kbd>?</kbd></td><td>Open this help</td></tr>
+    </tbody>
+  </table>
+  <form method="dialog"><button type="submit" id="help-close">Close</button></form>
+</dialog>
+</body>
+</html>

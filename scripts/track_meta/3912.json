@@ -1,0 +1,75 @@
+{
+ "title": "Global Sea Surface Currents and Temperature",
+ "summary": "The ocean's surface temperature, sung by its currents. Geophony.",
+ "voice": "geophony",
+ "video_url": "https://svs.gsfc.nasa.gov/vis/a000000/a003900/a003912/ecco2_sst_flow.m4v",
+ "video_alt_url": "https://svs.gsfc.nasa.gov/vis/a000000/a003900/a003912/ecco2_sst_flow.webmhd.webm",
+ "description": "Ocean surface currents swirl around the globe, coloured by sea surface temperature from the ECCO2 ocean model (MIT/JPL) on a 0 to 32 °C colour bar. The lead melody is the global average sea surface temperature, frame by frame: it rises and falls by about 1.4 °C over the movie. Six soft pad voices underneath are the six latitude bands, from the Arctic (lowest notes) to the tropics (highest) and down to Antarctica.",
+ "legend": [
+  {
+   "voice": "Lead (plucked)",
+   "meaning": "Global mean sea surface temperature. Higher pitch means warmer. The two-octave range covers 20.3 to 21.7 °C, so small changes are easy to hear."
+  },
+  {
+   "voice": "Bands (soft pads)",
+   "meaning": "Average temperature of six latitude bands, 30 degrees each, from 90° North to 90° South. Pitch spans the full colour bar, 0 to 32 °C, so warm tropical bands are high and cold polar bands are low. Each band also sits in its own register, shifted by up to 6 semitones: northern bands a little higher, southern a little lower."
+  },
+  {
+   "voice": "Shuffled control",
+   "meaning": "Press A to swap the lead for the same temperatures played in random order. It sounds like a tune but no longer follows the ocean."
+  }
+ ],
+ "band_pitch_map": {
+  "vmin": 0.0,
+  "vmax": 32.0,
+  "low": 36,
+  "span": 36,
+  "root": 2,
+  "scale": "major_pent",
+  "polarity": 1,
+  "note": "Each band uses this map shifted by its sweep pitch_offset (jukebox.score.mapping.band_voices)."
+ },
+ "sweep": {
+  "label": "latitude bands, north to south",
+  "voices": [
+   {
+    "voice": "band 90..60",
+    "label": "90 to 60 degrees North",
+    "pan": -1.0,
+    "pitch_offset": 6
+   },
+   {
+    "voice": "band 60..30",
+    "label": "60 to 30 North",
+    "pan": -0.6,
+    "pitch_offset": 4
+   },
+   {
+    "voice": "band 30..0",
+    "label": "30 North to the equator",
+    "pan": -0.2,
+    "pitch_offset": 1
+   },
+   {
+    "voice": "band 0..-30",
+    "label": "equator to 30 South",
+    "pan": 0.2,
+    "pitch_offset": -1
+   },
+   {
+    "voice": "band -30..-60",
+    "label": "30 to 60 South",
+    "pan": 0.6,
+    "pitch_offset": -4
+   },
+   {
+    "voice": "band -60..-90",
+    "label": "60 to 90 degrees South",
+    "pan": 1.0,
+    "pitch_offset": -6
+   }
+  ]
+ },
+ "time_label": "movie time",
+ "data_source": "ECCO2 ocean model (MIT/JPL), as rendered in NASA SVS visualization 3912. Values were recovered from the movie by inverting its 0 to 32 °C colour bar; 42% of pixels matched the colour bar (land, labels and gaps between flow lines are skipped)."
+}
