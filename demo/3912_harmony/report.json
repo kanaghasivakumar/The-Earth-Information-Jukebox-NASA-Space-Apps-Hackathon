@@ -1,0 +1,63 @@
+{
+ "source_timeline": "demo/3912/timeline.json",
+ "duration_s": 66.5,
+ "model": "stanford-crfm/music-medium-800k",
+ "seed": 0,
+ "top_p": 0.95,
+ "lead_program_for_model": 73,
+ "render_programs": {
+  "lead": 73,
+  "bass:32": 32,
+  "harmony:48": 48
+ },
+ "render_engine": "fluidsynth",
+ "lead_unchanged": true,
+ "notes": {
+  "lead": 36,
+  "bands": 0,
+  "harmony": 101,
+  "bass": 73
+ },
+ "programs_used": [
+  [
+   "bass",
+   32
+  ],
+  [
+   "harmony",
+   48
+  ]
+ ],
+ "clash_report": {
+  "new_notes": 174,
+  "overlap_pairs": 243,
+  "bass_on_harmony_pc": 0.8082191780821918,
+  "dissonant_pairs": 0,
+  "above_lead": 0,
+  "per_voice": {
+   "bass": 73,
+   "harmony": 101
+  }
+ },
+ "timing_s": {
+  "infill": 70.64603590965271,
+  "infill_per_60s_audio": 63.740784279385906,
+  "render": 3.786996841430664,
+  "tokens_fed": 1217,
+  "window_slides": 0
+ },
+ "lead_pitch_accuracy": {
+  "lead_stem": {
+   "frames": 133,
+   "voiced": 133,
+   "within_half_semitone": 1.0,
+   "median_abs_err_semitones": 0.06950772365465241
+  },
+  "full_mix": {
+   "frames": 133,
+   "voiced": 133,
+   "within_half_semitone": 0.9924812030075187,
+   "median_abs_err_semitones": 0.06950772365465241
+  }
+ }
+}
