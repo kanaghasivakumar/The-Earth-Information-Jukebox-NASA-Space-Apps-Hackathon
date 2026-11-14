@@ -287,6 +287,8 @@ def _interp(t: np.ndarray, v, at: np.ndarray, default: float) -> np.ndarray:
 def _smooth(x: np.ndarray, sr: int, tau: float = 0.03) -> np.ndarray:
     """Zero-phase one-pole smoothing (forward + backward) of an audio-rate control."""
     from scipy.signal import filtfilt
+    if len(x) < 16:
+        return x
     a = np.exp(-1.0 / (tau * sr))
     return filtfilt([1 - a], [1, -a], x, padlen=min(len(x) - 1, int(3 * tau * sr)))
 
