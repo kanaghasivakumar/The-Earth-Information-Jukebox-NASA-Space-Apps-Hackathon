@@ -121,7 +121,9 @@ def main(argv=None):
     ctrl = score(truth, recover_curve(ctrl_audio, SR, lead_pm, grid))
 
     report = {
-        "id": a.id, "title": page.get("title"), "frames": int(len(frames)), "fps": a.fps,
+        "id": a.id, "title": page.get("title"),
+        "args": {k: (str(v) if isinstance(v, Path) else v) for k, v in vars(a).items()},
+        "frames": int(len(frames)), "fps": a.fps,
         "duration_s": dur, "colorbar_url": cb_url, "colorbar_bbox": bbox,
         "colorbar_resolution": cbar.resolution, "units": a.units,
         "valid_pixel_fraction_mean": float(np.mean(valid)),
