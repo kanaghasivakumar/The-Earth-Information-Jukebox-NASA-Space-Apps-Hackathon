@@ -1,0 +1,448 @@
+{
+ "sections": [
+  {
+   "index": 0,
+   "start": 0.0,
+   "end": 8.5,
+   "start_frame": 0,
+   "end_frame": 17,
+   "label": "A",
+   "region": 4,
+   "boundary_novelty": 0.0,
+   "is_return": false,
+   "returns_to": null
+  },
+  {
+   "index": 1,
+   "start": 8.5,
+   "end": 14.5,
+   "start_frame": 17,
+   "end_frame": 29,
+   "label": "B",
+   "region": 1,
+   "boundary_novelty": 0.9692115336984515,
+   "is_return": false,
+   "returns_to": null
+  },
+  {
+   "index": 2,
+   "start": 14.5,
+   "end": 18.0,
+   "start_frame": 29,
+   "end_frame": 36,
+   "label": "C",
+   "region": 0,
+   "boundary_novelty": 0.9785714036839452,
+   "is_return": false,
+   "returns_to": null
+  },
+  {
+   "index": 3,
+   "start": 18.0,
+   "end": 21.5,
+   "start_frame": 36,
+   "end_frame": 43,
+   "label": "A",
+   "region": 4,
+   "boundary_novelty": 0.9386884743768674,
+   "is_return": true,
+   "returns_to": 0
+  },
+  {
+   "index": 4,
+   "start": 21.5,
+   "end": 24.5,
+   "start_frame": 43,
+   "end_frame": 49,
+   "label": "B",
+   "region": 1,
+   "boundary_novelty": 0.9999999999988515,
+   "is_return": true,
+   "returns_to": 1
+  }
+ ],
+ "tuples": [
+  [
+   0.0,
+   8.5,
+   "A"
+  ],
+  [
+   8.5,
+   14.5,
+   "B"
+  ],
+  [
+   14.5,
+   18.0,
+   "C"
+  ],
+  [
+   18.0,
+   21.5,
+   "A"
+  ],
+  [
+   21.5,
+   24.5,
+   "B"
+  ]
+ ],
+ "labels": [
+  "A",
+  "B",
+  "C"
+ ],
+ "label_to_region": {
+  "A": 4,
+  "B": 1,
+  "C": 0
+ },
+ "recurrences": {
+  "A": [
+   0,
+   3
+  ],
+  "B": [
+   1,
+   4
+  ],
+  "C": [
+   2
+  ]
+ },
+ "returns": [
+  {
+   "section": 3,
+   "label": "A",
+   "time": 18.0,
+   "first_section": 0
+  },
+  {
+   "section": 4,
+   "label": "B",
+   "time": 21.5,
+   "first_section": 1
+  }
+ ],
+ "regions": {
+  "k": 6,
+  "silhouette": 0.4015212518817101,
+  "runs": [
+   {
+    "region": 2,
+    "start": 0.0,
+    "end": 2.0,
+    "frames": 4
+   },
+   {
+    "region": 5,
+    "start": 2.0,
+    "end": 4.5,
+    "frames": 5
+   },
+   {
+    "region": 0,
+    "start": 4.5,
+    "end": 6.0,
+    "frames": 3
+   },
+   {
+    "region": 4,
+    "start": 6.0,
+    "end": 8.5,
+    "frames": 5
+   },
+   {
+    "region": 1,
+    "start": 8.5,
+    "end": 12.5,
+    "frames": 8
+   },
+   {
+    "region": 3,
+    "start": 12.5,
+    "end": 15.0,
+    "frames": 5
+   },
+   {
+    "region": 0,
+    "start": 15.0,
+    "end": 18.0,
+    "frames": 6
+   },
+   {
+    "region": 4,
+    "start": 18.0,
+    "end": 21.0,
+    "frames": 6
+   },
+   {
+    "region": 1,
+    "start": 21.0,
+    "end": 24.5,
+    "frames": 7
+   }
+  ],
+  "returns": [
+   {
+    "region": 0,
+    "start": 15.0,
+    "end": 18.0,
+    "frames": 6
+   },
+   {
+    "region": 4,
+    "start": 18.0,
+    "end": 21.0,
+    "frames": 6
+   },
+   {
+    "region": 1,
+    "start": 21.0,
+    "end": 24.5,
+    "frames": 7
+   }
+  ],
+  "per_frame": [
+   2,
+   2,
+   2,
+   2,
+   5,
+   5,
+   5,
+   5,
+   5,
+   0,
+   0,
+   0,
+   4,
+   4,
+   4,
+   4,
+   4,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   3,
+   3,
+   3,
+   3,
+   3,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   4,
+   4,
+   4,
+   4,
+   4,
+   4,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1
+  ]
+ },
+ "novelty": [
+  0.0075,
+  0.1747,
+  0.3304,
+  0.374,
+  0.3826,
+  0.3141,
+  0.1879,
+  0.1083,
+  0.2025,
+  0.5933,
+  0.6484,
+  0.556,
+  0.6587,
+  0.6408,
+  0.5677,
+  0.5662,
+  0.7935,
+  0.9692,
+  0.2977,
+  0.1431,
+  0.1853,
+  0.1473,
+  0.1686,
+  0.4098,
+  0.5699,
+  0.5882,
+  0.6906,
+  0.6986,
+  0.802,
+  0.9786,
+  0.8588,
+  0.3885,
+  0.1405,
+  0.1905,
+  0.3723,
+  0.6922,
+  0.9387,
+  0.8643,
+  0.6338,
+  0.3235,
+  0.2045,
+  0.2989,
+  0.7643,
+  1.0,
+  0.2952,
+  0.2014,
+  0.238,
+  0.1878,
+  0.1802
+ ],
+ "times": [
+  0.0,
+  0.5,
+  1.0,
+  1.5,
+  2.0,
+  2.5,
+  3.0,
+  3.5,
+  4.0,
+  4.5,
+  5.0,
+  5.5,
+  6.0,
+  6.5,
+  7.0,
+  7.5,
+  8.0,
+  8.5,
+  9.0,
+  9.5,
+  10.0,
+  10.5,
+  11.0,
+  11.5,
+  12.0,
+  12.5,
+  13.0,
+  13.5,
+  14.0,
+  14.5,
+  15.0,
+  15.5,
+  16.0,
+  16.5,
+  17.0,
+  17.5,
+  18.0,
+  18.5,
+  19.0,
+  19.5,
+  20.0,
+  20.5,
+  21.0,
+  21.5,
+  22.0,
+  22.5,
+  23.0,
+  23.5,
+  24.0
+ ],
+ "repetition": {
+  "lag_frames": null,
+  "lag_s": null,
+  "strength": null,
+  "lag_profile": [
+   1.0,
+   0.9267,
+   0.7486,
+   0.5375,
+   0.3333,
+   0.1494,
+   -0.0117,
+   -0.1474,
+   -0.2581,
+   -0.3468,
+   -0.4128,
+   -0.4563,
+   -0.4794,
+   -0.4807,
+   -0.4581,
+   -0.4121,
+   -0.3454,
+   -0.2625,
+   -0.1661,
+   -0.0523,
+   0.0764,
+   0.2139,
+   0.3573,
+   0.4907,
+   0.5791
+  ]
+ },
+ "params": {
+  "kernel_s": 2.45,
+  "kernel_half_frames": 2,
+  "smooth_s": 0.5,
+  "min_section_s": 2.45,
+  "prominence": 0.1,
+  "max_sections": 12,
+  "min_dwell_s": 1.225,
+  "hysteresis_s": 0.6125,
+  "seed": 0,
+  "dt": 0.5
+ },
+ "id": "5046",
+ "embedding": {
+  "method": "dinov2-small",
+  "model": "facebook/dinov2-small",
+  "impl": "plain-torch (jukebox.form.embed._DinoV2)",
+  "input_hw": [
+   224,
+   392
+  ],
+  "dim": 768,
+  "seconds": 11.3
+ },
+ "diagnostics": {
+  "camera_shift_px_max": 0.1727363299773877,
+  "bg_mask_change_max": 0.3640679253472222,
+  "boundary_vs_camera_shift": {
+   "ratio": 1.0767515987702165,
+   "p": 0.2275449101796407
+  },
+  "boundary_vs_bg_mask_change": {
+   "ratio": 0.7505462949676486,
+   "p": 0.6387225548902196
+  },
+  "boundary_vs_pixel_change": {
+   "ratio": 1.0577743764812582,
+   "p": 0.4471057884231537
+  },
+  "handcrafted_agreement": {
+   "handcrafted_boundaries_s": [
+    4.5,
+    8.5,
+    13.0,
+    19.0,
+    21.5
+   ],
+   "matched": 2,
+   "of": 4,
+   "tolerance_s": 0.5,
+   "novelty_corr": 0.7360782942805776
+  },
+  "data_field_agreement": null,
+  "score_data_agreement": null
+ }
+}
