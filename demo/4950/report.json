@@ -1,0 +1,99 @@
+{
+ "id": 4950,
+ "title": "GEDI Forest Height",
+ "movie": "https://svs.gsfc.nasa.gov/vis/a000000/a004900/a004950/GEDI_global_w_colorbar_1080p60.mp4",
+ "colorbar": "https://svs.gsfc.nasa.gov/vis/a000000/a004900/a004950/GEDI_colorbar_0to50_01_print.jpg",
+ "colorbar_variant": "0-50 m (burned-in bar in the movie is labelled 0..50 with an open-ended arrow)",
+ "fps": 4.0,
+ "width": 960,
+ "frames": 206,
+ "duration_s": 51.5,
+ "disc_px": [
+  479.5,
+  269.5,
+  258.5
+ ],
+ "inframe_colorbar_px": [
+  32,
+  235,
+  498,
+  506
+ ],
+ "inframe_colorbar_check_chroma": {
+  "n": 1632,
+  "r2": 0.9837687366909884,
+  "pearson_r": 0.9930370621665852,
+  "mae": 1.1776204508412116,
+  "valid_frac": 1.0
+ },
+ "inframe_colorbar_check_lab": {
+  "n": 1632,
+  "r2": 0.9917880991429128,
+  "pearson_r": 0.9971485762133361,
+  "mae": 0.8332380264079574
+ },
+ "colorbar_resolution": 0.3937007874015748,
+ "valid_land_fraction_mean": 0.4673312696900647,
+ "valid_disc_fraction_mean": 0.818324952472273,
+ "veg_fraction_range": [
+  0.013420643339550436,
+  0.261185120452975
+ ],
+ "melody_rest_fraction": 0.0,
+ "mean_veg_range_m": [
+  14.2636169871388,
+  23.669760988895
+ ],
+ "melody_pitchmap": {
+  "vmin": 14.04835629378576,
+  "vmax": 23.960063013927975,
+  "low": 57,
+  "span": 24,
+  "root": 9,
+  "scale": "major_pent",
+  "polarity": 1,
+  "max_snap_error": 0.6194816700088884
+ },
+ "audio_roundtrip": {
+  "melody": {
+   "n": 206,
+   "r2": 0.9818044871479933,
+   "pearson_r": 0.9912513786370372,
+   "mae": 0.29375246698527546
+  },
+  "bands": {
+   "upper": {
+    "n": 192,
+    "r2": 0.9037458823561364,
+    "pearson_r": 0.9551272433095697,
+    "mae": 0.9074508723832778
+   },
+   "middle": {
+    "n": 192,
+    "r2": 0.9449841082718994,
+    "pearson_r": 0.9733681451601118,
+    "mae": 0.6854802683431044
+   },
+   "lower": {
+    "n": 182,
+    "r2": 0.9323246151094636,
+    "pearson_r": 0.9700693466290423,
+    "mae": 0.6777322404520062
+   }
+  },
+  "shuffled_control": {
+   "n": 206,
+   "r2": -1.324509068525067,
+   "pearson_r": -0.10022022037814683,
+   "mae": 3.0698446140976876
+  }
+ },
+ "notes": {
+  "melody": 49,
+  "bands": {
+   "upper": 31,
+   "middle": 22,
+   "lower": 21
+  }
+ }
+}

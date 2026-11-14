@@ -1,0 +1,96 @@
+{
+ "id": 5209,
+ "title": "Zonal Climate Anomalies 1880-2023",
+ "svs_url": "https://svs.gsfc.nasa.gov/5209/",
+ "video_url": "https://svs.gsfc.nasa.gov/vis/a000000/a005200/a005209/GISTEMP_Zonal_1880-2023_C.mp4",
+ "duration_s": 30.0,
+ "units": "°C anomaly (vs 1951–1980)",
+ "description": "NASA GISS surface temperature anomalies from 1880 to 2023 for eight latitude zones, relative to 1951-1980. Each year is one beat: the plucked lead plays the global mean and eight voices, strummed from the Arctic down to Antarctica, play each zone. Higher pitch means warmer; by the end every zone has climbed, the Arctic highest.",
+ "legend": [
+  {
+   "voice": "lead_global",
+   "meaning": "global mean anomaly; D4 = -0.6 degC, D6 = +1.4 degC"
+  },
+  {
+   "voice": "bands",
+   "meaning": "one voice per latitude zone, north panned left, -2.7..+3.3 degC over 3 octaves"
+  },
+  {
+   "voice": "geophony",
+   "meaning": "control curve: global anomaly, louder when warmer"
+  },
+  {
+   "voice": "brightness",
+   "meaning": "control curve: fraction of zones warmer than +1 degC"
+  },
+  {
+   "voice": "anthrophony/biophony",
+   "meaning": "silent: not measured by this dataset"
+  }
+ ],
+ "stems": [
+  {
+   "name": "lead_global",
+   "file": "lead_global.wav",
+   "group": "melody"
+  },
+  {
+   "name": "band_64N-90N",
+   "file": "band_64N-90N.wav",
+   "group": "bands"
+  },
+  {
+   "name": "band_44N-64N",
+   "file": "band_44N-64N.wav",
+   "group": "bands"
+  },
+  {
+   "name": "band_24N-44N",
+   "file": "band_24N-44N.wav",
+   "group": "bands"
+  },
+  {
+   "name": "band_EQU-24N",
+   "file": "band_EQU-24N.wav",
+   "group": "bands"
+  },
+  {
+   "name": "band_24S-EQU",
+   "file": "band_24S-EQU.wav",
+   "group": "bands"
+  },
+  {
+   "name": "band_44S-24S",
+   "file": "band_44S-24S.wav",
+   "group": "bands"
+  },
+  {
+   "name": "band_64S-44S",
+   "file": "band_64S-44S.wav",
+   "group": "bands"
+  },
+  {
+   "name": "band_90S-64S",
+   "file": "band_90S-64S.wav",
+   "group": "bands"
+  }
+ ],
+ "timeline": "timeline.json",
+ "controls": "controls.json",
+ "fidelity": {
+  "r2": 0.9709,
+  "pearson_r": 0.9859,
+  "mae": 0.0551,
+  "control_r2": -0.6764
+ },
+ "data_source": {
+  "music": "NASA GISS GISTEMP v4 ZonAnn.Ts+dSST.csv",
+  "url": "https://data.giss.nasa.gov/gistemp/tabledata_v4/ZonAnn.Ts+dSST.csv",
+  "sync": "SVS movie marker positions (year onsets)"
+ },
+ "mix": "mix.wav",
+ "video_inversion": {
+  "r": 0.9997048866647865,
+  "mae": 0.00959355642497347
+ }
+}
