@@ -1,0 +1,66 @@
+{
+ "id": 5176,
+ "title": "Sea Surface Temperature (SST) Anomaly - Near Real Time",
+ "movie": "https://svs.gsfc.nasa.gov/vis/a000000/a005100/a005176/sst_anomaly_30_sec_4096x2048_2x1_30p.mp4",
+ "colorbar": "https://svs.gsfc.nasa.gov/vis/a000000/a005100/a005176/sst_mur_anomaly_auto_colorbar_01_print.jpg",
+ "colorbar_bbox": [
+  130,
+  250,
+  895,
+  276
+ ],
+ "fps": 4.0,
+ "width": 512,
+ "frames": 120,
+ "duration_s": 30.033333,
+ "dates": [
+  "20240526",
+  "20261104"
+ ],
+ "movie_frames": 901,
+ "dated_frames_listed": 901,
+ "colorbar_resolution": 0.03137254901960784,
+ "valid_pixel_fraction_mean": 0.5005055745442708,
+ "global_mean_range": [
+  0.34571370233450444,
+  0.8680296966087375
+ ],
+ "lead_pitchmap": {
+  "vmin": 0.34613877110096203,
+  "vmax": 0.8832100637852226,
+  "low": 62,
+  "span": 24,
+  "root": 2,
+  "scale": "major_pent",
+  "polarity": 1,
+  "max_snap_error": 0.033566955792766286
+ },
+ "band_pitchmap": {
+  "vmin": -1.5,
+  "vmax": 2.0,
+  "low": 43,
+  "span": 30,
+  "root": 2,
+  "scale": "major_pent",
+  "polarity": 1,
+  "max_snap_error": 0.17500000000000002
+ },
+ "audio_roundtrip": {
+  "lead": {
+   "n": 120,
+   "r2": 0.9784481565495071,
+   "pearson_r": 0.9897669288409217,
+   "mae": 0.013458353870787426
+  },
+  "shuffled_control": {
+   "n": 120,
+   "r2": -1.1344620326948616,
+   "pearson_r": -0.09280723591417998,
+   "mae": 0.1269476773779841
+  }
+ },
+ "notes": {
+  "lead": 75,
+  "bands": 219
+ }
+}

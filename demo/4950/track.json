@@ -1,0 +1,71 @@
+{
+ "id": 4950,
+ "title": "GEDI Forest Height",
+ "svs_url": "https://svs.gsfc.nasa.gov/4950/",
+ "video_url": "https://svs.gsfc.nasa.gov/vis/a000000/a004900/a004950/GEDI_global_w_colorbar_1080p60.mp4",
+ "duration_s": 51.5,
+ "units": "m (canopy height)",
+ "description": "Forest canopy height measured by the GEDI lidar on the International Space Station, shown on a globe that turns once. The plucked melody follows the average height of the visible forest: it climbs when the Amazon, Congo and Southeast Asian rainforests face you and rests over open ocean. A forest chorus swells with how much tall forest is in view.",
+ "legend": [
+  {
+   "voice": "melody_canopy",
+   "meaning": "mean canopy height of visible vegetation, A3 = 14.0 m, A5 = 24.0 m"
+  },
+  {
+   "voice": "bands",
+   "meaning": "same mean for the upper, middle and lower third of the globe, 0-30 m over 2 octaves"
+  },
+  {
+   "voice": "biophony",
+   "meaning": "control: canopy height x forest cover in view"
+  },
+  {
+   "voice": "geophony",
+   "meaning": "control: share of the visible globe that is ocean"
+  },
+  {
+   "voice": "brightness",
+   "meaning": "control: share of vegetation taller than 25 m"
+  },
+  {
+   "voice": "anthrophony",
+   "meaning": "silent: not measured by this dataset"
+  }
+ ],
+ "stems": [
+  {
+   "name": "melody_canopy",
+   "file": "melody_canopy.wav",
+   "group": "melody"
+  },
+  {
+   "name": "band_upper",
+   "file": "band_upper.wav",
+   "group": "bands"
+  },
+  {
+   "name": "band_middle",
+   "file": "band_middle.wav",
+   "group": "bands"
+  },
+  {
+   "name": "band_lower",
+   "file": "band_lower.wav",
+   "group": "bands"
+  }
+ ],
+ "timeline": "timeline.json",
+ "controls": "controls.json",
+ "fidelity": {
+  "r2": 0.982,
+  "pearson_r": 0.9913,
+  "mae": 0.2905,
+  "control_r2": -1.3876
+ },
+ "data_source": {
+  "music": "pixel inversion of the SVS movie with the SVS 0-50 m colorbar",
+  "colorbar_url": "https://svs.gsfc.nasa.gov/vis/a000000/a004900/a004950/GEDI_colorbar_0to50_01_print.jpg",
+  "underlying": "GEDI L2B RH100, Apr 2019 - Apr 2020"
+ },
+ "mix": "mix.wav"
+}
