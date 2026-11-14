@@ -1,0 +1,78 @@
+{
+ "id": 5058,
+ "title": "Florida Nighttime Lights Before and After Hurricane Ian",
+ "svs_url": "https://svs.gsfc.nasa.gov/5058",
+ "video_url": "https://svs.gsfc.nasa.gov/vis/a000000/a005000/a005058/black_marble_slide_line4.mp4",
+ "duration_s": 15.0,
+ "units": "relative night light (less .. more), no numeric scale",
+ "description": "Night lights of southwest Florida on August 30, 2022 and on September 30, after Hurricane Ian. A slider line wipes the 'after' picture across the map; as it passes, each strip of the coast plays a falling run as its lights go out. About 63 percent of the light on the map is gone, most around Fort Myers and Naples, so the city hum fades and frogs and insects take over until the line slides back.",
+ "legend": [
+  {
+   "voice": "pluck runs (city)",
+   "meaning": "each strip of the map as the line crosses it: falling = lights lost (bigger fall = more lost), rising when the before picture returns; pan = position"
+  },
+  {
+   "voice": "pad (drone)",
+   "meaning": "total light on screen; lower = darker"
+  },
+  {
+   "voice": "traffic hum (anthrophony)",
+   "meaning": "light currently on screen relative to before the storm"
+  },
+  {
+   "voice": "frogs and insects (biophony)",
+   "meaning": "louder as the city goes dark"
+  },
+  {
+   "voice": "wind and rain (geophony)",
+   "meaning": "share of the screen showing the after-storm picture"
+  }
+ ],
+ "stems": [
+  {
+   "name": "city",
+   "file": "city.wav",
+   "group": "melody"
+  },
+  {
+   "name": "drone",
+   "file": "drone.wav",
+   "group": "bands"
+  },
+  {
+   "name": "traffic",
+   "file": "traffic.wav",
+   "group": "anthrophony"
+  },
+  {
+   "name": "frogs-insects",
+   "file": "frogs-insects.wav",
+   "group": "biophony"
+  },
+  {
+   "name": "wind-rain",
+   "file": "wind-rain.wav",
+   "group": "geophony"
+  }
+ ],
+ "timeline": "timeline.json",
+ "controls": "controls.json",
+ "fidelity": {
+  "city_runs": {
+   "interval_vs_log_light_ratio_r": 0.6334131507522361,
+   "falls_on_wipe_out": 0.8,
+   "n": 10,
+   "stem": "city"
+  },
+  "line_tracked_frames": 351
+ },
+ "data_source": {
+  "kind": "pixels",
+  "movie": "https://svs.gsfc.nasa.gov/vis/a000000/a005000/a005058/black_marble_slide_line4.mp4",
+  "underlying": "NASA Black Marble (VIIRS) nightly radiance, 2022-08-30 vs 2022-09-30",
+  "scale": "relative: sequential colormap without numbers, inverted from the burned-in colorbar"
+ },
+ "mix": "mix.wav",
+ "report": "report.json",
+ "overview": "overview.png"
+}
