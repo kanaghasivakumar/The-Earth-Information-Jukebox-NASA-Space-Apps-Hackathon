@@ -1,0 +1,57 @@
+{
+ "id": 3912,
+ "title": "Global Sea Surface Currents and Temperature",
+ "frames": 133,
+ "fps": 2.0,
+ "duration_s": 66.5,
+ "colorbar_url": "https://svs.gsfc.nasa.gov/vis/a000000/a003900/a003912/sst_ecco2_cbar.png",
+ "colorbar_bbox": [
+  15,
+  29,
+  291,
+  68
+ ],
+ "colorbar_resolution": 0.12549019607843137,
+ "units": "\u00b0C",
+ "valid_pixel_fraction_mean": 0.4194948583617246,
+ "global_mean_range": [
+  20.31026576371374,
+  21.72705712889917
+ ],
+ "lead_pitchmap": {
+  "vmin": 20.250936426770917,
+  "vmax": 21.752528262966084,
+  "low": 60,
+  "span": 24,
+  "root": 2,
+  "scale": "major_pent",
+  "polarity": 1,
+  "max_snap_error": 0.09384948976219798
+ },
+ "band_pitchmap": {
+  "vmin": 0.0,
+  "vmax": 32.0,
+  "low": 36,
+  "span": 36,
+  "root": 2,
+  "scale": "major_pent",
+  "polarity": 1,
+  "max_snap_error": 1.3333333333333333
+ },
+ "notes": {
+  "lead": 36,
+  "bands": 37
+ },
+ "fidelity_real": {
+  "n": 133,
+  "r2": 0.9864855255613006,
+  "pearson_r": 0.9935053760666591,
+  "mae": 0.037360603001730344
+ },
+ "fidelity_shuffled_control": {
+  "n": 133,
+  "r2": -0.7428433770343394,
+  "pearson_r": 0.05953024088493349,
+  "mae": 0.40886241741104423
+ }
+}

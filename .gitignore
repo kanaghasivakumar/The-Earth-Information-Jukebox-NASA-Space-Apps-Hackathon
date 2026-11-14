@@ -218,3 +218,9 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Earth Jukebox data and outputs
+data/raw/
+data/catalog/
+outputs/
+*.part
