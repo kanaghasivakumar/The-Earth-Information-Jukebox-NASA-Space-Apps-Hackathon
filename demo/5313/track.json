@@ -1,0 +1,142 @@
+{
+ "id": 5313,
+ "title": "Change in Night Lights between 2012 and 2023 - EIC Version",
+ "svs_url": "https://svs.gsfc.nasa.gov/5313",
+ "video_url": "https://svs.gsfc.nasa.gov/vis/a000000/a005300/a005313/nightlights_flat_series_and_change_wZooms_13_EIC_2160p30_h265.mp4",
+ "duration_s": 43.333,
+ "units": "relative night-light change (no numeric scale): -1 lights out .. +1 new lights; years as light / 2012",
+ "description": "Night lights seen from space, 2012 to 2023: total light on the map grows by about 35 percent (relative pixel brightness; the map has no numeric scale). Rising notes and purple mark places that got brighter, most of all South Asia and Southeast Asia & Oceania; falling notes and orange mark places that got dimmer, such as Western Europe. As the lights spread, the city hum grows and the chorus of birds and insects fades.",
+ "legend": [
+  {
+   "voice": "pluck (years)",
+   "meaning": "total night light each year, 2012-2023; higher = more light"
+  },
+  {
+   "voice": "pluck arpeggio (sectors)",
+   "meaning": "six longitude sectors west to east, each pitched by its light relative to 2012; panned by longitude"
+  },
+  {
+   "voice": "plucked runs (change sweep)",
+   "meaning": "2012->2023 change map swept west to east: rising run = brighter (purple), falling run = dimmer (orange); bigger interval = stronger"
+  },
+  {
+   "voice": "pads (zoom regions)",
+   "meaning": "Western Europe, Eastern Mediterranean, Ukraine and India, each pitched by its light relative to 2012"
+  },
+  {
+   "voice": "ticks (events)",
+   "meaning": "a new year starts"
+  },
+  {
+   "voice": "city hum (anthrophony)",
+   "meaning": "louder with more light and with brightening"
+  },
+  {
+   "voice": "birds and insects (biophony)",
+   "meaning": "quieter as the lights grow"
+  },
+  {
+   "voice": "wind (geophony)",
+   "meaning": "quiet constant bed, not data-driven here"
+  }
+ ],
+ "stems": [
+  {
+   "name": "years",
+   "file": "years.wav",
+   "group": "melody"
+  },
+  {
+   "name": "change-sweep",
+   "file": "change-sweep.wav",
+   "group": "melody"
+  },
+  {
+   "name": "sectors",
+   "file": "sectors.wav",
+   "group": "bands"
+  },
+  {
+   "name": "year-ticks",
+   "file": "year-ticks.wav",
+   "group": "events"
+  },
+  {
+   "name": "city",
+   "file": "city.wav",
+   "group": "anthrophony"
+  },
+  {
+   "name": "chorus",
+   "file": "chorus.wav",
+   "group": "biophony"
+  },
+  {
+   "name": "wind",
+   "file": "wind.wav",
+   "group": "geophony"
+  }
+ ],
+ "timeline": "timeline.json",
+ "controls": "controls.json",
+ "fidelity": {
+  "years_melody": {
+   "real": {
+    "n": 24,
+    "r2": 0.97502506513201,
+    "pearson_r": 0.9892858595212415,
+    "mae": 0.013961006875864731
+   },
+   "shuffled_control": {
+    "n": 24,
+    "r2": -1.1595011838052924,
+    "pearson_r": -0.033705481264816935,
+    "mae": 0.10759447690492173
+   },
+   "stem": "years"
+  },
+  "change_sweep": {
+   "direction_sign_accuracy": 1.0,
+   "interval_vs_net_change_r": 0.9907038381861991,
+   "n": 14,
+   "stem": "change-sweep"
+  },
+  "cross_check_change_map_vs_annual_2023_minus_2012": {
+   "sector30_r": 0.8635951239776711,
+   "continent_r": 0.9234357978299222,
+   "note": "two independent encodings in the same movie agree"
+  }
+ },
+ "data_source": {
+  "kind": "pixels",
+  "movie": "https://svs.gsfc.nasa.gov/vis/a000000/a005300/a005313/nightlights_flat_series_and_change_wZooms_13_EIC_2160p30_h265.mp4",
+  "underlying": "NASA Black Marble (VIIRS, Suomi NPP) annual composites",
+  "scale": "relative: diverging colormap without numbers; inverted from the burned-in colorbar",
+  "projection": "left of two identical flat maps, georeferenced against 5011 (cubic in latitude)"
+ },
+ "mix": "mix.wav",
+ "report": "report.json",
+ "overview": "overview.png",
+ "segments": [
+  {
+   "name": "annual series",
+   "start": 0.0,
+   "end": 9.466666666666667
+  },
+  {
+   "name": "change map",
+   "start": 9.8,
+   "end": 20.866666666666667
+  },
+  {
+   "name": "annual series + zooms",
+   "start": 21.266666666666666,
+   "end": 36.733333333333334
+  },
+  {
+   "name": "change map + zooms",
+   "start": 36.86666666666667,
+   "end": 43.333333333333336
+  }
+ ]
+}

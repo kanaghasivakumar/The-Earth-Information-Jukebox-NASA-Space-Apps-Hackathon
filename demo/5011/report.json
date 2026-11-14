@@ -1,0 +1,129 @@
+{
+ "id": 5011,
+ "title": "Lightning Events Detected from the International Space Station (ISS) 2017-2023",
+ "movie": "https://svs.gsfc.nasa.gov/vis/a000000/a005000/a005011/iss_lightning_sos_yearly_07312023_2048p60.mp4",
+ "movie_info": {
+  "w": 4096,
+  "h": 2048,
+  "fps": 60.0,
+  "frames": 6002,
+  "duration": 100.033333
+ },
+ "detector": {
+  "method": "yellow-brightness jump between consecutive decoded frames, 8-connected components",
+  "decode_fps": 30.0,
+  "decode_width": 2048,
+  "jump_threshold_V": 35,
+  "min_px": 1,
+  "events_detected": 2009534,
+  "events_per_second_mean": 20088.6438523447,
+  "first_last_active_s": [
+   7.2,
+   98.5
+  ],
+  "note": "dots that appear in the same frame and touch merge into one event; counts are lower bounds"
+ },
+ "calendar": {
+  "method": "NH-share peaks, linear in time; first peak = summer 2017 dated 08-01",
+  "sec_per_year": 11.799999999999997,
+  "t_ref": 16.16666666666666,
+  "ref_date": "2017-08-01",
+  "nh_peak_times": [
+   15.5,
+   28.5,
+   40.5,
+   51.5,
+   62.5,
+   75.5
+  ],
+  "peak_fit_rms_s": 0.5962847939999439,
+  "t_first_active": 7.2,
+  "t_last_active": 98.5,
+  "date_first_active": "2016-10-27",
+  "date_last_active": "2024-07-23",
+  "t_of_page_end_date": 86.9182067077344,
+  "unexplained_tail_s": 11.581793292265601,
+  "note": "peaks 2017-2022 are evenly spaced; flashes keep appearing for a few seconds after the time that maps to 2023-07-31, so dates there are clamped to the page's end date",
+  "page_range": [
+   "2017-01-01",
+   "2023-07-31"
+  ]
+ },
+ "rate_limit": {
+  "bpm": 120,
+  "grid": "1/16 note",
+  "step_s": 0.125,
+  "cap_per_step": 2,
+  "cap_per_beat": 6,
+  "lon_sectors": 6,
+  "hits_per_beat_rule": "round(cap_beat * clip((I - p10)/(p98 - p10), 0, 1)^1.5)",
+  "beats_silent": 37,
+  "beats": 201,
+  "cells_with_flashes": 4640,
+  "hits": 378,
+  "note": "a hit = all onsets in one (16th step, 60 deg sector) cell; weaker cells are dropped",
+  "events_detected": 2009534
+ },
+ "hits": 378,
+ "melody_notes": 104,
+ "latitude_pitchmap": {
+  "vmin": -14.995286112218643,
+  "vmax": 37.5572519384631,
+  "low": 57,
+  "span": 24,
+  "root": 9,
+  "scale": "minor_pent",
+  "polarity": 1,
+  "max_snap_error": 3.2845336281676087
+ },
+ "spot_check": [
+  {
+   "t": 20.0,
+   "detected": 1495,
+   "new_isolated_blobs": 621,
+   "visible_yellow_px": 76470,
+   "detected_in_crop": 86
+  },
+  {
+   "t": 50.0,
+   "detected": 1586,
+   "new_isolated_blobs": 699,
+   "visible_yellow_px": 73001,
+   "detected_in_crop": 117
+  },
+  {
+   "t": 80.0,
+   "detected": 1462,
+   "new_isolated_blobs": 671,
+   "visible_yellow_px": 70704,
+   "detected_in_crop": 50
+  }
+ ],
+ "fidelity": {
+  "melody_latitude": {
+   "real": {
+    "n": 198,
+    "r2": 0.9880413102853929,
+    "pearson_r": 0.9942503114574649,
+    "mae": 1.3678428978176098
+   },
+   "shuffled_control": {
+    "n": 198,
+    "r2": -1.0531500205173994,
+    "pearson_r": 0.15803324831674753,
+    "mae": 17.337097310111208
+   },
+   "stem": "latitude"
+  },
+  "hits_vs_flash_density_r": 0.8299741985848176,
+  "pan_vs_longitude_r": 0.9999999990377899
+ },
+ "tom_map": {
+  ">= -90 deg": "low floor tom",
+  ">= -25 deg": "high floor tom",
+  ">= -10 deg": "low tom",
+  ">= 5 deg": "low-mid tom",
+  ">= 20 deg": "hi-mid tom",
+  ">= 35 deg": "high tom"
+ }
+}
