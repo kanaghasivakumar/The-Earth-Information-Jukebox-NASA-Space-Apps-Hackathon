@@ -13,11 +13,12 @@ Logs are in `logs_5046/` (gitignored). Inputs are in `data/raw/5046/` (gitignore
 - Audio is 1.5x slower than the movie (36.5 s). `track.json` has `video_rate: 0.6667`, which the players must honour (TODO).
 
 ## Steps
-1. [running] Builder: `sbatch scripts/build_5046.sbatch` (job 8837978). Writes `outputs/5046/` and `demo/5046/`.
-2. [todo] Arrangement `_5046` in `jukebox/render/arrangements.py`, then
-   `sbatch -A p32576 -p short -t 01:00:00 --mem=16G -c 4 -o logs_5046/arr-%j.out --wrap "scripts/arrange_one.sh 5046"`
-3. [todo] Export: `python scripts/export_track.py outputs/5046 --meta scripts/track_meta/5046.json`; add 5046 to `export_all.sh`;
+1. [done] Builder (job 8838139): NSIDC r 0.998, MAE 0.35 M km2; builder lead R2 0.992, control -1.28. Rerun: `sbatch scripts/build_5046.sbatch`.
+2. [running] Arrangement `_5046` added. Job 8838203: `sbatch scripts/arrange_5046.sbatch` (copies orig_* stems, then runs arrange_one.sh 5046).
+3. [queued, job 8838204, afterok 8838203] `sbatch scripts/export_5046.sbatch` runs export_track, demo copies, check_web and export_next_app (--integrate outputs). Still todo: add 5046 to `export_all.sh`. Old note: `python scripts/export_track.py outputs/5046 --meta scripts/track_meta/5046.json`; add 5046 to `export_all.sh`;
    copy `mix.mp3`/`arrange_report.json` to `demo/5046`; run `python scripts/check_web.py`; run `scripts/export_next_app.py`.
-4. [todo] Support `video_rate` in `web/js/app.js` and in the Next player. Add a line to `demo/README.md`.
+4. [done, uncommitted until the export] `video_rate` support in web/js/app.js and DataPlayer.tsx. [todo] Add 5046 to `lib/data/copy.ts` TRACK_COPY. [todo] Support `video_rate` in `web/js/app.js` and in the Next player. Add a line to `demo/README.md`.
 5. [todo] In `eic-vae/eic-sonification/frontend`: `npm run lint`, `npm test`, `npx next build --webpack`.
    node_modules can be symlinked from `../ui/eic-vae/eic-sonification/frontend/node_modules`.
+
+Deadline: commit by 12:10.

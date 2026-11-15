@@ -95,6 +95,8 @@ export interface DataTrack {
   svs_url: string;
   video_url: string | null;
   video_alt_url?: string;
+  /** movie seconds per audio second (default 1); below 1 the video plays slowed down */
+  video_rate?: number;
   image_url?: string;
   duration_s: number;
   units: string;

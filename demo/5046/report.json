@@ -1,0 +1,113 @@
+{
+ "id": 5046,
+ "title": "Daily Arctic Sea Ice, By Year",
+ "movie": "https://svs.gsfc.nasa.gov/vis/a000000/a005000/a005046/arctic_sea_ice_moving_two_year_w_dates.webm",
+ "width": 960,
+ "movie_frames": 730,
+ "movie_duration_s": 24.333333333333332,
+ "stretch": 1.5,
+ "duration_s": 36.5,
+ "dates": [
+  "2021-04-16",
+  "2023-04-15"
+ ],
+ "date_check": {
+  "frame0": "2021-04-16",
+  "label_changes_every_frame_fraction": 1.0,
+  "read_by_eye": {
+   "0.5 s": "2021-05-01",
+   "5.0 s": "2021-09-13",
+   "10.5 s": "2022-02-25",
+   "24.3 s": "2023-04-15"
+  }
+ },
+ "disc_px": [
+  479.0,
+  270.5,
+  257.25
+ ],
+ "camera_distance_earth_radii": 1.813645079109845,
+ "greenland_ice_km2_if_orthographic": 5302380.5041222945,
+ "rho_max": 0.88,
+ "km2_per_px_at_centre": 613.3444549276048,
+ "sea_px": 90512,
+ "land_px": 92953,
+ "greenland_px": 7388,
+ "extent_range_mkm2": [
+  5.277052653337514,
+  14.222835247181969
+ ],
+ "ground_truth": {
+  "source": "https://noaadata.apps.nsidc.org/NOAA/G02135/north/daily/data/N_seaice_extent_daily_v4.0.csv",
+  "daily": {
+   "n": 730,
+   "r2": 0.9857362246021412,
+   "pearson_r": 0.9980993035275769,
+   "mae": 0.3507684936285717
+  },
+  "linear_fit": {
+   "slope": 1.1141120363400419,
+   "intercept": -1.1931975208999548,
+   "n": 730,
+   "r2": 0.9962022197022353,
+   "pearson_r": 0.9980993035275773,
+   "mae": 0.17325300289929416
+  },
+  "nsidc_range_mkm2": [
+   4.692,
+   14.94
+  ],
+  "notes_vs_nsidc": {
+   "n": 146,
+   "r2": 0.9860363033713546,
+   "pearson_r": 0.9982668377253457,
+   "mae": 0.34802681320462747
+  }
+ },
+ "climatology": "https://noaadata.apps.nsidc.org/NOAA/G02135/north/daily/data/N_seaice_extent_climatology_1981-2010_v4.0.csv",
+ "days_per_note": 5,
+ "notes": {
+  "lead": 49,
+  "bands": 45
+ },
+ "lead_pitchmap": {
+  "vmin": 4.9,
+  "vmax": 15.94,
+  "low": 65,
+  "span": 24,
+  "root": 5,
+  "scale": "major",
+  "polarity": 1,
+  "max_snap_error": 0.45999999999999996
+ },
+ "band_pitchmap": {
+  "vmin": 4.9,
+  "vmax": 15.94,
+  "low": 41,
+  "span": 24,
+  "root": 5,
+  "scale": "major",
+  "polarity": 1,
+  "max_snap_error": 0.45999999999999996
+ },
+ "audio_roundtrip": {
+  "lead": {
+   "n": 146,
+   "r2": 0.9915233502882016,
+   "pearson_r": 0.9957817066992111,
+   "mae": 0.24336187252235095
+  },
+  "bands_climatology": {
+   "n": 146,
+   "r2": 0.9943198350592478,
+   "pearson_r": 0.9972033271229168,
+   "mae": 0.18877260273972615
+  },
+  "shuffled_control": {
+   "n": 146,
+   "r2": -1.2842553809841895,
+   "pearson_r": -0.14272234054975264,
+   "mae": 3.7899525455584087
+  }
+ }
+}

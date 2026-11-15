@@ -8,6 +8,9 @@ blue-white from JAXA AMSR2 (3-day running minimum, 15 % concentration threshold)
 Next Generation, fading month to month, so it is snow-white in winter. There is no colorbar: the
 movie shows extent (ice / no ice), not concentration.
 
+Video: the hosted .webm (Apr 2023) is the movie measured here. The .mp4 at the same address is
+re-rendered daily (rolling two years, 2024-2026 on 15 Nov 2026), so the track links the frozen .webm.
+
 Dates: the burned-in label reads 16 Apr 2021 on frame 0 (checked by eye at 0.5 s = 01 May 2021, 5.0 s =
 13 Sep 2021, 10.5 s = 25 Feb 2022, 24.3 s = 15 Apr 2023), and the label crop changes on every frame, so
 frame i is 16 Apr 2021 + i days. (The SVS frames folder now lists 2024304..2026303, a newer render
@@ -17,9 +20,12 @@ Extent per frame:
   disc     globe centre and radius from the non-black pixels
   classes  water (blue), white (ice or snow), land-coloured (green/brown/grey, not blue) per pixel
   land     pixels that are land-coloured on >= 2 % of frames (snow-free summer land), plus the
-           Greenland ice sheet: the never-water white component that contains Greenland's centre
+           Greenland ice sheet: the never-water, always-white component that contains Greenland's
+           centre (split from the perennial pack by a 3 px erosion)
   ice      white pixels that are not land, inside rho = r/R <= 0.88 (the hazy limb is cut)
-  area     orthographic weight 1/sqrt(1 - rho^2), and (6371 km / R_px)^2 per pixel at the centre
+  area     pinhole camera at distance D Earth radii above the view centre; D is fitted so that the
+           Greenland ice sheet has its known area (1.71 million km2). No sea-ice data is used for it
+           (an orthographic globe would make Greenland 3x too big).
 Ground truth: NSIDC Sea Ice Index v4 daily extent (G02135, public https, no login), same dates.
 
 Music: lead (flute) = sea-ice extent, more ice = higher pitch. The audio runs `stretch` (1.5) times
@@ -136,18 +142,22 @@ def masks(m: dict, greenland_km2: float = GREENLAND_ICE_KM2):
     for pw in m["whites"][::10]:
         always_white &= np.unpackbits(pw)[: H * W].reshape(H, W).astype(bool)
     perm = always_white & (m["n_water"] == 0) & ~land & inside
-    n, lab = cv2.connectedComponents(perm.astype(np.uint8), connectivity=4)
+    # the perennial pack touches north Greenland through a thin bridge: erode 3 px, take the seed's
+    # component, grow it back by 3 px inside the never-water white set
+    k3 = np.ones((3, 3), np.uint8)
+    n, lab = cv2.connectedComponents(cv2.erode(perm.astype(np.uint8), k3, iterations=3), connectivity=4)
     sx, sy = int(cx + GREENLAND_SEED[0] * R), int(cy + GREENLAND_SEED[1] * R)
     win = lab[sy - 3:sy + 4, sx - 3:sx + 4]
     lid = np.bincount(win[win > 0]).argmax() if (win > 0).any() else 0
-    gl = (lab == lid) if lid > 0 else np.zeros_like(perm)
+    gl = (cv2.dilate((lab == lid).astype(np.uint8), k3, iterations=3).astype(bool) & perm) if lid > 0 \
+        else np.zeros_like(perm)
     land_all = land | gl
     sea = inside & ~land_all
     # camera distance D (Earth radii): the one at which the Greenland ice sheet has its known area.
     # This uses no sea-ice data, so the NSIDC comparison stays an independent check.
     Ds = np.geomspace(1.05, 200, 400)
     gl_area = np.array([perspective_weight(rho[gl], D).sum() * (EARTH_KM / R) ** 2 for D in Ds])
-    D = float(np.interp(greenland_km2, gl_area[::-1], Ds[::-1])) if gl.any() else 1e3
+    D = float(np.interp(greenland_km2, gl_area, Ds)) if gl.any() else 1e3
     w = perspective_weight(np.clip(rho, 0, 0.9999), D)
     km2_px = (EARTH_KM / R) ** 2
     return {"disc": (cx, cy, R), "rho": rho, "sea": sea, "land": land_all, "greenland": gl, "perm": perm,
@@ -277,7 +287,7 @@ def main(argv=None):
               {"voice": "brightness", "meaning": "control: sea-ice extent (a brighter, glassier bed with more ice)"},
               {"voice": "anthrophony", "meaning": "silent: not measured by this dataset"}]
     track = write_track(
-        out, page_id=PAGE, title=page.get("title", "Daily Arctic Sea Ice, By Year"), video_url=VIDEO_MP4,
+        out, page_id=PAGE, title=page.get("title", "Daily Arctic Sea Ice, By Year"), video_url=MOVIE,
         duration_s=duration, units="million km²", description=desc, legend=legend, stems=stems,
         stem_groups=groups, notes=lead + glass, controls_t=t, curves=curves,
         fidelity={"r2": fid["r2"], "pearson_r": fid["pearson_r"], "mae": fid["mae"], "control_r2": fid_ctrl["r2"]},
@@ -287,10 +297,12 @@ def main(argv=None):
                      "dates": [ndates[0], dates[-1].isoformat()]},
         mix_gains={"lead_extent": 1.0, "bands": 0.8},
         extra={"dates": ndates, "dates_t": [round(float(x), 3) for x in t],
-               "video_rate": round(1 / a.stretch, 6), "video_alt_url": MOVIE,
+               "video_rate": round(1 / a.stretch, 6),
                "time_axis": {"start": ndates[0], "end": dates[-1].isoformat(), "format": "day"},
-               "caveat": "Extent is measured from the movie's pixels (blue-white ice vs ocean), not read from the "
-                         "AMSR2 files. Against NSIDC's daily extent it tracks with r = %.3f." % gt["pearson_r"]})
+               "caveat": ("Extent is measured from the movie's pixels (blue-white ice against ocean and land), not read "
+                          "from the AMSR2 files. Against NSIDC's daily extent: r = %.3f, mean error %.2f million km². "
+                          "The video is the 2021-2023 WebM; the SVS MP4 is now a newer 2024-2026 render."
+                          % (gt["pearson_r"], gt["mae"]))})
     report = {
         "id": PAGE, "title": page.get("title"), "movie": MOVIE, "width": a.width, "movie_frames": F,
         "movie_duration_s": F / movie_fps, "stretch": a.stretch, "duration_s": duration,
@@ -312,8 +324,25 @@ def main(argv=None):
     np.savez_compressed(out / "series.npz", ext_all=ext_all, truth=truth, clim=clim, t=t, ext=ext)
     plot(out, m, g, ext_all, truth, clim, dates, t, ext, est, a.stretch, movie_fps)
     export_demo(out, a.demo / str(PAGE), names=("mix", "lead_extent", "control_shuffled"))
+    form_src = a.demo / "5046_form" / "form.json"
+    if form_src.exists():   # the form analysis is in movie seconds; the arrangement needs audio seconds
+        form = scale_times(json.loads(form_src.read_text()), a.stretch)
+        form["note"] = f"demo/5046_form/form.json with every time multiplied by {a.stretch} (audio seconds)"
+        (a.demo / str(PAGE) / "form.json").write_text(json.dumps(form, indent=1))
     print(json.dumps({k: report[k] for k in ("dates", "date_check", "disc_px", "extent_range_mkm2", "ground_truth",
                                              "audio_roundtrip")}, indent=1, default=float))
+
+
+def scale_times(o, k: float):
+    """Multiply every start/end/time value (and [start, end, label] tuples) by k."""
+    if isinstance(o, dict):
+        return {key: (v * k if key in ("start", "end", "time") and isinstance(v, (int, float)) else scale_times(v, k))
+                for key, v in o.items()}
+    if isinstance(o, list):
+        if len(o) == 3 and all(isinstance(x, (int, float)) for x in o[:2]) and isinstance(o[2], str):
+            return [o[0] * k, o[1] * k, o[2]]
+        return [scale_times(v, k) for v in o]
+    return o
 
 
 def plot(out, m, g, ext_all, truth, clim, dates, t, ext, est, stretch, fps):
