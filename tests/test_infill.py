@@ -161,10 +161,12 @@ def test_kv_cache_matches_full_forward():
 
 # ------------------------------------------------------------------ demo artefact + renderer
 
-@pytest.mark.skipif(not (ROOT / "demo/3912_harmony/timeline.json").exists(), reason="demo not generated")
+# demo/3912_harmony (built on an older, biased 3912 timeline) was folded into the integrated 3912
+# track: demo/3912/timeline_arranged.json is the v2 data timeline + AMT harmony/bass + form cues.
+@pytest.mark.skipif(not (ROOT / "demo/3912/timeline_arranged.json").exists(), reason="demo not generated")
 def test_demo_timeline_keeps_lead():
     src = [d for d in json.loads(DEMO.read_text()) if d["voice"] == "lead"]
-    out = json.loads((ROOT / "demo/3912_harmony/timeline.json").read_text())
+    out = json.loads((ROOT / "demo/3912/timeline_arranged.json").read_text())
     assert [d for d in out if d["voice"] == "lead"] == src
     assert {d["voice"] for d in out} >= {"lead", "harmony", "bass"}
     assert all(d["value"] is None for d in out if d["voice"] in ("harmony", "bass"))
