@@ -1,6 +1,6 @@
 # 5313 mood pilot: Night lights 2012–2023
 
-A learned **mood texture** under the unchanged integrated arrangement: video frames → SigLIP style weights over a fixed prompt vocabulary (blended with the track's data curves) → Magenta RealTime 2 (`mrt2_small`, CPU) generating continuously over the timeline. The mood never sets a pitch. The data melody and all other stems are exactly the `integrate` stems.
+A learned **mood texture** under the unchanged integrated arrangement: video frames → SigLIP style weights over a fixed prompt vocabulary (blended with the track's data curves) → Magenta RealTime 2 (`mrt2_base`, GPU) generating continuously over the timeline. The mood never sets a pitch. The data melody and all other stems are exactly the `integrate` stems.
 
 | File | What it is |
 |---|---|
@@ -26,9 +26,9 @@ A learned **mood texture** under the unchanged integrated arrangement: video fra
 | full mix, no mood (integrate) | 0.977 | 1.00 |
 | full mix + mood | 0.977 | 1.00 |
 | shuffled control mix, no mood | -0.877 | 0.92 |
-| shuffled control mix + mood | -0.873 | 0.92 |
+| shuffled control mix + mood | -0.877 | 0.92 |
 
-R² change from the mood: -0.000. Mood sits -14 dB under the melody's active RMS before the sidechain (ducked 2.2 dB on average).
+R² change from the mood: -0.0005. Mood sits -14 dB under the melody's active RMS before the sidechain (ducked 2.1 dB on average).
 
 ## Does the mood follow the picture?
 
@@ -49,25 +49,27 @@ Correlation of each data-linked anchor's weight with its data curve. *Vision onl
 
 ## Does the generated audio follow the weights?
 
-MusicCoCa audio embeddings of the raw mood (18 clips of 10 s, every 2 s) against the prompts' text embeddings: mean r over anchors between “clip ↔ prompt similarity” and the weight the model was given = 0.65 (same audio against time-reversed weights: -0.56). The closest prompt is the most-weighted prompt in 94% of clips (chance 17%).
+MusicCoCa audio embeddings of the raw mood (18 clips of 10 s, every 2 s) against the prompts' text embeddings: mean r over anchors between “clip ↔ prompt similarity” and the weight the model was given = 0.60 (same audio against time-reversed weights: -0.57). The closest prompt is the most-weighted prompt in 83% of clips (chance 17%).
 
 | Anchor | r | share of clips closest |
 |---|---|---|
-| city | 0.92 | 50% |
-| forest | 0.50 | 0% |
-| dark | 0.92 | 0% |
-| glow | -0.22 | 0% |
-| change | 0.82 | 33% |
-| solemn | 0.94 | 17% |
+| city | 0.91 | 56% |
+| forest | 0.31 | 0% |
+| dark | 0.68 | 0% |
+| glow | -0.05 | 0% |
+| change | 0.83 | 33% |
+| solemn | 0.93 | 11% |
 
 ## Key
 
 Notes conditioning: `key` (out-of-scale pitches and everything from one semitone under the lead's lowest note upward set OFF; harmony chord tones below that FREE). Chroma share on the track's scale: 0.75 (chance 0.58).
-Chroma cosine with the harmony stem per 2 s: 0.81 in place vs 0.60 averaged over the 11 transpositions; best shift 0 st; shift 0 best in 50% of segments → no systematic clash.
+Chroma cosine with the harmony stem per 2 s: 0.82 in place vs 0.55 averaged over the 11 transpositions; best shift 0 st; shift 0 best in 55% of segments → no systematic clash.
 
 ## Runtime
 
-mrt2_small on CPU: 309 s for 45 s of audio (411 s per audio minute, 0.15× real time), plus 19 s load/compile.
+mrt2_base on GPU: 68 s for 45 s of audio (91 s per audio minute, 0.66× real time), plus 33 s load/compile.
+Also rendered with `mrt2_base` (CPU): full-mix R² with mood 0.977, 3361 s per audio minute.
+Also rendered with `mrt2_small` (CPU): full-mix R² with mood 0.977, 411 s per audio minute.
 
 Reproduce:
 

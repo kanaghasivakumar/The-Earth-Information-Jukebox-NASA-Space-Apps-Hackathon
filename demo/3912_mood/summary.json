@@ -1,13 +1,13 @@
 {
  "id": "3912",
- "tag": "small",
+ "tag": "base",
  "generate": {
   "id": "3912",
-  "size": "mrt2_small",
-  "tag": "small",
-  "device": "cpu",
+  "size": "mrt2_base",
+  "tag": "base",
+  "device": "gpu",
   "devices": [
-   "cpu:0"
+   "cuda:0"
   ],
   "chunk_frames": 10,
   "chunk_s": 0.4,
@@ -35,34 +35,34 @@
    11
   ],
   "lead_low": 62,
-  "load_s": 20.6,
-  "gen_s": 464.0,
+  "load_s": 22.8,
+  "gen_s": 100.2,
   "audio_s": 68.0,
-  "gen_s_per_audio_min": 409.4,
-  "realtime_factor": 0.147
+  "gen_s_per_audio_min": 88.4,
+  "realtime_factor": 0.679
  },
  "mix": {
   "id": "3912",
-  "tag": "small",
-  "label": "small",
+  "tag": "base",
+  "label": "base",
   "mood_db_vs_melody": -14.0,
   "highpass_hz": 80.0,
   "ducking": {
    "margin_db": 8.0,
    "max_db": 9.0,
-   "mean_gr_db": 0.6377185583114624,
-   "share_of_time_ducked_over_1db": 0.18180372148859544
+   "mean_gr_db": 0.6724712252616882,
+   "share_of_time_ducked_over_1db": 0.2139905962384954
   },
-  "lufs_pre": -15.98321137628817,
-  "lufs_mix": -16.000000145708132,
+  "lufs_pre": -15.976237253251998,
+  "lufs_mix": -15.999999913522354,
   "limiter_gr_db": -0.0,
-  "norm_gain_db": -0.016788623711830538,
+  "norm_gain_db": -0.023762746748001874,
   "active_rms_db": {
-   "melody": -20.308878193111287,
-   "bands": -36.59331136525516,
-   "harmony": -34.0781113785974,
-   "geophony": -34.24996168421395,
-   "mood": -37.8218458128237
+   "melody": -20.315851634446854,
+   "bands": -36.60028515499056,
+   "harmony": -34.08508590814524,
+   "geophony": -34.25693532105922,
+   "mood": -38.19156100367535
   },
   "fidelity": {
    "mix_without_mood": {
@@ -75,9 +75,9 @@
    },
    "mix_with_mood": {
     "n": 43,
-    "r2": 0.9870419801719489,
-    "pearson_r": 0.9936384416856179,
-    "mae": 0.02333389949178783,
+    "r2": 0.9868605291103681,
+    "pearson_r": 0.99353165771487,
+    "mae": 0.023472956299424124,
     "pitch_within_half_semitone": 0.9767441860465116,
     "voiced": 1.0
    },
@@ -90,12 +90,12 @@
     "voiced": 1.0
    },
    "control_mix_with_mood": {
-    "n": 43,
-    "r2": -1.1536370840920127,
-    "pearson_r": -0.046138464177595255,
-    "mae": 0.276111708485472,
-    "pitch_within_half_semitone": 0.9534883720930233,
-    "voiced": 1.0
+    "n": 42,
+    "r2": -1.0737856779498074,
+    "pearson_r": -0.007524129556647344,
+    "mae": 0.2677659842597918,
+    "pitch_within_half_semitone": 1.0,
+    "voiced": 0.9767441860465116
    },
    "control_stem": {
     "n": 43,
@@ -107,28 +107,28 @@
    }
   },
   "series": "global mean SST",
-  "r2_drop": -0.0001744484390521217,
+  "r2_drop": 7.002622528617941e-06,
   "key_check": {
-   "scale_share": 0.6814315319061279,
+   "scale_share": 0.6679376363754272,
    "scale_share_chance": 0.5833333333333334,
    "mood_chroma_profile": [
-    0.07829999923706055,
-    0.1014999970793724,
-    0.08060000091791153,
-    0.05079999938607216,
-    0.06520000100135803,
-    0.05389999970793724,
-    0.07689999788999557,
-    0.10719999670982361,
-    0.06620000302791595,
-    0.11209999769926071,
-    0.06939999759197235,
-    0.1378999948501587
+    0.0771000012755394,
+    0.07479999959468842,
+    0.0786999985575676,
+    0.05559999868273735,
+    0.09189999848604202,
+    0.05959999933838844,
+    0.08820000290870667,
+    0.11540000140666962,
+    0.06960000097751617,
+    0.10350000113248825,
+    0.07010000199079514,
+    0.11550000309944153
    ],
-   "harmony_chroma_cos_shift0": 0.7858548962018069,
-   "harmony_chroma_cos_other_shifts_mean": 0.5421417191385586,
+   "harmony_chroma_cos_shift0": 0.769618363941417,
+   "harmony_chroma_cos_other_shifts_mean": 0.5719584121423608,
    "best_shift_semitones": 0,
-   "share_segments_shift0_best": 0.47058823529411764,
+   "share_segments_shift0_best": 0.4117647058823529,
    "segments": 34,
    "clash": false
   },
@@ -137,27 +137,27 @@
    "clip_s": 10.0,
    "hop_s": 2.0,
    "r_per_anchor": {
-    "deep": -0.16672330125482096,
-    "tropic": 0.6313604109173302,
-    "icy": 0.5210433200920284,
-    "flow": 0.0161582458639208,
-    "storm": 0.3326575680989092,
-    "solemn": 0.09058454534377555
+    "deep": 0.12578378925173872,
+    "tropic": 0.8793171822448328,
+    "icy": -0.2874864638936043,
+    "flow": 0.17026976385148138,
+    "storm": -0.02947748166379384,
+    "solemn": -0.4876467114171308
    },
-   "mean_r": 0.23751346484352387,
-   "top_prompt_agreement": 0.9666666666666667,
+   "mean_r": 0.06179334639558733,
+   "top_prompt_agreement": 1.0,
    "chance_agreement": 0.16666666666666666,
-   "mean_r_time_reversed_weights": -0.14083535978898962,
+   "mean_r_time_reversed_weights": 0.26555876945316226,
    "closest_prompt_share": {
-    "deep": 0.03333333333333333,
+    "deep": 0.0,
     "tropic": 0.0,
     "icy": 0.0,
-    "flow": 0.9666666666666667,
+    "flow": 1.0,
     "storm": 0.0,
     "solemn": 0.0
    }
   },
-  "fidelity_s": 22.3
+  "fidelity_s": 31.1
  },
  "weights": {
   "model": "google/siglip-base-patch16-224",
@@ -259,5 +259,78 @@
    }
   }
  },
- "other_renders": []
+ "other_renders": [
+  {
+   "tag": "small",
+   "size": "mrt2_small",
+   "device": "cpu",
+   "gen_s_per_audio_min": 409.4,
+   "fidelity": {
+    "mix_without_mood": {
+     "n": 43,
+     "r2": 0.9868675317328968,
+     "pearson_r": 0.9935322224703205,
+     "mae": 0.02347295629942404,
+     "pitch_within_half_semitone": 0.9767441860465116,
+     "voiced": 1.0
+    },
+    "mix_with_mood": {
+     "n": 43,
+     "r2": 0.9870419801719489,
+     "pearson_r": 0.9936384416856179,
+     "mae": 0.02333389949178783,
+     "pitch_within_half_semitone": 0.9767441860465116,
+     "voiced": 1.0
+    },
+    "control_mix_without_mood": {
+     "n": 43,
+     "r2": -1.0262225057737284,
+     "pearson_r": -0.005619583460293393,
+     "mae": 0.26800006137335886,
+     "pitch_within_half_semitone": 1.0,
+     "voiced": 1.0
+    },
+    "control_mix_with_mood": {
+     "n": 43,
+     "r2": -1.1536370840920127,
+     "pearson_r": -0.046138464177595255,
+     "mae": 0.276111708485472,
+     "pitch_within_half_semitone": 0.9534883720930233,
+     "voiced": 1.0
+    },
+    "control_stem": {
+     "n": 43,
+     "r2": -1.1079076356778073,
+     "pearson_r": -0.11680186175692446,
+     "mae": 0.2770154478425048,
+     "pitch_within_half_semitone": 0.9767441860465116,
+     "voiced": 1.0
+    }
+   },
+   "key_check": {
+    "scale_share": 0.6814315319061279,
+    "scale_share_chance": 0.5833333333333334,
+    "mood_chroma_profile": [
+     0.07829999923706055,
+     0.1014999970793724,
+     0.08060000091791153,
+     0.05079999938607216,
+     0.06520000100135803,
+     0.05389999970793724,
+     0.07689999788999557,
+     0.10719999670982361,
+     0.06620000302791595,
+     0.11209999769926071,
+     0.06939999759197235,
+     0.1378999948501587
+    ],
+    "harmony_chroma_cos_shift0": 0.7858548962018069,
+    "harmony_chroma_cos_other_shifts_mean": 0.5421417191385586,
+    "best_shift_semitones": 0,
+    "share_segments_shift0_best": 0.47058823529411764,
+    "segments": 34,
+    "clash": false
+   }
+  }
+ ]
 }

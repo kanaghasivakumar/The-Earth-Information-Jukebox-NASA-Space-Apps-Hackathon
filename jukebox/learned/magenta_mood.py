@@ -272,11 +272,11 @@ def mix_mood(tid: str, tag: str = "small", *, mood_db: float = -14.0, highpass_h
     g = ref * 10 ** (mood_db / 20) / max(A.active_rms(mood), 1e-9)
     mood = mood * np.float32(g)
     acc = sum(a for gname, a in stems.values() if gname in cfg.duck_groups)
-    duck = None
+    duck_info = None
     if cfg.duck_db is not None and duck:
         gd = A.duck_gain(mel, acc + mood, cfg.duck_db, cfg.duck_max_db)
         mood = mood * gd[:, None]
-        duck = {"margin_db": cfg.duck_db, "max_db": cfg.duck_max_db, "mean_gr_db": float(-20 * np.log10(np.mean(gd))),
+        duck_info = {"margin_db": cfg.duck_db, "max_db": cfg.duck_max_db, "mean_gr_db": float(-20 * np.log10(np.mean(gd))),
                 "share_of_time_ducked_over_1db": float(np.mean(gd < 10 ** (-1 / 20)))}
     pre_old = sum(a for _, a in stems.values())
     pre = pre_old + mood
@@ -314,7 +314,7 @@ def mix_mood(tid: str, tag: str = "small", *, mood_db: float = -14.0, highpass_h
         follow = style_follow(tid, tag, out)
     except Exception as e:  # pragma: no cover
         follow = {"error": f"{type(e).__name__}: {e}"[:300]}
-    rep = {"id": tid, "tag": tag, "label": label, "mood_db_vs_melody": mood_db, "highpass_hz": highpass_hz, "ducking": duck,
+    rep = {"id": tid, "tag": tag, "label": label, "mood_db_vs_melody": mood_db, "highpass_hz": highpass_hz, "ducking": duck_info,
            "lufs_pre": L0, "lufs_mix": A.lufs(mix), "limiter_gr_db": gr, "norm_gain_db": A.db(k),
            "active_rms_db": lv, "fidelity": f, "series": spec.label,
            "r2_drop": (f["mix_without_mood"]["r2"] - f["mix_with_mood"]["r2"]) if f["mix_with_mood"]["r2"] is not None else None,
@@ -342,7 +342,7 @@ def _plot(out, tid, label, mood, mix, notes, cfg):
     t = np.asarray(W["t"])
     w = np.asarray(W["weights"])
     ax[0].stackplot(t, w.T, labels=[a["music"] for a in W["anchors"]], alpha=0.85)
-    ax[0].legend(fontsize=7, ncol=3, loc="upper left"); ax[0].set_title(f"{tid}: style weights sent to Magenta RT ({tag})")
+    ax[0].legend(fontsize=7, ncol=3, loc="upper left"); ax[0].set_title(f"{tid}: style weights sent to Magenta RT ({label})")
     for a_, lab, ttl in ((mood, "mood", 1), (mix, "mix", 2)):
         f, tt, S = spectrogram(a_.mean(1), SR, nperseg=2048, noverlap=1024)
         sel = f < 4000
@@ -353,7 +353,7 @@ def _plot(out, tid, label, mood, mix, notes, cfg):
             hz = 440 * 2 ** ((n_.pitch - 69) / 12)
             ax[2].plot([n_.start, n_.end], [hz, hz], color="cyan", lw=1)
     ax[2].set_xlabel("s")
-    fig.tight_layout(); fig.savefig(out / f"mood_{tag}.png", dpi=80); plt.close(fig)
+    fig.tight_layout(); fig.savefig(out / f"mood_{label}.png", dpi=80); plt.close(fig)
 
 
 def main(argv=None):

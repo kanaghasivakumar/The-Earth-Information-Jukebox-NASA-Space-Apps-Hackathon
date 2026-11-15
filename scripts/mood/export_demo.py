@@ -17,7 +17,7 @@ OUT = ROOT / "outputs"
 DEMO = ROOT / "demo"
 TITLES = {"5209": "Zonal temperature anomalies 1880–2023", "5313": "Night lights 2012–2023",
           "3912": "Sea surface currents and temperature"}
-TAGS = ("base", "small")
+TAGS = ("base", "base-cpu", "small")
 
 
 def mp3(src: Path, dst: Path, kbps: int):
@@ -74,9 +74,9 @@ def readme(tid: str, R: dict, others: list[dict]) -> str:
                    ("control_mix_without_mood", "shuffled control mix, no mood"),
                    ("control_mix_with_mood", "shuffled control mix + mood")):
         lines.append(f"| {lab} | {f(fid[k].get('r2'))} | {f(fid[k].get('pitch_within_half_semitone'), 2)} |")
-    lines += ["", f"R² change from the mood: {f(-rep['r2_drop'] if rep['r2_drop'] is not None else None)}. "
-              f"Mood sits {rep['mood_db_vs_melody']:.0f} dB under the melody's active RMS before the sidechain "
-              f"(ducked {rep['ducking']['mean_gr_db']:.1f} dB on average).", "",
+    lines += ["", f"R² change from the mood: {f(-rep['r2_drop'] if rep['r2_drop'] is not None else None, 4)}. "
+              f"Mood sits {rep['mood_db_vs_melody']:.0f} dB under the melody's active RMS before the sidechain " +
+              (f"(ducked {rep['ducking']['mean_gr_db']:.1f} dB on average)." if rep.get("ducking") else "(no sidechain)."), "",
               "## Does the mood follow the picture?", "",
               "Correlation of each data-linked anchor's weight with its data curve. *Vision only* is SigLIP "
               "alone; *blended* is what was sent to the model (it includes the data curve, so it correlates by "

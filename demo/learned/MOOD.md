@@ -4,7 +4,7 @@
 without hurting it? This is the honest version of Magenta's "Space DJ" idea, where weighted text prompts steer a
 live music model. Here the weights come from the frames and the data curves, not from a DJ.
 
-**Short answer.** The layer is **safe**: the full-mix round trip does not move (ΔR² ≤ 0.0004 on all three
+**Short answer.** The layer is **safe**: the full-mix round trip does not move (|ΔR²| ≤ 0.0005 on all three
 pilots), the mood stays in the track's key, and Magenta RT follows the weights it is given.
 But the **vision half does not reliably track what the data shows**. SigLIP sees section changes and overall
 trends, not the story the data tells (for example, more light on the map). The mood follows the data only where
@@ -50,12 +50,18 @@ similarity to a prompt and that prompt's weight, with the same audio against tim
 
 | Track | Model (device) | Full-mix R² without mood | with mood | Control R² (mix + mood; no mood) | Weight–data r: anchor, vision only (detrended) / blended | Audio follows weights: mean r (reversed) | Gen. s per audio min | Key clash? |
 |---|---|---|---|---|---|---|---|---|
+| 5313 | mrt2_base (GPU) | 0.977 | 0.977 | −0.88; −0.88 | city↔anthrophony: −0.29 (−0.36) / −0.21 | 0.60 (−0.57) | 91 | no (scale share 0.75) |
+| 5313 | mrt2_base (CPU) | 0.977 | 0.977 | −0.88; −0.88 | city↔anthrophony: −0.29 (−0.36) / −0.21 | – (–) | 3361 | no (scale share 0.74) |
 | 5313 | mrt2_small (CPU) | 0.977 | 0.977 | −0.87; −0.88 | city↔anthrophony: −0.29 (−0.36) / −0.21 | 0.65 (−0.56) | 411 | no (scale share 0.75) |
-| 3912 | mrt2_small (CPU) | 0.987 | 0.987 | −1.15; −1.03 | tropic↔global SST: 0.12 (−0.31) / 0.86 | 0.24 (−0.14) | 409 | no (scale share 0.68) |
+| 3912 | mrt2_base (GPU) | 0.987 | 0.987 | −1.07; −1.03 | tropic↔warm: 0.12 (−0.31) / 0.86 | 0.06 (0.27) | 88 | no (scale share 0.67) |
+| 3912 | mrt2_small (CPU) | 0.987 | 0.987 | −1.15; −1.03 | tropic↔warm: 0.12 (−0.31) / 0.86 | 0.24 (−0.14) | 409 | no (scale share 0.68) |
+| 5209 | mrt2_base (GPU) | 0.966 | 0.966 | −0.44; −0.55 | warm↔anomaly: 0.77 (0.14) / 0.87 | 0.11 (−0.15) | 91 | no (scale share 0.78) |
 | 5209 | mrt2_small (CPU) | 0.966 | 0.966 | −0.63; −0.55 | warm↔anomaly: 0.77 (0.14) / 0.87 | 0.17 (−0.08) | 346 | no (scale share 0.77) |
 
-`mood_table.md` is the same table written by `export_demo.py`. It gains base-model rows when the GPU job (or
-the CPU base run) finishes; see "Pending" below. Per-track detail is in `demo/<id>_mood/README.md`.
+`mood_table.md` is the same table written by `export_demo.py`. The demo MP3s use the base model on GPU,
+and per-track detail is in `demo/<id>_mood/README.md`. The CPU base run (5313) predates the audio-follows check.
+All rows were mixed with the sidechain. A first mix of the GPU renders ran without it, because of a variable-shadowing bug that is now fixed. That mix
+still scored 0.976 / 0.987 / 0.966 at −14 dB, so at this level the sidechain is not what saves the lead.
 
 ### Does the mood track the visuals?
 
@@ -78,12 +84,13 @@ the CPU base run) finishes; see "Pending" below. Per-track detail is in `demo/<i
 ### Does Magenta RT obey the weights and the key?
 
 - **Weights: yes, when they move.** In 5313 the generated audio's MusicCoCa similarity follows the weights
-  (mean r 0.65, against −0.56 for reversed weights). The most-weighted prompt is the closest prompt in
-  94 % of clips (chance 17 %). In 3912 and 5209 the weights hardly move, so the r values are small (0.24, 0.17).
+  (mean r 0.65 small / 0.60 base, against −0.56 / −0.57 for reversed weights). The most-weighted prompt is the closest
+  prompt in 94 % / 83 % of clips (chance 17 %). In 3912 and 5209 the weights hardly move, so the r values are small and not
+  distinguishable from the reversed control (3912 base: 0.06 against 0.27 reversed).
 - **Key: yes, with notes conditioning.** With the 128-pitch notes input (out-of-scale pitches and the lead
   register OFF, harmony chord tones FREE), the mood's chroma matches the harmony stem better in place than at
-  any of the 11 transpositions: cos 0.79–0.81 against 0.50–0.60. Its chroma share on the track's scale is
-  0.68–0.77 (chance 0.58). Ablation (3912) without notes gives cos 0.64 against 0.60, a best shift of 10 semitones and a scale share of
+  any of the 11 transpositions: cos 0.77–0.84 against 0.50–0.60, for both models on all three tracks. Its chroma
+  share on the track's scale is 0.67–0.78 (chance 0.58). Ablation (3912) without notes gives cos 0.64 against 0.60, a best shift of 10 semitones and a scale share of
   0.61, so it barely beats chance.
 
 ### What protects the lead (3912 stress test, small model)
@@ -107,8 +114,12 @@ For comparison, the integrate mix measures 0.987 (no mood).
 | Model | Device | s per audio minute | Real-time factor |
 |---|---|---|---|
 | mrt2_small (230 M) | CPU, 8 cores (Quest `short`) | 346–411 | 0.15–0.17× |
-| mrt2_base (2.4 B) | CPU, 8 cores | about 4,500 (5313: 757 s for the first 10 s) | about 0.013× |
-| mrt2_base (2.4 B) | GPU (gengpu) | pending | pending |
+| mrt2_base (2.4 B) | CPU, 8 cores (5313 only) | 3,361 | 0.018× |
+| mrt2_base (2.4 B) | GPU, 1× H100 80 GB (gengpu) | 88–91 | 0.66–0.68× |
+
+All three base renders, plus mixes and fidelity, took 7 min of GPU time in total (job 8750140). The per-call
+overhead of 0.4 s chunks is included. Longer chunks or the MLX/C++ streaming path would be faster, but
+the GPU run is not real time as used here.
 
 ## Caveats
 
@@ -123,12 +134,10 @@ For comparison, the integrate mix measures 0.987 (no mood).
 - Magenta RT 2 adds about 2 s of pre-roll (discarded) and changes style at 0.4 s chunk boundaries. It was
   trained with style changes about every 8 s, so faster weight changes may be smoothed by the model.
 
-## Pending
+## Jobs
 
-- GPU job **8745305** (`scripts/mood/gpu_base.sbatch`, `-A e32706 -p gengpu`, base model, all three pilots)
-  was still queued at the time of writing; its estimated start was 2026-11-15 07:12. When it finishes, run
-  `python scripts/mood/export_demo.py`. The demo folders switch to the base render, and `mood_table.md` gains the
-  base rows.
+- GPU job 8745305 failed after 21 s: it started at once, before the base checkpoint had finished downloading.
+  It was resubmitted as **8750140** and COMPLETED (H100, 7 min). Nothing is queued.
 
 ## Credits slide: licences
 
