@@ -86,15 +86,19 @@ def render_basic_wav(piano_roll, duration, output, *, sample_rate=44100, seed=0,
                     mix[lo:hi,0]+=voice*(1-pan); mix[lo:hi,1]+=voice*(1+pan)
                 peak=max(peak,float(np.max(np.abs(mix),initial=0)))
                 mix.tofile(temp)
-        finally: pass
+        except BaseException:
+            tmp.unlink(missing_ok=True); raise
     # Two-pass peak normalization keeps working memory bounded to one second.
-    gain=min(8.,.95/max(peak,1e-8))
-    with wave.open(str(output),'wb') as wav:
-        wav.setnchannels(2); wav.setsampwidth(2); wav.setframerate(sample_rate)
-        with tmp.open('rb') as src:
-            remaining=total
-            while remaining:
-                frames=min(chunk_size,remaining); data=np.fromfile(src,dtype=np.float32,count=frames*2).reshape(-1,2)
-                pcm=np.clip(data*gain,-.98,.98); wav.writeframesraw(np.rint(pcm*32767).astype('<i2').tobytes()); remaining-=frames
+    try:
+        gain=min(8.,.95/max(peak,1e-8))
+        with wave.open(str(output),'wb') as wav:
+            wav.setnchannels(2); wav.setsampwidth(2); wav.setframerate(sample_rate)
+            with tmp.open('rb') as src:
+                remaining=total
+                while remaining:
+                    frames=min(chunk_size,remaining); data=np.fromfile(src,dtype=np.float32,count=frames*2).reshape(-1,2)
+                    pcm=np.clip(data*gain,-.98,.98); wav.writeframesraw(np.rint(pcm*32767).astype('<i2').tobytes()); remaining-=frames
+    except BaseException:
+        tmp.unlink(missing_ok=True); raise
     tmp.unlink(missing_ok=True)
     return {'sample_rate':sample_rate,'channels':2,'frames':total,'peak':min(.98,peak*gain),'renderer':'basic'}

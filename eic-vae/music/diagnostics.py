@@ -51,8 +51,8 @@ def composition_metrics(
     velocities = [int(note[3]) for note in notes]
     duration = max(float(duration), 1e-9)
     schedule = list(memory_schedule or [])
-    repetitions = sum(bool(_event_value(event, 'is_return', False)) or
-                      int(_event_value(event, 'reuse_count', 0) or 0) > 0 for event in schedule)
+    repetitions = sum(int(_event_value(event, 'reuse_count', 0) or 0) > 0 for event in schedule)
+    region_returns = sum(bool(_event_value(event, 'is_return', False)) for event in schedule)
     variations = sum(bool(_event_value(event, 'is_variation', False)) for event in schedule)
     labels = np.asarray(cluster_labels if cluster_labels is not None else [], dtype=int)
     transitions = int(np.count_nonzero(labels[1:] != labels[:-1])) if len(labels) > 1 else 0
@@ -80,6 +80,7 @@ def composition_metrics(
         'rhythmic_density_notes_per_second': len(notes) / duration,
         'average_note_velocity': float(np.mean(velocities)) if velocities else 0.0,
         'motif_repetitions': int(repetitions),
+        'cluster_motif_returns': int(region_returns),
         'motif_variations': int(variations),
         'cluster_transitions': transitions,
         'music_energy_vs_latent_movement_correlation': movement_correlation,
@@ -96,7 +97,7 @@ def write_style_comparison(rows, output_path) -> Path:
         'style', 'total_note_count', 'average_note_duration_seconds',
         'pitch_min', 'pitch_max', 'pitch_range_semitones',
         'rhythmic_density_notes_per_second', 'average_note_velocity',
-        'motif_repetitions', 'motif_variations', 'cluster_transitions',
+        'motif_repetitions', 'cluster_motif_returns', 'motif_variations', 'cluster_transitions',
         'music_energy_vs_latent_movement_correlation', 'percussion_vs_optical_flow_correlation',
     ]
     with path.open('w', newline='', encoding='utf-8') as stream:
@@ -231,7 +232,7 @@ def save_memory_plot(
         x1 = int(np.clip(max(x1, x0 + 2), timeline_left + 1, timeline_right))
         color = _PALETTE[cluster % len(_PALETTE)]
         draw.rectangle((x0, motif_y0 + 1, x1, motif_y1 - 1), fill=color)
-        if bool(_event_value(event, 'is_return', False)) or int(_event_value(event, 'reuse_count', 0) or 0) > 0:
+        if bool(_event_value(event, 'is_return', False)):
             draw.text((x0 + 1, motif_y0 + 7), 'R', fill='white')
 
     draw.text((70, 850), f'Video time: {time_lo:.2f}–{time_hi:.2f} seconds', fill=(70, 70, 70))
