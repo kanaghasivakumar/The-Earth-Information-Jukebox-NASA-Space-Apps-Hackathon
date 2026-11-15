@@ -1,0 +1,90 @@
+{
+ "id": "3912",
+ "duration_s": 66.5,
+ "versions": [
+  {
+   "id": "mix",
+   "label": "Deterministic mix",
+   "kind": "deterministic",
+   "file": "mix.mp3",
+   "line": "The data melody and bands (FluidSynth), model-written harmony and the three recorded Earth voices. The reference.",
+   "fidelity": {
+    "r2": 0.9869,
+    "within_half_semitone": 0.977,
+    "control_r2": -1.0262,
+    "control_kind": "full mix, lead shuffled",
+    "note": "Measured on the full mix."
+   }
+  },
+  {
+   "id": "mcl_a",
+   "label": "MuseControlLite, mode A",
+   "kind": "learned",
+   "file": "versions/mcl_A.mp3",
+   "line": "Generated audio alone: Stable Audio Open with MuseControlLite adapters, steered by the data melody, dynamics and rhythm.",
+   "fidelity": {
+    "r2": 0.9851,
+    "within_half_semitone": 1.0,
+    "control_r2": -1.1176,
+    "control_kind": "generated from the shuffled lead",
+    "note": "Measured on the generated audio alone."
+   }
+  },
+  {
+   "id": "mcl_b_augment",
+   "label": "MuseControlLite, mode B (augment)",
+   "kind": "learned",
+   "file": "versions/mcl_B_augment.mp3",
+   "line": "Every current stem plus the generated audio as a bed, 13 dB under the data melody.",
+   "fidelity": {
+    "r2": 0.9869,
+    "within_half_semitone": 1.0,
+    "control_r2": -1.0284,
+    "control_kind": "shuffled lead through the whole pipeline",
+    "note": "Measured on the full mix."
+   }
+  },
+  {
+   "id": "mcl_b_replace",
+   "label": "MuseControlLite, mode B (replace)",
+   "kind": "learned",
+   "file": "versions/mcl_B_replace.mp3",
+   "line": "Data melody, bands and events plus the generated bed, which replaces the model harmony and recorded voices.",
+   "fidelity": {
+    "r2": 0.9867,
+    "within_half_semitone": 1.0,
+    "control_r2": -1.1111,
+    "control_kind": "shuffled lead through the whole pipeline",
+    "note": "Measured on the full mix."
+   }
+  },
+  {
+   "id": "mood",
+   "label": "Mood layer (Magenta RT 2)",
+   "kind": "learned",
+   "file": "versions/mood_mix.mp3",
+   "line": "The deterministic mix plus a texture from Magenta RealTime 2, steered by SigLIP frame weights and the data curves, 14 dB under the melody.",
+   "fidelity": {
+    "r2": 0.9869,
+    "within_half_semitone": 0.977,
+    "control_r2": -1.0738,
+    "control_kind": "full mix + mood, lead shuffled",
+    "note": "Measured on the full mix."
+   }
+  },
+  {
+   "id": "control",
+   "label": "Shuffled control",
+   "kind": "control",
+   "file": "mix_control.mp3",
+   "line": "The same arrangement with the melody's notes shuffled in time. It should sound like music but no longer follow the data.",
+   "fidelity": {
+    "r2": -1.0262,
+    "within_half_semitone": null,
+    "control_r2": null,
+    "control_kind": null,
+    "note": "R\u00b2 of the shuffled melody against the real data."
+   }
+  }
+ ]
+}

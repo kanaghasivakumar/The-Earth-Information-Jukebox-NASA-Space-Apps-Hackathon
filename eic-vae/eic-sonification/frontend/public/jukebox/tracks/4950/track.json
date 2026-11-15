@@ -1,0 +1,208 @@
+{
+ "id": "4950",
+ "title": "GEDI Forest Height",
+ "svs_url": "https://svs.gsfc.nasa.gov/4950/",
+ "video_url": "https://svs.gsfc.nasa.gov/vis/a000000/a004900/a004950/GEDI_global_w_colorbar_1080p60.mp4",
+ "duration_s": 51.5,
+ "units": "m (canopy height)",
+ "description": "Forest canopy height measured by the GEDI lidar on the International Space Station, shown on a globe that turns once. The flute melody follows the average height of the visible forest: it climbs when the Amazon, Congo and Southeast Asian rainforests face you and rests over open ocean. A forest chorus swells with how much tall forest is in view.",
+ "legend": [
+  {
+   "voice": "melody_canopy",
+   "meaning": "mean canopy height of visible vegetation, A3 = 14.0 m, A5 = 24.0 m"
+  },
+  {
+   "voice": "bands",
+   "meaning": "same mean for the upper, middle and lower third of the globe, 0-30 m over 2 octaves"
+  },
+  {
+   "voice": "biophony",
+   "meaning": "control: canopy height x forest cover in view"
+  },
+  {
+   "voice": "geophony",
+   "meaning": "control: share of the visible globe that is ocean"
+  },
+  {
+   "voice": "brightness",
+   "meaning": "control: share of vegetation taller than 25 m"
+  },
+  {
+   "voice": "anthrophony",
+   "meaning": "silent: not measured by this dataset"
+  },
+  {
+   "voice": "harmony and bass (model)",
+   "meaning": "written by the Anticipatory Music Transformer around the data melody; it never changes a data note and carries no data"
+  }
+ ],
+ "fidelity": {
+  "r2": 0.9828219797593877,
+  "pearson_r": 0.99152823496525,
+  "mae": 0.330242555740359,
+  "n": 49,
+  "control_r2": -1.2550297031469002,
+  "mix_r2": 0.9828182460811602,
+  "pitch_within_half_semitone": 1.0,
+  "mix_pitch_within_half_semitone": 1.0,
+  "method": "note-level register-bounded pyin on the final rendered audio",
+  "series": "mean canopy height",
+  "detail": {
+   "mean canopy height": {
+    "voices": [
+     "melody canopy"
+    ],
+    "final_stem": {
+     "n": 49,
+     "r2": 0.9828219797593877,
+     "pearson_r": 0.99152823496525,
+     "mae": 0.330242555740359,
+     "pitch_within_half_semitone": 1.0,
+     "voiced": 1.0
+    },
+    "before_stem": {
+     "n": 49,
+     "r2": 0.980844486590527,
+     "pearson_r": 0.9906098273220212,
+     "mae": 0.35315978078086685,
+     "pitch_within_half_semitone": 1.0,
+     "voiced": 1.0
+    },
+    "final_mix": {
+     "n": 49,
+     "r2": 0.9828182460811602,
+     "pearson_r": 0.9915620764199552,
+     "mae": 0.33066397184240665,
+     "pitch_within_half_semitone": 1.0,
+     "voiced": 1.0
+    },
+    "control_stem": {
+     "n": 49,
+     "r2": -1.2550297031469002,
+     "pearson_r": -0.13030171822547484,
+     "mae": 3.2387914441008485,
+     "pitch_within_half_semitone": 0.9183673469387755,
+     "voiced": 1.0
+    }
+   }
+  }
+ },
+ "data_source": {
+  "music": "pixel inversion of the SVS movie with the SVS 0-50 m colorbar",
+  "colorbar_url": "https://svs.gsfc.nasa.gov/vis/a000000/a004900/a004950/GEDI_colorbar_0to50_01_print.jpg",
+  "underlying": "GEDI L2B RH100, Apr 2019 - Apr 2020"
+ },
+ "voice_groups": {
+  "band lower third": "bands",
+  "band middle third": "bands",
+  "band upper third": "bands",
+  "bass": "harmony",
+  "harmony": "harmony",
+  "melody canopy": "melody"
+ },
+ "lead_voices": [
+  "melody canopy"
+ ],
+ "lead_voice": "melody canopy",
+ "pitch_map": {
+  "vmin": 14.04835629378576,
+  "vmax": 23.960063013927975,
+  "low": 57,
+  "span": 24,
+  "root": 9,
+  "scale": "major_pent",
+  "polarity": 1
+ },
+ "fidelity_builder": {
+  "r2": 0.9818,
+  "pearson_r": 0.9913,
+  "mae": 0.2938,
+  "control_r2": -1.3245
+ },
+ "arrangement": {
+  "engine": "FluidSynth + FluidR3_GM (MIT)",
+  "instruments": {
+   "band lower third": "warm pad",
+   "band middle third": "warm pad",
+   "band upper third": "warm pad",
+   "melody canopy": "flute"
+  },
+  "harmony": {
+   "model": "stanford-crfm/music-medium-800k",
+   "seed": 0,
+   "notes": {
+    "harmony": 57,
+    "bass": 57
+   }
+  },
+  "form": null,
+  "voices": [
+   {
+    "group": "geophony",
+    "curve": "geophony",
+    "sources": [
+     "ocean",
+     "water",
+     "wind"
+    ],
+    "tune_mix": 0.4,
+    "mean_level": 0.6386145631067961
+   },
+   {
+    "group": "biophony",
+    "curve": "biophony",
+    "sources": [
+     "birds",
+     "insects",
+     "frogs"
+    ],
+    "tune_mix": 0.2,
+    "mean_level": 0.6420140776699029
+   }
+  ],
+  "loudness_lufs": -16.0,
+  "notes": ""
+ },
+ "stems": [
+  {
+   "name": "melody",
+   "file": "melody.mp3",
+   "group": "melody",
+   "label": "Data melody"
+  },
+  {
+   "name": "bands",
+   "file": "bands.mp3",
+   "group": "bands",
+   "label": "Bands (data)"
+  },
+  {
+   "name": "harmony",
+   "file": "harmony.mp3",
+   "group": "harmony",
+   "label": "Harmony and bass (model-written)"
+  },
+  {
+   "name": "geophony",
+   "file": "geophony.mp3",
+   "group": "geophony",
+   "label": "Geophony (recorded Earth sounds)"
+  },
+  {
+   "name": "biophony",
+   "file": "biophony.mp3",
+   "group": "biophony",
+   "label": "Biophony (recorded living sounds)"
+  }
+ ],
+ "mix": "mix.mp3",
+ "control": {
+  "file": "control_shuffled.mp3",
+  "replaces": "melody",
+  "label": "Same lead notes, shuffled in time (same arrangement)"
+ },
+ "timeline": "timeline.json",
+ "controls": "controls.json",
+ "voice": "biophony",
+ "summary": "Forest canopy height from the GEDI lidar as the globe turns; a forest chorus swells over the rainforests. Biophony."
+}

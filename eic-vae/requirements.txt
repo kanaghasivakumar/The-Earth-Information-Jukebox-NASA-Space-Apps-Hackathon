@@ -1,3 +1,4 @@
+# pip users: `pip install -r eic-vae/requirements.txt`. uv users should prefer the root pyproject.toml (`uv sync`).
 torch
 numpy
 opencv-python-headless
@@ -8,3 +9,8 @@ tqdm
 pretty_midi
 scikit-learn
 PyYAML
+pydantic>=2.7.0
+google-genai>=1.0.0
+fastapi>=0.163.0
+uvicorn[standard]>=0.54.0
+python-multipart>=0.0.33

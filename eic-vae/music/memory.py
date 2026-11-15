@@ -89,7 +89,9 @@ class LatentMemory:
         if not np.isfinite(min_dwell) or min_dwell<0 or not np.isfinite(hysteresis) or hysteresis<0: raise ValueError('dwell and hysteresis must be finite and nonnegative')
         self.timestamps=t.copy(); self.requested_clusters=int(n_clusters)
         self.mean_=z.mean(axis=0); raw_scale=z.std(axis=0); self.scale_=np.where(raw_scale<1e-12,1.,raw_scale)
-        normalized=(z-self.mean_)/self.scale_
+        relative_span=np.ptp(z,axis=0)/np.maximum(1.,np.max(np.abs(z),axis=0))
+        near_constant=bool(np.max(relative_span,initial=0.)<=1e-8)
+        normalized=np.zeros_like(z) if near_constant else (z-self.mean_)/self.scale_
         unique=np.unique(normalized,axis=0); k=min(int(n_clusters),len(unique),len(z)); self.n_clusters=k
         centers,labels=_kmeans(normalized,k,self.seed)
         self.centers=centers*self.scale_+self.mean_; self.labels_raw=labels
@@ -121,23 +123,31 @@ class LatentMemory:
         if not 0<=int(cluster_id)<self.n_clusters: raise IndexError(f'unknown cluster id {cluster_id}')
         return self.clusters[int(cluster_id)].motif
 
-    def replay(self, cluster_id: int, *, variation_strength: float=0., seed: int|None=None, scale_length: int=7) -> Motif:
+    def replay(self, cluster_id: int, *, variation_strength: float=0., seed: int|None=None, scale_length: int=7, max_transposition_steps: int=1) -> Motif:
         """Replay exactly at strength zero, or add bounded scale-safe variation.
 
-        Variations shift by at most one scale degree, move events by at most 0.12
-        beats, adjust duration by at most 12%, and alter velocity gently.
+        Variation applies one shared transposition to preserve the motif contour.
+        At most 20% of notes receive an additional one-step pitch/rhythm/duration/
+        velocity edit; beat displacement is bounded to 0.12 beats.
         """
         if not np.isfinite(variation_strength) or not 0<=variation_strength<=1: raise ValueError('variation_strength must be in [0,1]')
         if int(scale_length)!=scale_length or scale_length<1: raise ValueError('scale_length must be a positive integer')
+        if int(max_transposition_steps)!=max_transposition_steps or max_transposition_steps<0: raise ValueError('max_transposition_steps must be a nonnegative integer')
         motif=self.motif_for(cluster_id)
         if variation_strength==0: return motif
-        rng=np.random.default_rng(self.seed if seed is None else seed); amount=float(variation_strength); result=[]
-        for note in motif.notes:
-            shift=int(rng.choice([-1,0,1])) if rng.random()<amount else 0
-            beat_offset=max(0.,note.beat_offset+float(rng.uniform(-.12,.12))*amount)
-            duration=max(.05,note.duration_beats*(1+float(rng.uniform(-.12,.12))*amount))
-            velocity=int(np.clip(round(note.velocity+rng.uniform(-7,7)*amount),1,127))
-            result.append(MotifNote((note.scale_degree+shift)%int(scale_length),beat_offset,duration,velocity))
+        rng=np.random.default_rng(self.seed if seed is None else seed); amount=float(variation_strength)
+        shared_shift=(int(rng.choice([-1,1]))*int(max_transposition_steps)) if max_transposition_steps and rng.random()<amount else 0
+        local_count=min(len(motif.notes),int(round(len(motif.notes)*.2*amount)))
+        local_indices=set(map(int,rng.choice(len(motif.notes),size=local_count,replace=False))) if local_count else set()
+        result=[]
+        for i,note in enumerate(motif.notes):
+            local_shift=int(rng.choice([-1,1])) if i in local_indices else 0
+            if i in local_indices:
+                beat_offset=max(0.,note.beat_offset+float(rng.uniform(-.12,.12))*amount)
+                duration=max(.05,note.duration_beats*(1+float(rng.uniform(-.12,.12))*amount))
+                velocity=int(np.clip(round(note.velocity+rng.uniform(-7,7)*amount),1,127))
+            else: beat_offset,duration,velocity=note.beat_offset,note.duration_beats,note.velocity
+            result.append(MotifNote((note.scale_degree+shared_shift+local_shift)%int(scale_length),beat_offset,duration,velocity))
         result.sort(key=lambda n:n.beat_offset)
         return Motif(tuple(result),name=f'{motif.name}-variation')
 

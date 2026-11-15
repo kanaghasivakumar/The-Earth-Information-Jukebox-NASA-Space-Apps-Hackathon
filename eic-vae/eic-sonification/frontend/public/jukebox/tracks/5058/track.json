@@ -1,0 +1,219 @@
+{
+ "id": "5058",
+ "title": "Florida Nighttime Lights Before and After Hurricane Ian",
+ "svs_url": "https://svs.gsfc.nasa.gov/5058",
+ "video_url": "https://svs.gsfc.nasa.gov/vis/a000000/a005000/a005058/black_marble_slide_line4.mp4",
+ "duration_s": 15.0,
+ "units": "relative night light (less .. more), no numeric scale",
+ "description": "Night lights of southwest Florida on August 30, 2022 and on September 30, after Hurricane Ian. A slider line wipes the 'after' picture across the map; as it passes, each strip of the coast plays a falling run as its lights go out. About 63 percent of the light on the map is gone, most around Fort Myers and Naples, so the city hum fades and frogs and insects take over until the line slides back.",
+ "legend": [
+  {
+   "voice": "trumpet runs (city)",
+   "meaning": "each strip of the map as the line crosses it: falling = lights lost (bigger fall = more lost), rising when the before picture returns; pan = position"
+  },
+  {
+   "voice": "pad (drone)",
+   "meaning": "total light on screen; lower = darker"
+  },
+  {
+   "voice": "traffic hum (anthrophony)",
+   "meaning": "light currently on screen relative to before the storm"
+  },
+  {
+   "voice": "frogs and insects (biophony)",
+   "meaning": "louder as the city goes dark"
+  },
+  {
+   "voice": "wind and rain (geophony)",
+   "meaning": "share of the screen showing the after-storm picture"
+  },
+  {
+   "voice": "harmony and bass (model)",
+   "meaning": "written by the Anticipatory Music Transformer around the data melody; it never changes a data note and carries no data"
+  }
+ ],
+ "fidelity": {
+  "r2": 0.9875264540815177,
+  "pearson_r": 0.9939745403356979,
+  "mae": 0.0812574454835383,
+  "n": 20,
+  "control_r2": -0.2888807381920515,
+  "mix_r2": 0.9876551169987725,
+  "pitch_within_half_semitone": 1.0,
+  "mix_pitch_within_half_semitone": 1.0,
+  "method": "note-level register-bounded pyin on the final rendered audio",
+  "series": "city light runs",
+  "detail": {
+   "city light runs": {
+    "voices": [
+     "city"
+    ],
+    "final_stem": {
+     "n": 20,
+     "r2": 0.9875264540815177,
+     "pearson_r": 0.9939745403356979,
+     "mae": 0.0812574454835383,
+     "pitch_within_half_semitone": 1.0,
+     "voiced": 1.0
+    },
+    "before_stem": {
+     "n": 20,
+     "r2": -0.347966700171225,
+     "pearson_r": 0.44593087814980653,
+     "mae": 0.5767731736688233,
+     "pitch_within_half_semitone": 0.7,
+     "voiced": 1.0
+    },
+    "final_mix": {
+     "n": 20,
+     "r2": 0.9876551169987725,
+     "pearson_r": 0.993998181981655,
+     "mae": 0.08061790381687167,
+     "pitch_within_half_semitone": 1.0,
+     "voiced": 1.0
+    },
+    "control_stem": {
+     "n": 20,
+     "r2": -0.2888807381920515,
+     "pearson_r": 0.36326358345939447,
+     "mae": 0.7648468315092971,
+     "pitch_within_half_semitone": 1.0,
+     "voiced": 1.0
+    }
+   }
+  }
+ },
+ "data_source": {
+  "kind": "pixels",
+  "movie": "https://svs.gsfc.nasa.gov/vis/a000000/a005000/a005058/black_marble_slide_line4.mp4",
+  "underlying": "NASA Black Marble (VIIRS) nightly radiance, 2022-08-30 vs 2022-09-30",
+  "scale": "relative: sequential colormap without numbers, inverted from the burned-in colorbar"
+ },
+ "voice_groups": {
+  "bass": "harmony",
+  "city": "melody",
+  "drone": "bands",
+  "harmony": "harmony"
+ },
+ "lead_voices": [
+  "city"
+ ],
+ "lead_voice": "city",
+ "pitch_map": {
+  "vmin": 0.0,
+  "vmax": 3.0698,
+  "low": 55,
+  "span": 24,
+  "root": 7,
+  "scale": "major_pent",
+  "polarity": 1
+ },
+ "fidelity_builder": {
+  "city_runs": {
+   "interval_vs_log_light_ratio_r": 0.6334131507522361,
+   "falls_on_wipe_out": 0.8,
+   "n": 10,
+   "stem": "city"
+  },
+  "line_tracked_frames": 351
+ },
+ "arrangement": {
+  "engine": "FluidSynth + FluidR3_GM (MIT)",
+  "instruments": {
+   "city": "GM 56",
+   "drone": "warm pad"
+  },
+  "harmony": {
+   "model": "stanford-crfm/music-medium-800k",
+   "seed": 0,
+   "notes": {
+    "harmony": 86,
+    "bass": 27
+   }
+  },
+  "form": null,
+  "voices": [
+   {
+    "group": "anthrophony",
+    "curve": "anthrophony",
+    "sources": [
+     "traffic",
+     "city",
+     "hum"
+    ],
+    "tune_mix": 0.1,
+    "mean_level": 0.6849296666666667
+   },
+   {
+    "group": "biophony",
+    "curve": "biophony",
+    "sources": [
+     "frogs",
+     "insects"
+    ],
+    "tune_mix": 0.05,
+    "mean_level": 0.5224726666666667
+   },
+   {
+    "group": "geophony",
+    "curve": "geophony",
+    "sources": [
+     "wind",
+     "rain"
+    ],
+    "tune_mix": 0.1,
+    "mean_level": 0.3329166666666667
+   }
+  ],
+  "loudness_lufs": -18.2,
+  "notes": "lead is a trumpet, not a flute: the 0.12 s city notes are too short for the flute attack (note-level pitch recovery 60 % flute vs 100 % trumpet, solo stem)"
+ },
+ "stems": [
+  {
+   "name": "melody",
+   "file": "melody.mp3",
+   "group": "melody",
+   "label": "Data melody"
+  },
+  {
+   "name": "bands",
+   "file": "bands.mp3",
+   "group": "bands",
+   "label": "Bands (data)"
+  },
+  {
+   "name": "harmony",
+   "file": "harmony.mp3",
+   "group": "harmony",
+   "label": "Harmony and bass (model-written)"
+  },
+  {
+   "name": "geophony",
+   "file": "geophony.mp3",
+   "group": "geophony",
+   "label": "Geophony (recorded Earth sounds)"
+  },
+  {
+   "name": "anthrophony",
+   "file": "anthrophony.mp3",
+   "group": "anthrophony",
+   "label": "Anthrophony (recorded human sounds)"
+  },
+  {
+   "name": "biophony",
+   "file": "biophony.mp3",
+   "group": "biophony",
+   "label": "Biophony (recorded living sounds)"
+  }
+ ],
+ "mix": "mix.mp3",
+ "control": {
+  "file": "control_shuffled.mp3",
+  "replaces": "melody",
+  "label": "Same lead notes, shuffled in time (same arrangement)"
+ },
+ "timeline": "timeline.json",
+ "controls": "controls.json",
+ "voice": "anthrophony",
+ "summary": "Southwest Florida's lights before and after Hurricane Ian: the city hum fades and frogs and insects take over."
+}

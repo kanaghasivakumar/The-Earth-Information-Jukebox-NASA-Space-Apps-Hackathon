@@ -17,10 +17,17 @@ def _midi_event_times(raw):
     ticks=[]; pos=14
     for _ in range(struct.unpack('>H',raw[10:12])[0]):
         size=struct.unpack('>I',raw[pos+4:pos+8])[0]; data=raw[pos+8:pos+8+size]; pos+=8+size
-        i=0; tick=0
+        i=0; tick=0; running_status=None
         while i<len(data):
             delta,i=_vlq(data,i); tick+=delta; ticks.append(tick)
-            status=data[i]; i+=1
+            status=data[i]
+            if status & 0x80:
+                i+=1
+                if status < 0xf0: running_status=status
+            elif running_status is not None:
+                status=running_status
+            else:
+                raise AssertionError('MIDI running status used before a channel status')
             if status==0xff:
                 meta=data[i]; i+=1; length,i=_vlq(data,i)
                 if meta==0x2f:break
@@ -83,7 +90,8 @@ def test_static_activity_suppresses_events_and_target_duration_clips(tmp_path):
     assert all(note[1] <= 3.7 for track in result['piano_roll'] for note in track)
     assert all(event[0] < 3.7 for event in result['piano_roll'][0])
     assert len(result['piano_roll'][4])>0
-    assert max(_midi_event_times((tmp_path/'clip.mid').read_bytes())) <= round(3.7*90*8)
+    # PrettyMIDI rounds timestamps to integer ticks; allow one tick at the clip boundary.
+    assert max(_midi_event_times((tmp_path/'clip.mid').read_bytes())) <= round(3.7*90*8)+1
 
 def test_fallback_uses_tempo_for_tick_conversion(tmp_path, monkeypatch):
     import sys
@@ -193,3 +201,13 @@ def test_static_score_plots_write_feature_and_empty_piano_roll(tmp_path):
     save_plots(features,np.zeros((len(t),2)),tmp_path,score['piano_roll'],score['musical_features'])
     assert (tmp_path/'earth_jukebox_features.png').is_file()
     assert (tmp_path/'earth_jukebox_piano_roll.png').is_file()
+
+
+def test_render_failure_leaves_no_scratch_file(tmp_path, monkeypatch):
+    import music.render as render
+    def boom(*a, **k): raise OSError('disk full')
+    monkeypatch.setattr(render.wave, 'open', boom)
+    score=[[(0,.18,69,100)],[(0,.2,60,75)],[(0,.16,64,75)],[(0,.2,36,90)],[(.05,.13,36,110)]]
+    with pytest.raises(OSError):
+        render_basic_wav(score,.25,tmp_path/'a.wav',sample_rate=44100,seed=11)
+    assert list(tmp_path.glob('earth-jukebox-*.f32'))==[]

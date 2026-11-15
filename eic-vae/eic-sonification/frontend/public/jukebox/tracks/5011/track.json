@@ -1,0 +1,205 @@
+{
+ "id": "5011",
+ "title": "Lightning Events Detected from the International Space Station (ISS) 2017-2023",
+ "svs_url": "https://svs.gsfc.nasa.gov/5011",
+ "video_url": "https://svs.gsfc.nasa.gov/vis/a000000/a005000/a005011/iss_lightning_sos_yearly_07312023_2048p60.mp4",
+ "duration_s": 100.033,
+ "units": "flashes (counts); latitude in degrees",
+ "description": "Lightning seen by the ISS Lightning Imaging Sensor from January 2017 to July 2023, drawn as yellow dots on a flat world map; we detected about 2.0 million new dots. Each drum hit is a cluster of new flashes: it is panned to where the storms are (west left, east right) and pitched by latitude, higher drums for northern storms. The flute line follows the average latitude of the storms, rising every northern summer and falling every southern summer, and the thunder rumble swells with the number of flashes.",
+ "legend": [
+  {
+   "voice": "toms (events)",
+   "meaning": "new lightning flashes; pan = longitude, drum pitch = latitude (higher = further north), loudness = flash brightness x count"
+  },
+  {
+   "voice": "flute (melody)",
+   "meaning": "average latitude of new flashes; higher = storm belt further north"
+  },
+  {
+   "voice": "thunder (geophony)",
+   "meaning": "number of flashes per second"
+  },
+  {
+   "voice": "night insects (biophony)",
+   "meaning": "constant background bed, not data-driven in this track"
+  }
+ ],
+ "fidelity": {
+  "r2": 0.9837769005241578,
+  "pearson_r": 0.992309185737694,
+  "mae": 1.2992275155036122,
+  "n": 104,
+  "control_r2": -1.0326802821094274,
+  "mix_r2": 0.9832701650588708,
+  "pitch_within_half_semitone": 1.0,
+  "mix_pitch_within_half_semitone": 1.0,
+  "method": "note-level register-bounded pyin on the final rendered audio",
+  "series": "storm-belt latitude",
+  "detail": {
+   "storm-belt latitude": {
+    "voices": [
+     "storm-belt latitude"
+    ],
+    "final_stem": {
+     "n": 104,
+     "r2": 0.9837769005241578,
+     "pearson_r": 0.992309185737694,
+     "mae": 1.2992275155036122,
+     "pitch_within_half_semitone": 1.0,
+     "voiced": 1.0
+    },
+    "before_stem": {
+     "n": 104,
+     "r2": 0.9838620496200918,
+     "pearson_r": 0.9924167332253508,
+     "mae": 1.3057291263558406,
+     "pitch_within_half_semitone": 1.0,
+     "voiced": 1.0
+    },
+    "final_mix": {
+     "n": 104,
+     "r2": 0.9832701650588708,
+     "pearson_r": 0.9923969926560012,
+     "mae": 1.3209276005524029,
+     "pitch_within_half_semitone": 1.0,
+     "voiced": 1.0
+    },
+    "control_stem": {
+     "n": 104,
+     "r2": -1.0326802821094274,
+     "pearson_r": -0.028929803262257255,
+     "mae": 13.376462415538786,
+     "pitch_within_half_semitone": 0.9711538461538461,
+     "voiced": 1.0
+    }
+   }
+  }
+ },
+ "data_source": {
+  "kind": "pixels",
+  "movie": "https://svs.gsfc.nasa.gov/vis/a000000/a005000/a005011/iss_lightning_sos_yearly_07312023_2048p60.mp4",
+  "underlying": "ISS LIS quality-controlled science data V1 (GHRC DAAC)",
+  "projection": "equirectangular, lon -180..180, lat 90..-90 (Science On a Sphere)",
+  "calendar": "movie time -> date by fitting the annual NH/SH flash cycle; see report.calendar"
+ },
+ "calendar": {
+  "t_ref": 16.16666666666666,
+  "ref_date": "2017-08-01",
+  "sec_per_year": 11.799999999999997,
+  "clamp": [
+   "2017-01-01",
+   "2023-07-31"
+  ],
+  "date_of_t": "ref_date + (t - t_ref) / sec_per_year years, clamped"
+ },
+ "voice_groups": {
+  "flashes": "events",
+  "storm-belt latitude": "melody"
+ },
+ "lead_voices": [
+  "storm-belt latitude"
+ ],
+ "lead_voice": "storm-belt latitude",
+ "pitch_map": {
+  "vmin": -14.995286112218643,
+  "vmax": 37.5572519384631,
+  "low": 57,
+  "span": 24,
+  "root": 9,
+  "scale": "minor_pent",
+  "polarity": 1
+ },
+ "fidelity_builder": {
+  "melody_latitude": {
+   "real": {
+    "n": 198,
+    "r2": 0.9880413102853929,
+    "pearson_r": 0.9942503114574649,
+    "mae": 1.3678428978176098
+   },
+   "shuffled_control": {
+    "n": 198,
+    "r2": -1.0531500205173994,
+    "pearson_r": 0.15803324831674753,
+    "mae": 17.337097310111208
+   },
+   "stem": "latitude"
+  },
+  "hits_vs_flash_density_r": 0.8299741985848176,
+  "pan_vs_longitude_r": 0.9999999990377899
+ },
+ "arrangement": {
+  "engine": "FluidSynth + FluidR3_GM (MIT)",
+  "instruments": {
+   "storm-belt latitude": "flute"
+  },
+  "harmony": null,
+  "form": null,
+  "voices": [
+   {
+    "group": "geophony",
+    "kind": "events",
+    "voice": "flashes",
+    "hits": 378
+   },
+   {
+    "group": "geophony",
+    "curve": "geophony",
+    "sources": [
+     "rain",
+     "wind"
+    ],
+    "tune_mix": 0.3,
+    "mean_level": 0.5498532467532468
+   },
+   {
+    "group": "biophony",
+    "curve": "biophony",
+    "sources": [
+     "insects"
+    ],
+    "tune_mix": 0.2,
+    "mean_level": 0.14999999999999997
+   }
+  ],
+  "loudness_lufs": -16.0,
+  "notes": "no model harmony: percussive track; thunder = render_events at every flash-cluster hit"
+ },
+ "stems": [
+  {
+   "name": "melody",
+   "file": "melody.mp3",
+   "group": "melody",
+   "label": "Data melody"
+  },
+  {
+   "name": "events",
+   "file": "events.mp3",
+   "group": "events",
+   "label": "Events (data)"
+  },
+  {
+   "name": "geophony",
+   "file": "geophony.mp3",
+   "group": "geophony",
+   "label": "Geophony (recorded Earth sounds)"
+  },
+  {
+   "name": "biophony",
+   "file": "biophony.mp3",
+   "group": "biophony",
+   "label": "Biophony (recorded living sounds)"
+  }
+ ],
+ "mix": "mix.mp3",
+ "control": {
+  "file": "control_shuffled.mp3",
+  "replaces": "melody",
+  "label": "Same lead notes, shuffled in time (same arrangement)"
+ },
+ "timeline": "timeline.json",
+ "controls": "controls.json",
+ "voice": "geophony",
+ "summary": "Six years of lightning seen from the ISS: drums where the storms are, thunder at every burst, a flute for the storm belt's latitude.",
+ "caveat": "Flashes keep appearing for about 11.6 s after the movie time that maps to the page's end date (31 July 2023); spoken dates there are held at that end date."
+}

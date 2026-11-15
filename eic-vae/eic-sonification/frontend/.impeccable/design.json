@@ -1,0 +1,136 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-14T00:00:00Z",
+  "title": "Design System: Earth Jukebox",
+  "extensions": {
+    "colorMeta": {
+      "pen-vermilion": { "role": "primary", "displayName": "Pen Vermilion", "canonical": "#ff6b4a", "tonalRamp": ["#3a1209", "#5e1f12", "#8a2e1b", "#b84028", "#e2573a", "#ff6b4a", "#ff9275", "#ffd2c5"] },
+      "deep": { "role": "neutral", "displayName": "Deep Ink Blue", "canonical": "#0b1520", "tonalRamp": ["#05090e", "#0b1520", "#12202f", "#1d3247", "#32506b", "#587792", "#93aec4", "#d3e0ea"] },
+      "ground-2": { "role": "neutral", "displayName": "Lifted Ink Blue", "canonical": "#12202f", "tonalRamp": ["#070d14", "#0b1520", "#12202f", "#1d3247", "#32506b", "#587792", "#93aec4", "#d3e0ea"] },
+      "ink": { "role": "neutral", "displayName": "Chart Ink", "canonical": "#e8eef2", "tonalRamp": ["#2a3238", "#444f57", "#5f6c76", "#7d8b95", "#9eabb4", "#bcc7ce", "#d6dee3", "#e8eef2"] },
+      "group-a": { "role": "tertiary", "displayName": "Group A Sky", "canonical": "#7cc4ff", "tonalRamp": ["#0a2540", "#103d69", "#195d9a", "#2d82cc", "#52a5ee", "#7cc4ff", "#aedaff", "#dcefff"] },
+      "group-b": { "role": "tertiary", "displayName": "Group B Amber", "canonical": "#ffb454", "tonalRamp": ["#3d2506", "#69400b", "#975d12", "#c97d1d", "#f09d35", "#ffb454", "#ffcf8a", "#ffe9c7"] },
+      "group-c": { "role": "tertiary", "displayName": "Group C Lilac", "canonical": "#b79cff", "tonalRamp": ["#251a4d", "#3d2e82", "#5b49b5", "#7e6cdc", "#9d88f5", "#b79cff", "#d0bfff", "#ebe3ff"] },
+      "group-d": { "role": "tertiary", "displayName": "Group D Sage", "canonical": "#7fd1ae", "tonalRamp": ["#0c2e20", "#145037", "#1f7552", "#33996f", "#58b98d", "#7fd1ae", "#aee3cb", "#d9f3e7"] }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display", "purpose": "The Listen heading." },
+      "headline": { "displayName": "Headline", "purpose": "Section headings for How it works, Accessibility, Upload." },
+      "title": { "displayName": "Title", "purpose": "Style names, step titles, pipeline column heads." },
+      "body": { "displayName": "Body", "purpose": "Reading text at Ink 2, capped 52-72ch." },
+      "label": { "displayName": "Label", "purpose": "The uppercase Play button label." },
+      "numeral": { "displayName": "Numeral", "purpose": "JetBrains Mono for playhead tag, axis, durations, key hints and pipeline values." },
+      "clock": { "displayName": "Clock", "purpose": "Elapsed time leading the transport row." }
+    },
+    "shadows": [
+      { "name": "frame", "value": "0 0 0 1px rgb(255 255 255 / 0.16), 0 24px 48px -12px rgb(0 0 20 / 0.7), 0 6px 14px rgb(0 0 20 / 0.4)", "purpose": "Footage frame only." },
+      { "name": "panel-lift", "value": "0 18px 40px -16px rgb(0 0 30 / 0.7)", "purpose": "Timeline panel only." },
+      { "name": "row-lift", "value": "0 10px 24px -8px rgb(0 0 30 / 0.6)", "purpose": "Selected style row only." }
+    ],
+    "motion": [
+      { "name": "ease-ui", "value": "0.15s ease-out", "purpose": "Hover and active transitions on buttons, rows, drop zone." },
+      { "name": "ease-dim", "value": "0.2s ease-out", "purpose": "Group block and pipeline frame opacity." },
+      { "name": "ease-progress", "value": "0.4s ease-out", "purpose": "Upload progress bar width." },
+      { "name": "ease-settle", "value": "0.6s cubic-bezier(0.16, 1, 0.3, 1)", "purpose": "Pipeline bars and dots." },
+      { "name": "reduced-motion", "value": "transition: none; animation: none", "purpose": "All motion disabled under prefers-reduced-motion." }
+    ],
+    "breakpoints": [
+      { "name": "mobile-max", "value": "719px" },
+      { "name": "lanes-two-column", "value": "720px" },
+      { "name": "pipeline-five-part", "value": "900px" },
+      { "name": "stage-two-column", "value": "980px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Play Button",
+      "kind": "button",
+      "refersTo": "button-play",
+      "description": "The one vermilion action; large transport control.",
+      "html": "<button class=\"ds-play\">Play</button>",
+      "css": ".ds-play { min-height: 56px; min-width: 148px; padding: 0 28px; background: #ff6b4a; color: #1a0905; border: 0; border-radius: 6px; font: 800 1.125rem/1 Figtree, system-ui, sans-serif; letter-spacing: 0.02em; text-transform: uppercase; cursor: pointer; transition: background-color 0.15s ease-out, transform 0.15s ease-out; } .ds-play:hover { background: #ff9275; } .ds-play:active { transform: translateY(1px); } .ds-play:focus-visible { outline: 3px solid #ff6b4a; outline-offset: 3px; border-radius: 2px; }"
+    },
+    {
+      "name": "Skip Button",
+      "kind": "button",
+      "refersTo": "button-skip",
+      "description": "Secondary transport button with a hairline border.",
+      "html": "<button class=\"ds-skip\">Back 15s</button>",
+      "css": ".ds-skip { min-height: 56px; min-width: 56px; padding: 0 14px; background: transparent; color: #e8eef2; border: 2px solid rgb(200 220 235 / 0.16); border-radius: 6px; font: 500 0.95rem Figtree, system-ui, sans-serif; cursor: pointer; transition: border-color 0.15s ease-out, background-color 0.15s ease-out; } .ds-skip:hover { border-color: #e8eef2; background: rgb(255 255 255 / 0.08); } .ds-skip:focus-visible { outline: 3px solid #ff6b4a; outline-offset: 3px; }"
+    },
+    {
+      "name": "Style Row",
+      "kind": "custom",
+      "refersTo": "style-row",
+      "description": "Single-choice row with an icon tile; selected is a quiet tint with a vermilion icon tile.",
+      "html": "<div class=\"ds-styles\"><button class=\"ds-style\" aria-checked=\"true\"><span class=\"ds-icon\">&#9835;</span><span class=\"ds-name\">Ambient</span><span class=\"ds-meta\">2:10</span><span class=\"ds-line\">Slow and wide</span></button><button class=\"ds-style\" aria-checked=\"false\"><span class=\"ds-icon\">&#9835;</span><span class=\"ds-name\">Jazz</span><span class=\"ds-meta\">2:10</span><span class=\"ds-line\">Loose and warm</span></button></div>",
+      "css": ".ds-styles { display: flex; flex-direction: column; gap: 8px; background: #0b1520; padding: 12px; } .ds-style { display: grid; grid-template-columns: 44px 1fr auto; grid-template-areas: 'icon name meta' 'icon line key'; column-gap: 14px; align-items: baseline; text-align: left; width: 100%; min-height: 62px; padding: 10px 14px 10px 12px; background: rgb(200 220 235 / 0.05); color: #e8eef2; border: 1px solid rgb(200 220 235 / 0.16); border-radius: 6px; font-family: Figtree, system-ui, sans-serif; cursor: pointer; transition: background-color 0.15s ease-out; } .ds-style:hover { background: rgb(255 255 255 / 0.12); border-color: rgb(255 255 255 / 0.4); } .ds-style[aria-checked='true'] { background: rgb(200 220 235 / 0.12); border-color: #e8eef2; } .ds-icon { grid-area: icon; align-self: center; width: 44px; height: 44px; display: inline-flex; align-items: center; justify-content: center; border-radius: 6px; background: rgb(255 255 255 / 0.12); } .ds-style[aria-checked='true'] .ds-icon { background: #ff6b4a; color: #1a0905; } .ds-name { grid-area: name; font-size: 1.2rem; font-weight: 800; } .ds-meta { grid-area: meta; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 0.8rem; color: rgb(232 238 242 / 0.64); } .ds-line { grid-area: line; font-size: 0.95rem; color: rgb(232 238 242 / 0.8); } .ds-style:focus-visible { outline: 3px solid #ff6b4a; outline-offset: -3px; }"
+    },
+    {
+      "name": "Timeline Lane on Chart Paper",
+      "kind": "custom",
+      "refersTo": "group-chip",
+      "description": "Lettered pattern-group blocks over a ruled lane, with the vermilion playhead and played loudness fill.",
+      "html": "<div class=\"ds-panel\"><div class=\"ds-lane\"><span class=\"ds-g ds-a\">A</span><span class=\"ds-g ds-b\">B</span><span class=\"ds-g ds-c\">C</span><span class=\"ds-g ds-d\">D</span></div><div class=\"ds-lane ds-paper\"><i class=\"ds-played\"></i><i class=\"ds-head\"><b>0:54</b></i></div></div>",
+      "css": ".ds-panel { position: relative; padding: 28px 24px 16px; border: 1px solid rgb(200 220 235 / 0.16); border-radius: 8px; background: rgb(200 220 235 / 0.05); } .ds-lane { position: relative; display: flex; height: 40px; border-radius: 4px; overflow: hidden; margin-bottom: 12px; } .ds-g { flex: 1; display: flex; align-items: center; justify-content: center; color: #05080b; font: 800 0.95rem Figtree, system-ui, sans-serif; border-right: 1px solid #0b1520; } .ds-a { background: #7cc4ff; } .ds-b { background: #ffb454; } .ds-c { background: #b79cff; } .ds-d { background: #7fd1ae; } .ds-paper { height: 52px; overflow: visible; background-color: rgb(0 0 0 / 0.3); background-image: linear-gradient(rgb(124 196 255 / 0.1) 1px, transparent 1px), linear-gradient(90deg, rgb(124 196 255 / 0.1) 1px, transparent 1px), linear-gradient(rgb(124 196 255 / 0.04) 1px, transparent 1px), linear-gradient(90deg, rgb(124 196 255 / 0.04) 1px, transparent 1px); background-size: 50px 52px, 50px 52px, 10px 13px, 10px 13px; } .ds-played { position: absolute; left: 0; top: 30%; bottom: 0; width: 42%; background: rgb(255 107 74 / 0.85); } .ds-head { position: absolute; left: 42%; top: -6px; bottom: -6px; width: 2px; margin-left: -1px; background: #ff6b4a; } .ds-head b { position: absolute; top: -26px; left: 50%; transform: translateX(-50%); padding: 1px 7px; background: #ff6b4a; color: #0b1520; font: 500 0.78rem 'JetBrains Mono', ui-monospace, monospace; border-radius: 2px; white-space: nowrap; }"
+    },
+    {
+      "name": "Pipeline Chip Button",
+      "kind": "chip",
+      "refersTo": "chip-button",
+      "description": "Style picker in the pipeline walkthrough bar (selected currently fills white; flagged as drift).",
+      "html": "<button class=\"ds-chip\" aria-checked=\"false\">Jazz</button>",
+      "css": ".ds-chip { min-height: 44px; padding: 0 14px; border: 1px solid rgb(200 220 235 / 0.16); border-radius: 6px; background: transparent; color: #e8eef2; font: 600 0.92rem Figtree, system-ui, sans-serif; cursor: pointer; transition: background-color 0.15s ease-out, border-color 0.15s ease-out; } .ds-chip:hover { border-color: rgb(232 238 242 / 0.64); } .ds-chip:focus-visible { outline: 3px solid #ff6b4a; outline-offset: 3px; }"
+    },
+    {
+      "name": "Panel",
+      "kind": "card",
+      "refersTo": "panel",
+      "description": "Translucent blue-grey panel with hairline border; hosts on-screen, now, upload and pipeline content.",
+      "html": "<div class=\"ds-card\"><p>Now playing group B</p></div>",
+      "css": ".ds-card { padding: 20px 22px; border: 1px solid rgb(200 220 235 / 0.16); border-radius: 8px; background: rgb(200 220 235 / 0.05); color: rgb(232 238 242 / 0.8); font-family: Figtree, system-ui, sans-serif; } .ds-card p { margin: 0; }"
+    },
+    {
+      "name": "Check Chip",
+      "kind": "chip",
+      "refersTo": "button-ghost",
+      "description": "Selectable upload option with a native vermilion checkbox.",
+      "html": "<label class=\"ds-check\"><input type=\"checkbox\" checked> Ambient</label>",
+      "css": ".ds-check { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 14px 0 10px; border: 1px solid #e8eef2; border-radius: 4px; background: rgb(255 255 255 / 0.1); color: #e8eef2; font-family: Figtree, system-ui, sans-serif; cursor: pointer; } .ds-check input { width: 20px; height: 20px; accent-color: #ff6b4a; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Chart Recorder",
+    "overview": "One synchronized instrument: footage, score and one shared timeline move together like a strip chart being drawn. The ground is ink-blue, near black at the page edge and a little lifted at the top. A single vermilion is the pen: it draws the played part of the loudness curve, the playhead and the Play button, and nothing else carries that colour. Four cool-to-warm pattern-group hues colour the data, always with a letter.\n\nThe recorder's ruled chart paper appears in exactly one place, behind the timeline lanes. Everywhere else the surface is quiet: translucent blue-grey panels, hairline rules, and large plain type. No glass, no starfield, no glow.\n\nDensity is moderate and predictable: large hit targets (56px transport, 44px minimum elsewhere), copy capped near 52-72ch, a two-column stage (480px footage column, fluid control column) that collapses to a single ordered column under 980px. Accessibility is the stated purpose: 3px vermilion focus rings, a letter on every group colour, reduced-motion support.",
+    "keyCharacteristics": [
+      "Ink-blue gradient ground (#12202f to #0b1520 over 760px), pale blue-grey ink, one vermilion pen.",
+      "Panels 8px, buttons and rows 6px, chips 4px; soft tonal panels, hairline rules.",
+      "Figtree for everything spoken, JetBrains Mono for every numeral.",
+      "Four group hues, each paired with A-D; chart-paper grid only under timeline lanes."
+    ],
+    "rules": [
+      { "name": "The One Pen Rule", "body": "Vermilion marks what plays, what has been played, what has focus and what progresses. Selection of a choice is not action: it is a quiet tint.", "section": "colors" },
+      { "name": "The Letter Beside Color Rule", "body": "A group hue never appears without its letter (A-D); colour is never the only cue.", "section": "colors" },
+      { "name": "The Mono Is Numbers Rule", "body": "JetBrains Mono carries timecodes, durations, step numerals and key hints; never prose.", "section": "typography" },
+      { "name": "The Paper Under The Lanes Rule", "body": "Ruled grid belongs to the timeline lanes and nowhere else; the group-blocks lane stays clear of it.", "section": "elevation" },
+      { "name": "The Hairline Before Shadow Rule", "body": "Separate surfaces with a Rule border or a Well first; a shadow is allowed only on the three surfaces named above.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do reserve vermilion for play, played, playhead, focus and progress.",
+      "Do pair every group colour with its letter and give it dark ink on bright fills.",
+      "Do mark selection with a quiet blue-grey tint and Ink border.",
+      "Do keep hit targets at 44px or more (56px transport).",
+      "Do use 3px vermilion focus rings with 3px offset (inset on the style list).",
+      "Do set every number in JetBrains Mono, tabular.",
+      "Do disable transitions and animation under `prefers-reduced-motion`."
+    ],
+    "donts": [
+      "Don't add a second action colour, glass, glow or a starfield image.",
+      "Don't put chart-paper ruling on the page ground or panels; it is for timeline lanes only.",
+      "Don't fill a selected choice with white or vermilion; vermilion is not selection.",
+      "Don't use radii beyond 8px or below the role-based set above.",
+      "Don't set prose in JetBrains Mono.",
+      "Don't port this look into `/lab`."
+    ]
+  }
+}
