@@ -13,7 +13,7 @@ the web jukebox (`web/tracks/<id>/`), in this story order:
 | 4 | **5011** Lightning from the ISS 2017–2023 | Tom hits are panned to where the storms are, with a thunderclap behind each hit, rain and wind, and a flute line. There is no model harmony because the track is percussive. | Hit pan is longitude and drum pitch is latitude. The flute is the storm belt's mean latitude: it rises every northern summer. | Flute in the full mix: R² 0.983 (shuffled −1.03). Hits vs flash density r 0.83 (builder). |
 | 5 | **4950** GEDI forest height | A flute with three soft band pads, strings and bass, an ocean bed, and a forest chorus. | Pitch is the mean canopy height of the forest facing you, and loudness is how much of the view is vegetated. The chorus swells over tall forest and the ocean grows over open sea. | Full mix R² 0.983 (shuffled −1.26). |
 | 6 | **5669** GEOS aerosols (still image) | A west-to-east sweep with one instrument per aerosol type: double bass for sea salt, clarinet for dust, oboe for sulfate and harp for smoke. Wind and surf, city hum and birds sit underneath. There is no lead and no harmony. | Loudness is how much of a longitude column holds that aerosol, and pitch is its latitude. Listen for Saharan dust and African smoke. | On each type's own stem, 100 % of solo notes come back on the written pitch (dust R² 0.974, sulfate R² 0.79). R² for latitude is limited by the 9° pitch steps. |
-| 7 | **5058** Florida lights after Hurricane Ian | Trumpet runs fall as the "after" picture wipes across the coast, over a pad, sparse strings and bass, traffic, frogs and insects. | Each run is one strip of the map, and a bigger fall means more light was lost (about 63 % of the light is lost overall). City hum fades and frogs take over. | Trumpet stem: R² 0.988 for the light value (the old synth stem scored −0.35). Full mix: R² 0.69, with 90 % of notes on the right pitch. This is the weakest mix, see below. |
+| 7 | **5058** Florida lights after Hurricane Ian | Trumpet runs fall as the "after" picture wipes across the coast, over a pad, sparse strings and bass, traffic, frogs and insects. | Each run is one strip of the map, and a bigger fall means more light was lost (about 63 % of the light is lost overall). City hum fades and frogs take over. | Trumpet stem: R² 0.988 for the light value (the old synth stem scored −0.35). Full mix: R² 0.988, all 20 notes on the right pitch (v1 was 0.69; see below). |
 | 8 | **5176** SST anomaly, 2024–2026 (daily) | A flute over six band pads, strings and bass, and ocean recordings. | Pitch is the global ocean's departure from normal (higher means warmer than normal). | Full mix R² 0.979 (shuffled −1.26). |
 
 ## How the fidelity numbers are measured
@@ -33,7 +33,7 @@ same arrangement with the lead's pitches permuted in time, scored against the re
 | 5011 | 0.988 | 0.984 | 0.984 | 0.983 | −1.03 |
 | 4950 | 0.982 | 0.981 | 0.983 | 0.983 | −1.26 |
 | 5669 dust / sulfate / sea salt / smoke (pitch hit rate) | 0.97 / 0.89 / n=4 / −1.32 | 87 / 36 / 50 / 100 % | 100 / 100 / 100 / 100 % | not measured (4 voices at once) | none |
-| 5058 | interval r 0.63 | −0.35 | 0.988 | 0.688 | −0.29 |
+| 5058 | interval r 0.63 | −0.35 | 0.988 | 0.988 | −0.29 |
 | 5176 | 0.978 | 0.979 | 0.979 | 0.979 | −1.26 |
 
 Mix decisions that the numbers forced:
@@ -42,13 +42,13 @@ Mix decisions that the numbers forced:
 - **5058** uses a trumpet because its 0.12 s notes are shorter than the flute's attack (flute 60 % of notes, trumpet 100 %).
 - **Harmony** is AMT strings plus a bass line. It stays under the lowest lead note, uses the lead's own key (`infer_key` would read a D-major-pentatonic lead as A major), and sits 13 dB down.
 - **Bands** sit 15 dB under the melody's active RMS, and the voices 10–11 dB under (scaled by each curve's peak).
-- A **sidechain** keeps the accompaniment 8 dB (5058: 10 dB) under the sounding lead and ducks it by 9 dB at most. One gain curve is used for all of these groups, so anthrophony against biophony keeps its balance. Event hits (data) are never ducked. Before the sidechain, the 4950 mix scored R² −0.10 and the 5058 mix −0.71.
+- A **sidechain** keeps the accompaniment 8 dB (5058: 10 dB) under the sounding lead and ducks it by 9 dB at most (5058: 14 dB under, up to 14 dB). One gain curve is used for all of these groups, so anthrophony against biophony keeps its balance. Event hits (data) are never ducked. Before the sidechain, the 4950 mix scored R² −0.10 and the 5058 mix −0.71.
 
 ## Caveats
 
 - **Nothing here has been listened to.** The balance was judged from per-group RMS, the round trip and
   spectrograms (`outputs/<id>/arrange.png`), not by ear.
-- **5058 full mix** is the weakest result. 2 of its 20 short notes are lost under the drone and city hum (R² 0.69).
+- **5058 full mix** was the weakest result (2 of 20 short notes lost under the drone and city hum, R² 0.69). Fixed by pulling the beds and strings 4–7 dB further down, ducking up to 14 dB, and making the beds mostly unpitched (tune_mix 0.05–0.1), so the tuned noise no longer competes with the trumpet: now R² 0.988, 20/20 notes. It plays at −18.2 LUFS, about 2 dB quieter than the other tracks, because the trumpet's peaks cap the normalisation.
   The trumpet stem alone recovers all 20.
 - **5669 R²** values are small or negative even when every note is on pitch. Each pitch step covers about 9° of
   latitude, and the solo notes of a type often span only a few steps. Sea salt has only 4 solo notes.

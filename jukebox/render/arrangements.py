@@ -197,12 +197,16 @@ def _5669(out):
 
 def _5058(out):
     return Arrangement(
-        id="5058", lead_voices=("city",), programs={"city": 56, "drone": 89}, gains_db={"bands": -17.0},
-        harmony={}, harmony_max_per_s=1.5,
-        duck_db=10.0,   # 0.12 s trumpet notes over a drone and city hum: keep the bed a bit further down
-        beds=[Bed("anthrophony", sources=("traffic", "city", "hum"), tune_mix=0.3, width=0.5),
-              Bed("biophony", sources=("frogs", "insects"), tune_mix=0.2, width=0.8),
-              Bed("geophony", sources=("wind", "rain"), tune_mix=0.3, width=0.7)],
+        id="5058", lead_voices=("city",), programs={"city": 56, "drone": 89},
+        # v1 lost 2 of 20 trumpet notes in the full mix (R² 0.69): beds sat only 10-11 dB under the lead,
+        # ducking was capped at 9 dB, and chord-tuned beds carried pitch that competed with the lead.
+        # Pull every accompaniment group further down, duck harder, and keep the beds mostly unpitched.
+        gains_db={"bands": -20.0, "harmony": -17.0, "anthrophony": -15.0, "biophony": -17.0, "geophony": -18.0},
+        harmony={}, harmony_max_per_s=1.0,
+        duck_db=14.0, duck_max_db=14.0,
+        beds=[Bed("anthrophony", sources=("traffic", "city", "hum"), tune_mix=0.1, width=0.5),
+              Bed("biophony", sources=("frogs", "insects"), tune_mix=0.05, width=0.8),
+              Bed("geophony", sources=("wind", "rain"), tune_mix=0.1, width=0.7)],
         # ian_lights.py: PitchMap(0, log-light max, low=55, span=24, G major pent); vmax refit from the
         # timeline (reproduces all 20 city pitches)
         fidelity=[FidSpec(("city",), {"vmin": 0.0, "vmax": 3.0698, "low": 55, "span": 24, "root": 7,

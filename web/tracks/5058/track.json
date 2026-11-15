@@ -38,9 +38,9 @@
   "mae": 0.0812574454835383,
   "n": 20,
   "control_r2": -0.2888807381920515,
-  "mix_r2": 0.688231450944603,
+  "mix_r2": 0.9876551169987725,
   "pitch_within_half_semitone": 1.0,
-  "mix_pitch_within_half_semitone": 0.9,
+  "mix_pitch_within_half_semitone": 1.0,
   "method": "note-level register-bounded pyin on the final rendered audio",
   "series": "city light runs",
   "detail": {
@@ -66,10 +66,10 @@
     },
     "final_mix": {
      "n": 20,
-     "r2": 0.688231450944603,
-     "pearson_r": 0.8779217019403381,
-     "mae": 0.21669629752103034,
-     "pitch_within_half_semitone": 0.9,
+     "r2": 0.9876551169987725,
+     "pearson_r": 0.993998181981655,
+     "mae": 0.08061790381687167,
+     "pitch_within_half_semitone": 1.0,
      "voiced": 1.0
     },
     "control_stem": {
@@ -141,7 +141,7 @@
      "city",
      "hum"
     ],
-    "tune_mix": 0.3,
+    "tune_mix": 0.1,
     "mean_level": 0.6849296666666667
    },
    {
@@ -151,7 +151,7 @@
      "frogs",
      "insects"
     ],
-    "tune_mix": 0.2,
+    "tune_mix": 0.05,
     "mean_level": 0.5224726666666667
    },
    {
@@ -161,11 +161,11 @@
      "wind",
      "rain"
     ],
-    "tune_mix": 0.3,
+    "tune_mix": 0.1,
     "mean_level": 0.3329166666666667
    }
   ],
-  "loudness_lufs": -17.1,
+  "loudness_lufs": -18.2,
   "notes": "lead is a trumpet, not a flute: the 0.12 s city notes are too short for the flute attack (note-level pitch recovery 60 % flute vs 100 % trumpet, solo stem)"
  },
  "stems": [

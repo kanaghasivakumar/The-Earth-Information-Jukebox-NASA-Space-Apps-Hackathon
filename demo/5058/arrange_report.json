@@ -42,11 +42,11 @@
     "harmony": 86
    }
   },
-  "cached": false,
+  "cached": true,
   "thinned": {
    "before": 113,
-   "after": 64,
-   "max_per_s": 1.5
+   "after": 42,
+   "max_per_s": 1.0
   }
  },
  "tune_to": {
@@ -62,7 +62,7 @@
     "city",
     "hum"
    ],
-   "tune_mix": 0.3,
+   "tune_mix": 0.1,
    "mean_level": 0.6849296666666667
   },
   {
@@ -72,7 +72,7 @@
     "frogs",
     "insects"
    ],
-   "tune_mix": 0.2,
+   "tune_mix": 0.05,
    "mean_level": 0.5224726666666667
   },
   {
@@ -82,7 +82,7 @@
     "wind",
     "rain"
    ],
-   "tune_mix": 0.3,
+   "tune_mix": 0.1,
    "mean_level": 0.3329166666666667
   }
  ],
@@ -99,47 +99,47 @@
   },
   "bands": {
    "group": "bands",
-   "gain_db": -13.986148772930173,
-   "target_db_vs_melody": -17.0,
-   "active_rms_db": -34.47987606710775,
-   "peak_db": -17.953357725134506
+   "gain_db": -16.98614877293017,
+   "target_db_vs_melody": -20.0,
+   "active_rms_db": -37.469082056850496,
+   "peak_db": -20.953358379224433
   },
   "harmony": {
    "group": "harmony",
-   "gain_db": -13.680609918238488,
-   "target_db_vs_melody": -13.0,
-   "active_rms_db": -31.347956646724068,
-   "peak_db": -14.657614814536418
+   "gain_db": -17.25502780396011,
+   "target_db_vs_melody": -17.0,
+   "active_rms_db": -33.743003968047574,
+   "peak_db": -17.54105646520924
   },
   "anthrophony": {
    "group": "anthrophony",
-   "gain_db": -15.431488809837052,
-   "target_db_vs_melody_at_level1": -10.0,
+   "gain_db": -21.440165957797905,
+   "target_db_vs_melody_at_level1": -15.0,
    "curve_peak": 1.0,
-   "active_rms_db": -27.293358130799305,
-   "peak_db": -9.940693411326071
+   "active_rms_db": -32.25518262940423,
+   "peak_db": -14.518329817192388
   },
   "biophony": {
    "group": "biophony",
-   "gain_db": -16.15227030316332,
-   "target_db_vs_melody_at_level1": -11.0,
+   "gain_db": -23.387553029846558,
+   "target_db_vs_melody_at_level1": -17.0,
    "curve_peak": 0.9,
-   "active_rms_db": -28.871327103871,
-   "peak_db": -8.970948990072745
+   "active_rms_db": -34.79051203844434,
+   "peak_db": -14.587479694276073
   },
   "geophony": {
    "group": "geophony",
-   "gain_db": -9.805290545410827,
-   "target_db_vs_melody_at_level1": -10.0,
+   "gain_db": -19.05861637299898,
+   "target_db_vs_melody_at_level1": -18.0,
    "curve_peak": 0.6,
-   "active_rms_db": -31.27909945548808,
-   "peak_db": -4.375130281507761
+   "active_rms_db": -39.180452208697396,
+   "peak_db": -12.093040215147358
   }
  },
  "loudness": {
   "ducking": {
-   "margin_db": 10.0,
-   "max_db": 9.0,
+   "margin_db": 14.0,
+   "max_db": 14.0,
    "groups": [
     "anthrophony",
     "bands",
@@ -147,17 +147,17 @@
     "geophony",
     "harmony"
    ],
-   "mean_gr_db": 1.6102372407913208,
-   "max_gr_db": 9.0,
-   "share_of_time_ducked_over_1db": 0.36487734487734486
+   "mean_gr_db": 1.6889609098434448,
+   "max_gr_db": 14.0,
+   "share_of_time_ducked_over_1db": 0.3479447536590394
   },
   "stem_limiter_gr_db": {
    "melody": 2.99999997377013
   },
-  "lufs_pre_norm": -29.44724501960211,
+  "lufs_pre_norm": -30.32455734437165,
   "lufs_target": -16.0,
-  "lufs_mix": -17.108890044749135,
-  "limiter_max_gr_db": 1.7249634761569008,
+  "lufs_mix": -18.231178033941017,
+  "limiter_max_gr_db": 1.3879872544241245,
   "mix_peak_db": -1.0000002900227403,
   "norm_gain_db": 13.405055360277164
  },
@@ -193,10 +193,10 @@
    },
    "final_mix": {
     "n": 20,
-    "r2": 0.688231450944603,
-    "pearson_r": 0.8779217019403381,
-    "mae": 0.21669629752103034,
-    "pitch_within_half_semitone": 0.9,
+    "r2": 0.9876551169987725,
+    "pearson_r": 0.993998181981655,
+    "mae": 0.08061790381687167,
+    "pitch_within_half_semitone": 1.0,
     "voiced": 1.0
    },
    "control_stem": {
@@ -210,14 +210,14 @@
   }
  },
  "timings_s": {
-  "harmony": 45.5,
-  "fluidsynth": 1.6,
-  "voices": 7.3,
-  "fidelity": 10.2,
-  "total": 65.8
+  "harmony": 14.5,
+  "fluidsynth": 3.7,
+  "voices": 16.4,
+  "fidelity": 20.0,
+  "total": 56.0
  },
  "data_notes": 26,
  "data_notes_unchanged": true,
- "model_notes": 64,
+ "model_notes": 42,
  "notes": "lead is a trumpet, not a flute: the 0.12 s city notes are too short for the flute attack (note-level pitch recovery 60 % flute vs 100 % trumpet, solo stem)"
 }
