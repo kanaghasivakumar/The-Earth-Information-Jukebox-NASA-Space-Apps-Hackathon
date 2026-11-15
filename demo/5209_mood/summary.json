@@ -1,0 +1,263 @@
+{
+ "id": "5209",
+ "tag": "small",
+ "generate": {
+  "id": "5209",
+  "size": "mrt2_small",
+  "tag": "small",
+  "device": "cpu",
+  "devices": [
+   "cpu:0"
+  ],
+  "chunk_frames": 10,
+  "chunk_s": 0.4,
+  "notes_mode": "key",
+  "cfg_style": 3.0,
+  "cfg_notes": 1.0,
+  "temperature": 1.2,
+  "top_k": 40,
+  "preroll_s": 2.0,
+  "prompts": [
+   "icy glassy pads",
+   "warm tropical marimba",
+   "tense rising cinematic drums",
+   "calm cool ambient",
+   "solemn orchestral strings",
+   "airy wind ambient"
+  ],
+  "scale_pcs": [
+   1,
+   2,
+   4,
+   6,
+   7,
+   9,
+   11
+  ],
+  "lead_low": 64,
+  "load_s": 18.1,
+  "gen_s": 182.2,
+  "audio_s": 31.6,
+  "gen_s_per_audio_min": 346.0,
+  "realtime_factor": 0.173
+ },
+ "mix": {
+  "id": "5209",
+  "tag": "small",
+  "label": "small",
+  "mood_db_vs_melody": -14.0,
+  "highpass_hz": 80.0,
+  "ducking": {
+   "margin_db": 8.0,
+   "max_db": 9.0,
+   "mean_gr_db": 0.8762151598930359,
+   "share_of_time_ducked_over_1db": 0.29091890724543784
+  },
+  "lufs_pre": -15.95429546002749,
+  "lufs_mix": -16.000000170195413,
+  "limiter_gr_db": -0.0,
+  "norm_gain_db": -0.04570453997250967,
+  "active_rms_db": {
+   "melody": -20.4084479553017,
+   "bands": -35.97862662903549,
+   "harmony": -34.450911809467016,
+   "geophony": -32.46285429530922,
+   "mood": -35.413066400104896
+  },
+  "fidelity": {
+   "mix_without_mood": {
+    "n": 68,
+    "r2": 0.9664259625235994,
+    "pearson_r": 0.98478447004162,
+    "mae": 0.06528186274509815,
+    "pitch_within_half_semitone": 1.0,
+    "voiced": 1.0
+   },
+   "mix_with_mood": {
+    "n": 68,
+    "r2": 0.9662917188837366,
+    "pearson_r": 0.9847141186095546,
+    "mae": 0.06509803921568642,
+    "pitch_within_half_semitone": 1.0,
+    "voiced": 1.0
+   },
+   "control_mix_without_mood": {
+    "n": 65,
+    "r2": -0.5513890055788799,
+    "pearson_r": 0.23608354713823224,
+    "mae": 0.37370512820512825,
+    "pitch_within_half_semitone": 0.9384615384615385,
+    "voiced": 0.9558823529411765
+   },
+   "control_mix_with_mood": {
+    "n": 66,
+    "r2": -0.6344546652838885,
+    "pearson_r": 0.19643303781123977,
+    "mae": 0.3840909090909092,
+    "pitch_within_half_semitone": 0.9393939393939394,
+    "voiced": 0.9705882352941176
+   },
+   "control_stem": {
+    "n": 68,
+    "r2": -0.6639079608375977,
+    "pearson_r": 0.142787224261494,
+    "mae": 0.4072426470588236,
+    "pitch_within_half_semitone": 0.9411764705882353,
+    "voiced": 1.0
+   }
+  },
+  "series": "global anomaly",
+  "r2_drop": 0.00013424363986280774,
+  "key_check": {
+   "scale_share": 0.7736133337020874,
+   "scale_share_chance": 0.5833333333333334,
+   "mood_chroma_profile": [
+    0.03799999877810478,
+    0.08340000361204147,
+    0.29420000314712524,
+    0.06019999831914902,
+    0.09809999912977219,
+    0.04989999905228615,
+    0.05959999933838844,
+    0.028699999675154686,
+    0.03680000081658363,
+    0.14259999990463257,
+    0.04129999876022339,
+    0.06710000336170197
+   ],
+   "harmony_chroma_cos_shift0": 0.8022292792797089,
+   "harmony_chroma_cos_other_shifts_mean": 0.5007618448951028,
+   "best_shift_semitones": 0,
+   "share_segments_shift0_best": 0.8,
+   "segments": 15,
+   "clash": false
+  },
+  "style_follow": {
+   "clips": 11,
+   "clip_s": 10.0,
+   "hop_s": 2.0,
+   "r_per_anchor": {
+    "icy": 0.9490186433021054,
+    "warm": 0.94356429024081,
+    "heat": -0.68046743498405,
+    "calm": -0.7370688340891313,
+    "solemn": 0.41672461442636494,
+    "wind": 0.10002330376162308
+   },
+   "mean_r": 0.16529909710962035,
+   "top_prompt_agreement": 0.8181818181818182,
+   "chance_agreement": 0.16666666666666666,
+   "mean_r_time_reversed_weights": -0.08075420978884079,
+   "closest_prompt_share": {
+    "icy": 0.7272727272727273,
+    "warm": 0.2727272727272727,
+    "heat": 0.0,
+    "calm": 0.0,
+    "solemn": 0.0,
+    "wind": 0.0
+   }
+  },
+  "fidelity_s": 8.6
+ },
+ "weights": {
+  "model": "google/siglip-base-patch16-224",
+  "fps": 2.0,
+  "tau": 0.01,
+  "debias": 0.7,
+  "beta": 2.0,
+  "smooth_s": 1.5,
+  "anchors": [
+   {
+    "name": "icy",
+    "music": "icy glassy pads",
+    "visual": "cold blue colors",
+    "data_link": [
+     "anomaly",
+     -1
+    ]
+   },
+   {
+    "name": "warm",
+    "music": "warm tropical marimba",
+    "visual": "warm red and orange colors",
+    "data_link": [
+     "anomaly",
+     1
+    ]
+   },
+   {
+    "name": "heat",
+    "music": "tense rising cinematic drums",
+    "visual": "hot dark red heat",
+    "data_link": [
+     "anomaly",
+     1
+    ]
+   },
+   {
+    "name": "calm",
+    "music": "calm cool ambient",
+    "visual": "pale white and light blue colors",
+    "data_link": null
+   },
+   {
+    "name": "solemn",
+    "music": "solemn orchestral strings",
+    "visual": "a chart with lines on a dark background",
+    "data_link": null
+   },
+   {
+    "name": "wind",
+    "music": "airy wind ambient",
+    "visual": "an empty grey chart",
+    "data_link": null
+   }
+  ],
+  "mean_weight": {
+   "icy": 0.3255763053894043,
+   "warm": 0.1946631371974945,
+   "heat": 0.12747196853160858,
+   "calm": 0.09483826905488968,
+   "solemn": 0.206308513879776,
+   "wind": 0.05114181339740753
+  },
+  "mean_weight_image_only": {
+   "icy": 0.12767130136489868,
+   "warm": 0.13553285598754883,
+   "heat": 0.08711479604244232,
+   "calm": 0.1853233426809311,
+   "solemn": 0.3860871195793152,
+   "wind": 0.07827060669660568
+  },
+  "linked_correlations": {
+   "icy": {
+    "curve": "anomaly",
+    "sign": -1,
+    "r_image_only": 0.7701573457430518,
+    "r_blended": 0.834487112905719,
+    "r_image_only_detrended": -0.4239495922159899,
+    "r_image_only_vs_time": -0.9438239007415267,
+    "r_curve_vs_time": -0.8850822546427061
+   },
+   "warm": {
+    "curve": "anomaly",
+    "sign": 1,
+    "r_image_only": 0.767666678849051,
+    "r_blended": 0.8694987126907917,
+    "r_image_only_detrended": 0.14019253926497402,
+    "r_image_only_vs_time": 0.8257580773347396,
+    "r_curve_vs_time": 0.8850822546427061
+   },
+   "heat": {
+    "curve": "anomaly",
+    "sign": 1,
+    "r_image_only": 0.9139589770704017,
+    "r_blended": 0.9689057082084301,
+    "r_image_only_detrended": 0.5822155251952212,
+    "r_image_only_vs_time": 0.8977704626619275,
+    "r_curve_vs_time": 0.8850822546427061
+   }
+  }
+ },
+ "other_renders": []
+}
