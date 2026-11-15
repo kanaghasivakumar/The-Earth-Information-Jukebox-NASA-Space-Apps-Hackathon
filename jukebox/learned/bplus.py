@@ -551,10 +551,13 @@ def duck_params(out: Path) -> tuple[float, float]:
 
 
 def gen_target_db(out: Path, tid: str) -> float:
+    """The AMT harmony's target level vs the lead, plus BPLUS_GEN_OFFSET_DB (a per-track trim when the full-mix
+    R² showed the MCL bed competing with the lead)."""
+    off = float(os.environ.get("BPLUS_GEN_OFFSET_DB", "0"))
     if tid in LEADLESS:
-        return -15.0                     # under the four instruments (the beds sit -12 dB)
+        return -15.0 + off               # under the four instruments (the beds sit -12 dB)
     lv = json.loads((out / "arrange_report.json").read_text())["levels"]
-    return float((lv.get("harmony") or {}).get("target_db_vs_melody", A.DEFAULT_GAINS_DB["harmony"]))
+    return float((lv.get("harmony") or {}).get("target_db_vs_melody", A.DEFAULT_GAINS_DB["harmony"])) + off
 
 
 def bplus_stems(out: Path, track: dict, tid: str, lead: np.ndarray, gen: np.ndarray, how: str) -> tuple[dict, dict]:
@@ -573,6 +576,8 @@ def bplus_stems(out: Path, track: dict, tid: str, lead: np.ndarray, gen: np.ndar
     g = g * np.float32(A.active_rms(lead) * 10 ** (gen_db / 20) / max(1e-9, A.active_rms(g)))
     bus = sum((a for k, (grp, a) in stems.items() if grp in DUCK_GROUPS), np.zeros_like(g)) + g
     margin, mx = duck_params(out)
+    mx = float(os.environ.get("BPLUS_DUCK_MAX_DB", mx))   # per-track trim: let the sidechain go deeper on the MCL
+    margin = max(margin, float(os.environ.get("BPLUS_DUCK_MARGIN_DB", margin)))
     gd = A.duck_gain(lead, bus, margin, mx)
     stems[GEN_GROUP] = (GEN_GROUP, g * gd[:, None])
     return stems, {"how": how, "mcl_db_vs_lead_before_duck": gen_db, "duck_margin_db": margin, "duck_max_db": mx,
@@ -699,6 +704,7 @@ def postprocess(tid: str) -> dict:
     gc = decymbal(gc_raw, DECYMBAL_DB) if gc_raw is not None else None
     A.write_wav(out / "bplus_mcl_clean.wav", g)
     rep = {"id": tid, "source": src, "reused_pilot_take": tid in REUSE_PILOT,
+           "gen_offset_db": float(os.environ.get("BPLUS_GEN_OFFSET_DB", "0")),
            "decymbal": {"atten_db": DECYMBAL_DB, "above_hz": 5000, "hpss_margin": 1.0, "applied_to": "MCL stem only"},
            "bed": {"raw": percussiveness(g_raw), "clean": percussiveness(g)}, "mixes": {}, "reference": {}}
     runs = json.loads((out / "gen_runs.json").read_text()) if (out / "gen_runs.json").exists() else []
@@ -786,13 +792,15 @@ def choose_mix(rep: dict) -> dict:
     d = rep["reference"]["deterministic"]["energy_share"]["voice_beds"]
     rp, bl = rep["mixes"]["replace"], rep["mixes"]["blend"]
     r2 = lambda r: (r["mix"] or {}).get("r2") or 0.0
-    blend_ok = (r2(bl) >= r2(rp) - 0.002
-                and abs(bl["energy_share"]["voice_beds"] - d) <= abs(rp["energy_share"]["voice_beds"] - d) + 0.005
-                and abs(bl["percussion"]["low_db"] - low) < abs(rp["percussion"]["low_db"] - low))
+    if abs(r2(bl) - r2(rp)) > 0.002:      # fidelity first
+        blend_ok = r2(bl) > r2(rp)
+    else:
+        blend_ok = (abs(bl["energy_share"]["voice_beds"] - d) <= abs(rp["energy_share"]["voice_beds"] - d) + 0.005
+                    and abs(bl["percussion"]["low_db"] - low) < abs(rp["percussion"]["low_db"] - low))
     return {"how": "blend" if blend_ok else "replace", "chroma_agreement": bl.get("chroma_agreement_amt_vs_mcl"),
             "low_db": {"reference": low, "replace": rp["percussion"]["low_db"], "blend": bl["percussion"]["low_db"]},
-            "rule": "blend if it keeps R² (±0.002) and the voice-bed share (±0.005) and its 40-250 Hz level is closer "
-                    "to the old augment's (deterministic mix where none)"}
+            "rule": "the higher full-mix R² if they differ by more than 0.002; otherwise blend if it keeps the voice-bed "
+                    "share (±0.005) and its 40-250 Hz level is closer to the old augment's (deterministic mix where none)"}
 
 
 # ---------------------------------------------------------------- export (demo/<id>_mclbplus)
@@ -881,7 +889,12 @@ def export(tid: str) -> None:
               f"- **Prompt:** \"{run.get('prompt')}\"", f"- **Negative prompt:** \"{run.get('negative_prompt')}\""]
     L += [f"- **Cymbal removal (disclosed post-processing):** HPSS (margin 1) on the MCL stem only; its percussive",
           f"  component above 5 kHz is turned down {DECYMBAL_DB:g} dB (1 kHz ramp). The data lead, bands and recorded voices",
-          "  are untouched, and so is everything under 4 kHz (the bass).", ""]
+          "  are untouched, and so is everything under 4 kHz (the bass)."]
+    if rep.get("gen_offset_db"):
+        L += [f"- **Level trim:** the MCL bed sits {-rep['gen_offset_db']:g} dB under the harmony slot: at the slot level one lead "
+              "note (41.5 s) was read an octave low and the full-mix R² fell to 0.916; with the trim it matches the "
+              "deterministic mix."]
+    L += [""]
     L += ["| measure | deterministic mix | old augment | B+ |", "|---|---|---|---|"]
     if mm:
         L += [f"| full-mix R² vs data | {_f(dm.get('r2'))} | {_f((old or {}).get('mix', {}).get('r2'))} | {_f(mm.get('r2'))} |",

@@ -111,7 +111,7 @@
    "replace": 32.31074523925781,
    "blend": 32.31074523925781
   },
-  "rule": "blend if it keeps R\u00b2 (\u00b10.002) and the voice-bed share (\u00b10.005) and its 40-250 Hz level is closer to the old augment's (deterministic mix where none)"
+  "rule": "the higher full-mix R\u00b2 if they differ by more than 0.002; otherwise blend if it keeps the voice-bed share (\u00b10.005) and its 40-250 Hz level is closer to the old augment's (deterministic mix where none)"
  },
  "mix": {
   "how": "replace",

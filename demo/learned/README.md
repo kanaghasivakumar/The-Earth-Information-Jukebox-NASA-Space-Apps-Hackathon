@@ -141,6 +141,110 @@ The full grid (CFG 1.0/1.5/2.5, both adapters, both controls, seeds) is in `all_
 4. **Before it goes in the pitch, someone has to listen.** Check the crossfade seam on 3912 and whether the
    wosdd-all percussion clashes with the data rhythm.
 
+## B+: MuseControlLite without cymbals, under the data lead and the Earth voices
+
+**Why.** On the Compare page the user rated MCL mode B augment highest on 5313 (5/5) and liked its bass, but
+heard the cymbals/drums "break the flow" on 5209, and mode B replace lost the recorded sea and Earth sounds
+they liked most. B+ is augment with the cymbals taken out and every recorded voice kept. **Nothing has been
+listened to**: the judgements below come from pyin, HPSS and spectrograms.
+
+**What B+ is** (`jukebox/learned/bplus.py`, one track: `scripts/bplus_one.sh`, `scripts/bplus_render.sbatch`,
+`scripts/bplus_post.sbatch`):
+
+- **Arranged stems untouched.** The data lead, bands, events and every recorded voice bed (geophony,
+  anthrophony, biophony) keep their arranged, already-ducked levels.
+- **MCL accompaniment in the harmony slot.** It goes in at the AMT harmony's target level (−13 dB vs the lead;
+  5058 −17 dB; 5669 −15 dB vs the four instruments). The AMT harmony either stays 3 dB down next to it
+  ("blend") or is removed ("replace"). It is ducked with arrange's sidechain on the whole accompaniment bus,
+  using the track's own margins (8/9 dB; 5058 14/14 dB). Then the mix goes to −16 LUFS and arrange's limiter.
+- **Blend or replace, chosen by metrics.** The AMT harmony stem carries the deterministic bass line, so
+  replace thins the low end (5209: whole-mix 40–250 Hz falls 2 dB below the old augment). Blend wins when it
+  keeps R² (±0.002) and the voice-bed share (±0.005), and its 40–250 Hz level is closer to the old augment's
+  (or to the deterministic mix's where there is no old augment). Blend won on every track that has a harmony
+  stem. The AMT and MCL chroma agree only at a cosine of 0.52–0.62 (two independent harmonisations under one
+  melody). That number is reported, but it is untested whether it clashes by ear.
+- **Cymbal removal.**
+  - *New renders:* the prompt says "…, warm bass line, no cymbals, no hi-hats, no crash, no ride". The
+    negative prompt is "cymbals, hi-hats, crash cymbal, ride cymbal, splash cymbal, shaker, tambourine,
+    bright snare". The rhythm control is halved (×0.5).
+  - *Then, on every track:* a disclosed post-process on the MCL stem only. HPSS (margin 1) splits the stem,
+    and its percussive part above 5 kHz is turned down 15 dB (1 kHz ramp). The data lead, bands and recorded
+    voices are never touched, and neither is anything under 4 kHz (the bass).
+  - *Pilot takes:* under the deadline triage, 5209, 5313 and 3912 were **not regenerated**. Their B+ uses the
+    pilot's own wosdd-all CFG 1.5 take (the one the user rated) and only the post-process.
+- **Fidelity.** The note-level pyin round trip of `arrange.fidelity` runs on the full B+ mix. The control is
+  the shuffled lead plus the MCL accompaniment generated from the shuffled lead, sent through the identical
+  chain (end to end). Lead swap is also reported in `bplus_report.json`.
+- **Seams** (tracks longer than 47 s; new renders only). The windows are spread evenly, so the overlaps are as
+  long as possible. Each seam is one 8 s equal-power crossfade at the spectrally closest point of its overlap,
+  with the second take level-matched over the overlap.
+- **CPU rendering.** The GPU queue was about 7 h deep, so every new take was rendered on `short`: one job per
+  47 s window, 16 cores, fp32, 50 steps, about 4.5 min per window.
+
+### Results
+
+| track | MCL take | lead-stem R² | full-mix R²: det / old aug / B+ | within ½ st (B+) | control R² (B+ e2e) | HF perc. energy, mix (dB): det / old / B+ | MCL bed HF perc. (dB) raw → clean | voice-bed share: det / old / B+ | mix 40–250 Hz (dB): det / old / B+ | B+ mix |
+|---|---|---|---|---|---|---|---|---|---|---|
+| 5209 | pilot (reused) | 0.966 | 0.966 / 0.966 / 0.967 | 1.00 | -0.638 | -35.3 / -35.9 / -35.4 | -43.9 → -53.8 | 0.043 / 0.036 / 0.042 | 26.3 / 25.5 / 25.1 | blend |
+| 5313 | pilot (reused) | 0.976 | 0.977 / 0.977 / 0.977 | 1.00 | -0.878 | -29.4 / -30.8 / -29.6 | -28.7 → -35.4 | 0.047 / 0.036 / 0.047 | 24.7 / 23.9 / 23.6 | blend |
+| 3912 | pilot (reused) | 0.987 | 0.987 / 0.987 / 0.987 | 1.00 | -1.026 | -42.3 / -42.6 / -42.4 | -41.2 → -47.9 | 0.027 / 0.022 / 0.026 | 26.0 / 25.4 / 24.9 | blend |
+| 4950 | new CPU render | 0.983 | 0.983 / – / 0.983 | 1.00 | -2.547 | -18.9 / – / -19.0 | -46.1 → -63.6 | 0.087 / – / 0.088 | 27.0 / – / 26.3 | blend |
+| 5176 | new CPU render | 0.979 | 0.979 / – / 0.980 | 1.00 | -1.146 | -33.5 / – / -33.7 | -70.8 → -86.0 | 0.056 / – / 0.054 | 26.3 / – / 25.1 | blend |
+| 5011 | new CPU render | 0.984 | 0.983 / – / 0.983 | 1.00 | -1.092 | -31.0 / – / -31.1 | -52.8 → -67.4 | 0.035 / – / 0.034 | 30.4 / – / 30.4 | replace |
+| 5058 | new CPU render | 0.988 | 0.988 / – / 0.988 | 1.00 | 0.115 | -27.5 / – / -27.8 | -65.6 → -70.1 | 0.131 / – / 0.129 | 27.6 / – / 28.8 | blend |
+| 5669 | new CPU render | – | – / – / – | – | – | -27.1 / – / -27.1 | -71.3 → -78.8 | 0.115 / – / 0.114 | 32.2 / – / 32.3 | replace |
+| 5046 | new CPU render | 0.990 | 0.990 / – / 0.990 | 1.00 | -1.247 | -36.5 / – / -36.7 | -64.7 → -81.3 | 0.036 / – / 0.035 | 25.2 / – / 23.9 | blend |
+
+HF percussive energy is the HPSS percussive energy in 5–16 kHz, as dB relative to the whole A-weighted
+energy, with the audio at −23 LUFS. The 40–250 Hz level is the bass, in dB at −23 LUFS. The voice-bed share is
+the K-weighted energy share of geophony + anthrophony + biophony in the pre-limiter mix. "Old aug." is the
+pilot's mode B augment (the version the user rated). It exists only for 5209, 5313 and 3912.
+
+### Reading the numbers
+
+- **Fidelity holds.** The full-mix R² of B+ equals the deterministic mix's to within 0.001 on every track
+  with a lead (5058: see below). All lead notes land within ½ semitone, and the end-to-end controls stay
+  between −0.64 and −2.55. 5058 is the exception (see below).
+- **The Earth voices keep their share.** The voice beds are within 0.002 of the deterministic mix's share in
+  every B+ mix. The old augment re-ducked the whole bus, which lost 0.005–0.011 of share.
+- **Cymbals.**
+  - *Pilot takes:* the post-process lowers the MCL bed's HF percussive energy by 7–10 dB (5209 −43.9 → −53.8
+    dB, 5313 −28.7 → −35.4, 3912 −41.2 → −47.9). But the 5313 take also has a sustained broadband HF wash
+    (0–7 s and 27–34 s in `demo/5313_mclbplus/spectrogram.png`). HPSS does not count that as percussive, so
+    it drops only 3 dB (all HF −16.0 → −19.3 dB). If the user still hears cymbals on 5313, that wash is why.
+  - *New renders:* with the cymbal-free prompt and negative prompt, the beds' HF percussive energy is already
+    at −46 to −71 dB *before* the post-process, against −29 to −44 dB for the pilot takes. The prompt did most
+    of the work (different tracks, so this is not a controlled comparison). The post-process then takes off
+    another 5–17 dB.
+  - *In the full mix,* HF percussive energy barely moves (≤0.2 dB), because there it comes from the recorded
+    surf, wind and rain, which B+ keeps on purpose.
+- **Bass.** The MCL beds' 40–250 Hz level is unchanged by the cleanup (≤0.2 dB). Whole-mix bass is within
+  0.4–0.6 dB of the old augment on the pilot tracks, and within 1.3 dB of the deterministic mix elsewhere. The
+  5176 bed is bass-light (16 dB vs 22–35 dB for the others). The prompt asked for a bass line, and it is still
+  quiet there.
+- **5011 lightning.** The data drum hits stay the transients: onset salience at the hits is 6.02 in B+ against
+  6.09 deterministic, with 0.59 MCL onsets per second away from any hit. Events are never ducked, and thunder
+  stays in geophony.
+- **5669 aerosols.** There is no lead. The melody control is the dominant aerosol voice per 0.25 s step, and
+  the dynamics come from the summed fractions. Per-type r between each note's data fraction and its level in
+  the mix hardly moves (deterministic → B+): black carbon 0.45 → 0.44, dust 0.89 → 0.87, sea salt
+  0.35 → 0.37, sulfate 0.61 → 0.63. The dynamics-only alternative was not rendered (deadline).
+- **5058 Hurricane Ian.** The 0.12 s trumpet notes make a poor melody control, so two takes were rendered:
+  a coarse melody (0.5 s frames) and no melody control at all (dynamics and a "G major" prompt). With the
+  coarse take, R² fell to 0.34 in both mixes. The no-melody take was shipped: blend R² 0.988 against the
+  deterministic 0.988. Replace still falls to 0.34, because without the AMT harmony the MCL bed gets the
+  harmony slot's level (−17 dB vs the lead) and masks short notes, so the choice falls to blend (MCL at −20 dB).
+  As in the deterministic mix, the 5058 shuffled control is weak (+0.12 end to end, +0.10 deterministic
+  lead swap). With 20 notes, a permutation of the same pitches still correlates with the data.
+- **4950 needed a trim.** At the harmony slot's level, one lead note (41.5 s) read an octave low and R² fell
+  to 0.916. Deeper sidechain ducking did not help. The MCL bed 10 dB lower (blend: −26 dB vs the lead)
+  restores 0.983. Disclosed in `demo/4950_mclbplus/README.md`.
+- **Seams.** The 3912 pilot take was reused, so its 4 s crossfade at 32–36 s is **not fixed**. Its 1 s
+  log-mel jump there is 7.7 dB, 2.8 × the track's median (90th percentile). On the new multi-window renders,
+  the first seam measures 11.8 dB on 4950 (2.6 × median, 86th
+  percentile) and 9.7 dB on 5011 (1.7 ×, 86th). The take gains were matched within 0.02 dB and 0.9 dB. That
+  is no clear improvement over the pilot's ratio, so the seam fix is **unproven**. A listen is needed.
+
 ## Licences (for the credits slide)
 
 | Component | Licence | What applies to our outputs |

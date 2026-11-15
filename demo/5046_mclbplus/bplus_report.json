@@ -1,0 +1,262 @@
+{
+ "id": "5046",
+ "source": "/gpfs/projects/e32706/omb8654/jukebox-wt/mcl-bplus/outputs/5046_mclbplus/gen_bplus_real.wav",
+ "reused_pilot_take": false,
+ "gen_offset_db": 0.0,
+ "decymbal": {
+  "atten_db": 15.0,
+  "above_hz": 5000,
+  "hpss_margin": 1.0,
+  "applied_to": "MCL stem only"
+ },
+ "bed": {
+  "raw": {
+   "perc_ratio": 0.002173259403037189,
+   "hf_perc_share": 3.359725396918977e-07,
+   "hf_share": 2.452341038777277e-06,
+   "hf_perc_of_hf": 0.13523714244365692,
+   "low_share": 0.0528125986456871,
+   "low_db": 25.724828720092773,
+   "hat_hits_per_s": 0.9473684210526315,
+   "kick_flux_db": 0.5819182991981506
+  },
+  "clean": {
+   "perc_ratio": 0.0021717195117329276,
+   "hf_perc_share": 7.386518630202287e-09,
+   "hf_share": 1.5841337786539523e-06,
+   "hf_perc_of_hf": 0.004762099590152502,
+   "low_share": 0.05281271040439606,
+   "low_db": 25.7248477935791,
+   "hat_hits_per_s": 0.8157894736842105,
+   "kick_flux_db": 0.5819185972213745
+  }
+ },
+ "reference": {
+  "deterministic": {
+   "mix": {
+    "n": 49,
+    "r2": 0.9899386079556106,
+    "pearson_r": 0.9952649182791267,
+    "mae": 0.24099173659895082,
+    "pitch_within_half_semitone": 1.0,
+    "voiced": 1.0
+   },
+   "lead_stem": {
+    "n": 49,
+    "r2": 0.9895596565494861,
+    "pearson_r": 0.9950709673648814,
+    "mae": 0.2452162263948698,
+    "pitch_within_half_semitone": 1.0,
+    "voiced": 1.0
+   },
+   "energy_share": {
+    "lead": 0.9344667279157134,
+    "bands": 0.012332530394438606,
+    "biophony": 1.612838824780009e-05,
+    "geophony": 0.03571319506391291,
+    "harmony": 0.016407537244522062,
+    "voice_beds": 0.035729679776406335
+   },
+   "percussion": {
+    "perc_ratio": 0.0013545359261798863,
+    "hf_perc_share": 0.00022171088273820696,
+    "hf_share": 0.0007785261074943644,
+    "hf_perc_of_hf": 0.2776070833206177,
+    "low_share": 0.05585862696170807,
+    "low_db": 25.181522369384766,
+    "hat_hits_per_s": 3.6315789473684212,
+    "kick_flux_db": 0.8035391569137573
+   },
+   "lufs": -16.000000148305876,
+   "control_leadswap": {
+    "n": 48,
+    "r2": -1.3304882812193615,
+    "pearson_r": -0.11812943560194954,
+    "mae": 3.242590300171367,
+    "pitch_within_half_semitone": 0.9583333333333334,
+    "voiced": 0.9795918367346939
+   }
+  }
+ },
+ "run": {
+  "prompt": "Arctic ambient, glassy pads and slow strings, cold and spacious, warm bass line, no cymbals, no hi-hats, no crash, no ride",
+  "negative_prompt": "cymbals, hi-hats, crash cymbal, ride cymbal, splash cymbal, shaker, tambourine, bright snare",
+  "rhythm_scale": 0.5,
+  "melody_scale": 1.0,
+  "condition": "cond_real.wav",
+  "adapter": "wosdd-all",
+  "guidance_con": 1.5,
+  "guidance_text": 7.0,
+  "steps": 50,
+  "seed": 42,
+  "variant": "bplus",
+  "which": "real",
+  "segments": [
+   [
+    0.0,
+    38.0
+   ]
+  ],
+  "seam": {
+   "windows": 1
+  },
+  "audio_s": 38.0,
+  "device": [
+   "CPU x16"
+  ],
+  "jobs": [
+   "8838967"
+  ],
+  "gen_seconds": 363.0
+ },
+ "mode_a_clean_bed": {
+  "r2": 0.9890391495991196,
+  "within": 1.0,
+  "control_r2": -1.233553878789388
+ },
+ "choice": {
+  "how": "blend",
+  "chroma_agreement": 0.525678813457489,
+  "low_db": {
+   "reference": 25.181522369384766,
+   "replace": 22.135944366455078,
+   "blend": 23.90882682800293
+  },
+  "rule": "the higher full-mix R\u00b2 if they differ by more than 0.002; otherwise blend if it keeps the voice-bed share (\u00b10.005) and its 40-250 Hz level is closer to the old augment's (deterministic mix where none)"
+ },
+ "variant": "bplus",
+ "mix": {
+  "how": "blend",
+  "mcl_db_vs_lead_before_duck": -16.0,
+  "duck_margin_db": 8.0,
+  "duck_max_db": 9.0,
+  "mcl_duck": {
+   "mean_gr_db": 0.499588280916214,
+   "max_gr_db": 8.999384880065918
+  },
+  "lufs": -16.00000019260082,
+  "limiter_gr_db": -0.0,
+  "norm_gain_db": -0.10657218266974232,
+  "mix": {
+   "n": 49,
+   "r2": 0.9899140318503955,
+   "pearson_r": 0.9952372091520231,
+   "mae": 0.240522348843849,
+   "pitch_within_half_semitone": 1.0,
+   "voiced": 1.0
+  },
+  "energy_share": {
+   "lead": 0.9116271183972631,
+   "bands": 0.012031106951346468,
+   "biophony": 1.573418899090055e-05,
+   "geophony": 0.03484031708383186,
+   "harmony": 0.008022260617606783,
+   "mcl": 0.016699813431743687,
+   "voice_beds": 0.034856398888029966
+  },
+  "percussion": {
+   "perc_ratio": 0.0013020799194209888,
+   "hf_perc_share": 0.00021278344931490014,
+   "hf_share": 0.0007035195480473979,
+   "hf_perc_of_hf": 0.2960430383682251,
+   "low_share": 0.04157743602991104,
+   "low_db": 23.90882682800293,
+   "hat_hits_per_s": 3.710526315789474,
+   "kick_flux_db": 0.8786831498146057
+  },
+  "mcl_low_db_in_mix": -50.15412952855517,
+  "percussion_without_decymbal": {
+   "perc_ratio": 0.0013020553852077232,
+   "hf_perc_share": 0.00021276095328459353,
+   "hf_share": 0.0007035051822184984,
+   "hf_perc_of_hf": 0.2960211932659149,
+   "low_share": 0.04157743230462074,
+   "low_db": 23.90882682800293,
+   "hat_hits_per_s": 3.710526315789474,
+   "kick_flux_db": 0.8786831498146057
+  },
+  "control_e2e": {
+   "n": 49,
+   "r2": -1.2466748003358905,
+   "pearson_r": -0.07155870573745203,
+   "mae": 3.191984194686692,
+   "pitch_within_half_semitone": 0.9591836734693877,
+   "voiced": 1.0
+  },
+  "control_leadswap": {
+   "n": 48,
+   "r2": -1.247775472110992,
+   "pearson_r": -0.038836343806287144,
+   "mae": 3.103795033534496,
+   "pitch_within_half_semitone": 0.9791666666666666,
+   "voiced": 0.9795918367346939
+  },
+  "chroma_agreement_amt_vs_mcl": 0.525678813457489
+ },
+ "other_mix": {
+  "how": "replace",
+  "mcl_db_vs_lead_before_duck": -13.0,
+  "duck_margin_db": 8.0,
+  "duck_max_db": 9.0,
+  "mcl_duck": {
+   "mean_gr_db": 0.7023370862007141,
+   "max_gr_db": 8.999606132507324
+  },
+  "lufs": -16.00000006265185,
+  "limiter_gr_db": -0.0,
+  "norm_gain_db": -0.1602790637814112,
+  "mix": {
+   "n": 49,
+   "r2": 0.9900192803531741,
+   "pearson_r": 0.9952807182434322,
+   "mae": 0.23911418557854297,
+   "pitch_within_half_semitone": 1.0,
+   "voiced": 1.0
+  },
+  "energy_share": {
+   "lead": 0.9003311471945888,
+   "bands": 0.011882029510673537,
+   "biophony": 1.5539226662387198e-05,
+   "geophony": 0.03440861073095052,
+   "mcl": 0.031000467109907167,
+   "voice_beds": 0.034424493265520245
+  },
+  "percussion": {
+   "perc_ratio": 0.001272698850126833,
+   "hf_perc_share": 0.00021340760476900504,
+   "hf_share": 0.0006439080124016663,
+   "hf_perc_of_hf": 0.32634589076042175,
+   "low_share": 0.027718104422092438,
+   "low_db": 22.135944366455078,
+   "hat_hits_per_s": 3.8421052631578947,
+   "kick_flux_db": 1.0554072856903076
+  },
+  "mcl_low_db_in_mix": -47.54186022807562,
+  "percussion_without_decymbal": {
+   "perc_ratio": 0.0012727003508853304,
+   "hf_perc_share": 0.00021340030035321646,
+   "hf_share": 0.0006438947627308118,
+   "hf_perc_of_hf": 0.32634100317955017,
+   "low_share": 0.02771809697151184,
+   "low_db": 22.135942459106445,
+   "hat_hits_per_s": 3.8421052631578947,
+   "kick_flux_db": 1.0554075241088867
+  },
+  "control_e2e": {
+   "n": 49,
+   "r2": -1.2456738144362451,
+   "pearson_r": -0.07163873034510924,
+   "mae": 3.190576031421386,
+   "pitch_within_half_semitone": 0.9795918367346939,
+   "voiced": 1.0
+  },
+  "control_leadswap": {
+   "n": 49,
+   "r2": -1.3110523909396399,
+   "pearson_r": -0.04775318850327986,
+   "mae": 3.167576031421385,
+   "pitch_within_half_semitone": 0.9387755102040817,
+   "voiced": 1.0
+  }
+ }
+}
