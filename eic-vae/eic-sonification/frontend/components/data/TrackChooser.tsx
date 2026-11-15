@@ -7,7 +7,7 @@ import { fmt } from "@/lib/jukebox";
 
 export const SEASON = "season";
 
-/** One row of choices above the player: the hurricane season (artistic) and the eight data tracks. */
+/** One row of choices above the player: the hurricane season (artistic) and the data tracks. */
 export const TrackChooser = memo(function TrackChooser({ current, onChoose }: { current: string; onChoose: (id: string) => void }) {
   const items = [
     { id: SEASON, name: "Hurricane season", kind: "Artistic sonification", value: "5 styles" },

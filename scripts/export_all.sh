@@ -5,7 +5,7 @@
 set -e
 cd "$(dirname "$0")/.."
 BIN=/projects/e32706/omb8654/conda/envs/jukebox/bin
-for id in 5209 5313 3912 5011 4950 5669 5058 5176; do
+for id in 5209 5313 3912 5011 4950 5669 5058 5176 5046; do
   PYTHONPATH=. $BIN/python -W ignore scripts/export_track.py outputs/$id --meta scripts/track_meta/$id.json "$@"
   mkdir -p demo/$id
   $BIN/ffmpeg -v error -y -i outputs/$id/mix.wav -codec:a libmp3lame -b:a 128k demo/$id/mix.mp3
