@@ -1,0 +1,225 @@
+{
+ "id": "3912",
+ "duration_s": 66.5,
+ "seed": 0,
+ "harmony": {
+  "model": "stanford-crfm/music-medium-800k",
+  "seed": 0,
+  "seconds": 46.0,
+  "kwargs": {
+   "instruments": [
+    {
+     "48": "harmony"
+    },
+    {
+     "32": "bass",
+     "33": "bass"
+    }
+   ],
+   "key": [
+    2,
+    "major"
+   ],
+   "ranges": {
+    "harmony": [
+     43,
+     61
+    ]
+   }
+  },
+  "notes": {
+   "harmony": 75,
+   "bass": 66
+  },
+  "clash_report": {
+   "new_notes": 141,
+   "overlap_pairs": 209,
+   "bass_on_harmony_pc": 0.6212121212121212,
+   "dissonant_pairs": 0,
+   "above_lead": 0,
+   "per_voice": {
+    "bass": 66,
+    "harmony": 75
+   }
+  },
+  "cached": false
+ },
+ "form": {
+  "sections": [
+   [
+    0.0,
+    25.5,
+    "A"
+   ],
+   [
+    25.5,
+    36.0,
+    "B"
+   ],
+   [
+    36.0,
+    43.5,
+    "C"
+   ],
+   [
+    43.5,
+    56.5,
+    "D"
+   ],
+   [
+    56.5,
+    66.5,
+    "E"
+   ]
+  ],
+  "boundaries": [
+   25.5,
+   36.0,
+   43.5,
+   56.5
+  ],
+  "non_data_changes": {
+   "transposed": 0,
+   "shortened": 11,
+   "rerouted": 0
+  },
+  "kwargs": {
+   "transpose": false,
+   "motifs": false,
+   "cymbal": true,
+   "phrase_break": true
+  },
+  "source": "/gpfs/projects/e32706/omb8654/jukebox-wt/integrate/demo/3912/form.json"
+ },
+ "tune_to": {
+  "source": "harmony",
+  "segments": 34
+ },
+ "beds": [
+  {
+   "group": "geophony",
+   "curve": "geophony",
+   "sources": [
+    "hydrophone",
+    "ocean",
+    "water"
+   ],
+   "tune_mix": 0.45,
+   "mean_level": 0.39724812030075185
+  }
+ ],
+ "engines": [
+  "fluidsynth"
+ ],
+ "levels": {
+  "melody": {
+   "group": "melody",
+   "gain_db": 0.0,
+   "target_db_vs_melody": 0.0,
+   "active_rms_db": -20.292084426710293,
+   "peak_db": -5.124588580306767
+  },
+  "bands": {
+   "group": "bands",
+   "gain_db": -11.820884259152479,
+   "target_db_vs_melody": -15.0,
+   "active_rms_db": -36.570360287452665,
+   "peak_db": -22.055445136815063
+  },
+  "harmony": {
+   "group": "harmony",
+   "gain_db": -9.593681555434994,
+   "target_db_vs_melody": -13.0,
+   "active_rms_db": -34.06108779218778,
+   "peak_db": -15.782741856475209
+  },
+  "geophony": {
+   "group": "geophony",
+   "gain_db": -7.31566804061117,
+   "target_db_vs_melody_at_level1": -10.0,
+   "curve_peak": 0.7468,
+   "active_rms_db": -34.233176299163496,
+   "peak_db": -14.119982464378406
+  }
+ },
+ "loudness": {
+  "ducking": {
+   "margin_db": 8.0,
+   "max_db": 9.0,
+   "groups": [
+    "bands",
+    "geophony",
+    "harmony"
+   ],
+   "mean_gr_db": 1.4119501113891602,
+   "max_gr_db": 9.0,
+   "share_of_time_ducked_over_1db": 0.42746965452847807
+  },
+  "stem_limiter_gr_db": {},
+  "lufs_pre_norm": -24.71338261692373,
+  "lufs_target": -16.0,
+  "lufs_mix": -16.000000335860076,
+  "limiter_max_gr_db": -0.0,
+  "mix_peak_db": -4.521791198652522,
+  "norm_gain_db": 8.713382616923731
+ },
+ "fidelity": {
+  "global mean SST": {
+   "voices": [
+    "lead"
+   ],
+   "pitch_map": {
+    "vmin": 18.882267621666927,
+    "vmax": 19.838978458204167,
+    "low": 60,
+    "span": 24,
+    "root": 2,
+    "scale": "major_pent",
+    "polarity": 1
+   },
+   "final_stem": {
+    "n": 43,
+    "r2": 0.9868615203261365,
+    "pearson_r": 0.99348909449059,
+    "mae": 0.023438230893318705,
+    "pitch_within_half_semitone": 0.9767441860465116,
+    "voiced": 1.0
+   },
+   "before_stem": {
+    "n": 43,
+    "r2": 0.9848132158557216,
+    "pearson_r": 0.9925191926297873,
+    "mae": 0.025338673931013744,
+    "pitch_within_half_semitone": 1.0,
+    "voiced": 1.0
+   },
+   "final_mix": {
+    "n": 43,
+    "r2": 0.9868675317328968,
+    "pearson_r": 0.9935322224703205,
+    "mae": 0.02347295629942404,
+    "pitch_within_half_semitone": 0.9767441860465116,
+    "voiced": 1.0
+   },
+   "control_stem": {
+    "n": 43,
+    "r2": -1.1079076356778073,
+    "pearson_r": -0.11680186175692446,
+    "mae": 0.2770154478425048,
+    "pitch_within_half_semitone": 0.9767441860465116,
+    "voiced": 1.0
+   }
+  }
+ },
+ "timings_s": {
+  "harmony": 51.9,
+  "fluidsynth": 3.8,
+  "voices": 4.7,
+  "fidelity": 19.0,
+  "total": 81.7
+ },
+ "data_notes": 71,
+ "data_notes_unchanged": true,
+ "model_notes": 193,
+ "notes": "corrected v2 timeline (recorded inversion flags); form sections from DINOv2 frame novelty"
+}

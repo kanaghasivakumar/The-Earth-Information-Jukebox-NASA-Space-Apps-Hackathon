@@ -3,13 +3,13 @@
  "title": "Global Sea Surface Currents and Temperature",
  "svs_url": "https://svs.gsfc.nasa.gov/3912/",
  "video_url": "https://svs.gsfc.nasa.gov/vis/a000000/a003900/a003912/ecco2_sst_flow.m4v",
+ "video_alt_url": "https://svs.gsfc.nasa.gov/vis/a000000/a003900/a003912/ecco2_sst_flow.webmhd.webm",
  "duration_s": 66.5,
  "units": "°C",
- "description": "Ocean surface currents swirl around the globe, coloured by sea surface temperature from the ECCO2 ocean model (MIT/JPL) on a 0 to 32 °C colour bar. The lead melody is the global average sea surface temperature, frame by frame: it rises and falls by about 1.4 °C over the movie. Six soft pad voices underneath are the six latitude bands, from the Arctic (lowest notes) to the tropics (highest) and down to Antarctica.",
- "voice": "geophony",
+ "description": "Ocean surface currents swirl around the globe, coloured by sea surface temperature from the ECCO2 ocean model (MIT/JPL) on a 0 to 32 °C colour bar, March 2007 to February 2008. The flute melody is the global average sea surface temperature, frame by frame: it moves over about 0.9 °C. Six soft pads underneath are the six latitude bands. A hydrophone recording of the Pacific swells with how much the currents move, and the model-written strings and bass follow the flute without changing it.",
  "legend": [
   {
-   "voice": "Lead (plucked)",
+   "voice": "Lead (flute)",
    "meaning": "Global mean sea surface temperature. Higher pitch means warmer. The two-octave range covers 18.9 to 19.8 °C, so small changes are easy to hear."
   },
   {
@@ -17,56 +17,74 @@
    "meaning": "Average temperature of six latitude bands, 30 degrees each, from 90° North to 90° South. Pitch spans the full colour bar, 0 to 32 °C, so warm tropical bands are high and cold polar bands are low. Each band also sits in its own register, shifted by up to 6 semitones: northern bands a little higher, southern a little lower."
   },
   {
-   "voice": "Shuffled control",
-   "meaning": "Press A to swap the lead for the same temperatures played in random order. It sounds like a tune but no longer follows the ocean."
-  }
- ],
- "stems": [
-  {
-   "name": "lead",
-   "file": "lead.mp3",
-   "group": "melody",
-   "label": "Lead melody (data notes)"
+   "voice": "Ocean (geophony)",
+   "meaning": "MBARI Pacific hydrophone and surf recordings; louder and denser when the currents in the movie move more (frame-to-frame activity), brighter when the ocean is warmer."
   },
   {
-   "name": "bands",
-   "file": "bands.mp3",
-   "group": "bands",
-   "label": "Latitude bands (pads)",
-   "derived": "re-rendered from timeline.json"
+   "voice": "Shuffled control",
+   "meaning": "Press A to swap the lead for the same temperatures played in random order. It sounds like a tune but no longer follows the ocean."
+  },
+  {
+   "voice": "harmony and bass (model)",
+   "meaning": "written by the Anticipatory Music Transformer around the data melody; it never changes a data note and carries no data"
+  },
+  {
+   "voice": "cymbal swells (form)",
+   "meaning": "section changes found in the video frames (DINOv2 novelty); cues only, no data"
   }
  ],
- "mix": "mix.mp3",
- "control": {
-  "file": "control_shuffled.mp3",
-  "replaces": "melody",
-  "label": "Same notes, data shuffled in time"
- },
- "timeline": "timeline.json",
- "controls": "controls.json",
- "lead_voice": "lead",
- "pitch_map": {
-  "vmin": 18.882267621666927,
-  "vmax": 19.838978458204167,
-  "low": 60,
-  "span": 24,
-  "root": 2,
-  "scale": "major_pent",
-  "polarity": 1,
-  "max_snap_error": 0.059794427283577534
- },
  "fidelity": {
-  "r2": 0.9856827991960285,
-  "pearson_r": 0.9934863966823893,
-  "mae": 0.023241768972366742,
-  "control_r2": -1.0164215707126774,
-  "control_pearson_r": -0.09906305212701687,
-  "control_mae": 0.2589917589159387,
-  "n": 133
+  "r2": 0.9868615203261365,
+  "pearson_r": 0.99348909449059,
+  "mae": 0.023438230893318705,
+  "n": 43,
+  "control_r2": -1.1079076356778073,
+  "mix_r2": 0.9868675317328968,
+  "pitch_within_half_semitone": 0.9767441860465116,
+  "mix_pitch_within_half_semitone": 0.9767441860465116,
+  "method": "note-level register-bounded pyin on the final rendered audio",
+  "series": "global mean SST",
+  "detail": {
+   "global mean SST": {
+    "voices": [
+     "lead"
+    ],
+    "final_stem": {
+     "n": 43,
+     "r2": 0.9868615203261365,
+     "pearson_r": 0.99348909449059,
+     "mae": 0.023438230893318705,
+     "pitch_within_half_semitone": 0.9767441860465116,
+     "voiced": 1.0
+    },
+    "before_stem": {
+     "n": 43,
+     "r2": 0.9848132158557216,
+     "pearson_r": 0.9925191926297873,
+     "mae": 0.025338673931013744,
+     "pitch_within_half_semitone": 1.0,
+     "voiced": 1.0
+    },
+    "final_mix": {
+     "n": 43,
+     "r2": 0.9868675317328968,
+     "pearson_r": 0.9935322224703205,
+     "mae": 0.02347295629942404,
+     "pitch_within_half_semitone": 0.9767441860465116,
+     "voiced": 1.0
+    },
+    "control_stem": {
+     "n": 43,
+     "r2": -1.1079076356778073,
+     "pearson_r": -0.11680186175692446,
+     "mae": 0.2770154478425048,
+     "pitch_within_half_semitone": 0.9767441860465116,
+     "voiced": 1.0
+    }
+   }
+  }
  },
  "data_source": "ECCO2 ocean model (MIT/JPL), as rendered in NASA SVS visualization 3912. Values were recovered from the movie by inverting its 0 to 32 °C colour bar; 57% of pixels matched the colour bar (land, labels and gaps between flow lines are skipped). The absolute level is uncertain by about 1 to 2 °C because the flow lines are drawn dimmed; the changes through the year are reliable.",
- "summary": "The ocean's surface temperature, sung by its currents. Geophony.",
- "video_alt_url": "https://svs.gsfc.nasa.gov/vis/a000000/a003900/a003912/ecco2_sst_flow.webmhd.webm",
  "band_pitch_map": {
   "vmin": 0.0,
   "vmax": 32.0,
@@ -118,5 +136,136 @@
    }
   ]
  },
+ "summary": "Ocean temperature, frame by frame, over a Pacific hydrophone; model-written strings and bass. Geophony.",
+ "voice": "geophony",
+ "voice_groups": {
+  "band -30..-60": "bands",
+  "band -60..-90": "bands",
+  "band 0..-30": "bands",
+  "band 30..0": "bands",
+  "band 60..30": "bands",
+  "band 90..60": "bands",
+  "bass": "harmony",
+  "form cymbal": "harmony",
+  "harmony": "harmony",
+  "lead": "melody"
+ },
+ "lead_voices": [
+  "lead"
+ ],
+ "lead_voice": "lead",
+ "pitch_map": {
+  "vmin": 18.882267621666927,
+  "vmax": 19.838978458204167,
+  "low": 60,
+  "span": 24,
+  "root": 2,
+  "scale": "major_pent",
+  "polarity": 1
+ },
+ "fidelity_builder": {
+  "r2": 0.9856827991960285,
+  "pearson_r": 0.9934863966823893,
+  "mae": 0.023241768972366742,
+  "control_r2": -1.0164215707126774
+ },
+ "arrangement": {
+  "engine": "FluidSynth + FluidR3_GM (MIT)",
+  "instruments": {
+   "band -30..-60": "warm pad",
+   "band -60..-90": "warm pad",
+   "band 0..-30": "warm pad",
+   "band 30..0": "warm pad",
+   "band 60..30": "warm pad",
+   "band 90..60": "warm pad",
+   "lead": "flute"
+  },
+  "harmony": {
+   "model": "stanford-crfm/music-medium-800k",
+   "seed": 0,
+   "notes": {
+    "harmony": 75,
+    "bass": 66
+   }
+  },
+  "form": {
+   "sections": [
+    [
+     0.0,
+     25.5,
+     "A"
+    ],
+    [
+     25.5,
+     36.0,
+     "B"
+    ],
+    [
+     36.0,
+     43.5,
+     "C"
+    ],
+    [
+     43.5,
+     56.5,
+     "D"
+    ],
+    [
+     56.5,
+     66.5,
+     "E"
+    ]
+   ]
+  },
+  "voices": [
+   {
+    "group": "geophony",
+    "curve": "geophony",
+    "sources": [
+     "hydrophone",
+     "ocean",
+     "water"
+    ],
+    "tune_mix": 0.45,
+    "mean_level": 0.39724812030075185
+   }
+  ],
+  "loudness_lufs": -16.0,
+  "notes": "corrected v2 timeline (recorded inversion flags); form sections from DINOv2 frame novelty"
+ },
+ "stems": [
+  {
+   "name": "melody",
+   "file": "melody.mp3",
+   "group": "melody",
+   "label": "Data melody"
+  },
+  {
+   "name": "bands",
+   "file": "bands.mp3",
+   "group": "bands",
+   "label": "Bands (data)"
+  },
+  {
+   "name": "harmony",
+   "file": "harmony.mp3",
+   "group": "harmony",
+   "label": "Harmony and bass (model-written)"
+  },
+  {
+   "name": "geophony",
+   "file": "geophony.mp3",
+   "group": "geophony",
+   "label": "Geophony (recorded Earth sounds)"
+  }
+ ],
+ "mix": "mix.mp3",
+ "control": {
+  "file": "control_shuffled.mp3",
+  "replaces": "melody",
+  "label": "Same lead notes, shuffled in time (same arrangement)"
+ },
+ "timeline": "timeline.json",
+ "controls": "controls.json",
  "time_label": "movie time"
 }

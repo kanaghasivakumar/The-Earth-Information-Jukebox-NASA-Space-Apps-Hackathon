@@ -1,0 +1,342 @@
+{
+ "id": "5313",
+ "title": "Change in Night Lights between 2012 and 2023 - EIC Version",
+ "svs_url": "https://svs.gsfc.nasa.gov/5313",
+ "video_url": "https://svs.gsfc.nasa.gov/vis/a000000/a005300/a005313/nightlights_flat_series_and_change_wZooms_13_EIC_2160p30_h265.mp4",
+ "duration_s": 43.333,
+ "units": "relative night-light change (no numeric scale): -1 lights out .. +1 new lights; years as light / 2012",
+ "description": "Night lights seen from space, 2012 to 2023: total light on the map grows by about 35 percent (relative pixel brightness; the map has no numeric scale). Rising notes and purple mark places that got brighter, most of all South Asia and Southeast Asia & Oceania; falling notes and orange mark places that got dimmer, such as Western Europe. As the lights spread, the city hum grows and the chorus of birds and insects fades.",
+ "legend": [
+  {
+   "voice": "flute (years)",
+   "meaning": "total night light each year, 2012-2023; higher = more light"
+  },
+  {
+   "voice": "harp arpeggio (sectors)",
+   "meaning": "six longitude sectors west to east, each pitched by its light relative to 2012; panned by longitude"
+  },
+  {
+   "voice": "clarinet runs (change sweep)",
+   "meaning": "2012->2023 change map swept west to east: rising run = brighter (purple), falling run = dimmer (orange); bigger interval = stronger"
+  },
+  {
+   "voice": "pads (zoom regions)",
+   "meaning": "Western Europe, Eastern Mediterranean, Ukraine and India, each pitched by its light relative to 2012"
+  },
+  {
+   "voice": "wood-block ticks (events)",
+   "meaning": "a new year starts"
+  },
+  {
+   "voice": "city hum (anthrophony)",
+   "meaning": "louder with more light and with brightening"
+  },
+  {
+   "voice": "birds and insects (biophony)",
+   "meaning": "quieter as the lights grow"
+  },
+  {
+   "voice": "wind (geophony)",
+   "meaning": "quiet constant bed, not data-driven here"
+  },
+  {
+   "voice": "harmony and bass (model)",
+   "meaning": "written by the Anticipatory Music Transformer around the data melody; it never changes a data note and carries no data"
+  }
+ ],
+ "fidelity": {
+  "r2": 0.9756618141472334,
+  "pearson_r": 0.9894455441808471,
+  "mae": 0.013834613652694311,
+  "n": 24,
+  "control_r2": -0.9148145332535,
+  "mix_r2": 0.9771657684236911,
+  "pitch_within_half_semitone": 1.0,
+  "mix_pitch_within_half_semitone": 1.0,
+  "method": "note-level register-bounded pyin on the final rendered audio",
+  "series": "global light / 2012",
+  "detail": {
+   "global light / 2012": {
+    "voices": [
+     "years"
+    ],
+    "final_stem": {
+     "n": 24,
+     "r2": 0.9756618141472334,
+     "pearson_r": 0.9894455441808471,
+     "mae": 0.013834613652694311,
+     "pitch_within_half_semitone": 1.0,
+     "voiced": 1.0
+    },
+    "before_stem": {
+     "n": 24,
+     "r2": 0.9749486398372266,
+     "pearson_r": 0.9892858595212415,
+     "mae": 0.01400422877911294,
+     "pitch_within_half_semitone": 1.0,
+     "voiced": 1.0
+    },
+    "final_mix": {
+     "n": 24,
+     "r2": 0.9771657684236911,
+     "pearson_r": 0.9900498320692511,
+     "mae": 0.01324096071022903,
+     "pitch_within_half_semitone": 1.0,
+     "voiced": 1.0
+    },
+    "control_stem": {
+     "n": 24,
+     "r2": -0.9148145332535,
+     "pearson_r": -0.047221637292374934,
+     "mae": 0.09847185898543849,
+     "pitch_within_half_semitone": 0.9583333333333334,
+     "voiced": 1.0
+    }
+   }
+  }
+ },
+ "data_source": {
+  "kind": "pixels",
+  "movie": "https://svs.gsfc.nasa.gov/vis/a000000/a005300/a005313/nightlights_flat_series_and_change_wZooms_13_EIC_2160p30_h265.mp4",
+  "underlying": "NASA Black Marble (VIIRS, Suomi NPP) annual composites",
+  "scale": "relative: diverging colormap without numbers; inverted from the burned-in colorbar",
+  "projection": "left of two identical flat maps, georeferenced against 5011 (cubic in latitude)"
+ },
+ "segments": [
+  {
+   "name": "annual series",
+   "start": 0.0,
+   "end": 9.466666666666667
+  },
+  {
+   "name": "change map",
+   "start": 9.8,
+   "end": 20.866666666666667
+  },
+  {
+   "name": "annual series + zooms",
+   "start": 21.266666666666666,
+   "end": 36.733333333333334
+  },
+  {
+   "name": "change map + zooms",
+   "start": 36.86666666666667,
+   "end": 43.333333333333336
+  }
+ ],
+ "voice_groups": {
+  "bass": "harmony",
+  "change-sweep": "melody",
+  "harmony": "harmony",
+  "sectors": "bands",
+  "year-ticks": "events",
+  "years": "melody",
+  "zoom Eastern Mediterranean": "bands",
+  "zoom India": "bands",
+  "zoom Ukraine": "bands",
+  "zoom Western Europe": "bands"
+ },
+ "lead_voices": [
+  "years"
+ ],
+ "lead_voice": "years",
+ "pitch_map": {
+  "vmin": 0.98,
+  "vmax": 1.3667224882345073,
+  "low": 62,
+  "span": 19,
+  "root": 2,
+  "scale": "major_pent",
+  "polarity": 1
+ },
+ "fidelity_builder": {
+  "years_melody": {
+   "real": {
+    "n": 24,
+    "r2": 0.97502506513201,
+    "pearson_r": 0.9892858595212415,
+    "mae": 0.013961006875864731
+   },
+   "shuffled_control": {
+    "n": 24,
+    "r2": -1.1595011838052924,
+    "pearson_r": -0.033705481264816935,
+    "mae": 0.10759447690492173
+   },
+   "stem": "years"
+  },
+  "change_sweep": {
+   "direction_sign_accuracy": 1.0,
+   "interval_vs_net_change_r": 0.9907038381861991,
+   "n": 14,
+   "stem": "change-sweep"
+  },
+  "cross_check_change_map_vs_annual_2023_minus_2012": {
+   "sector30_r": 0.8635951239776711,
+   "continent_r": 0.9234357978299222,
+   "note": "two independent encodings in the same movie agree"
+  }
+ },
+ "arrangement": {
+  "engine": "FluidSynth + FluidR3_GM (MIT)",
+  "instruments": {
+   "change-sweep": "clarinet",
+   "sectors": "harp",
+   "year-ticks": "wood block",
+   "years": "flute",
+   "zoom Eastern Mediterranean": "warm pad",
+   "zoom India": "warm pad",
+   "zoom Ukraine": "warm pad",
+   "zoom Western Europe": "warm pad"
+  },
+  "harmony": {
+   "model": "stanford-crfm/music-medium-800k",
+   "seed": 0,
+   "notes": {
+    "harmony": 270,
+    "bass": 99
+   }
+  },
+  "form": null,
+  "voices": [
+   {
+    "group": "geophony",
+    "curve": "geophony",
+    "sources": [
+     "wind"
+    ],
+    "tune_mix": 0.3,
+    "mean_level": 0.12000000000000004
+   },
+   {
+    "group": "anthrophony",
+    "curve": "anthrophony",
+    "sources": [
+     "city",
+     "traffic",
+     "hum"
+    ],
+    "tune_mix": 0.5,
+    "mean_level": 0.5946441753171857
+   },
+   {
+    "group": "biophony",
+    "curve": "biophony",
+    "sources": [
+     "birds",
+     "insects"
+    ],
+    "tune_mix": 0.2,
+    "mean_level": 0.40535386389850053
+   }
+  ],
+  "loudness_lufs": -16.0,
+  "notes": ""
+ },
+ "stems": [
+  {
+   "name": "melody",
+   "file": "melody.mp3",
+   "group": "melody",
+   "label": "Data melody"
+  },
+  {
+   "name": "bands",
+   "file": "bands.mp3",
+   "group": "bands",
+   "label": "Bands (data)"
+  },
+  {
+   "name": "events",
+   "file": "events.mp3",
+   "group": "events",
+   "label": "Events (data)"
+  },
+  {
+   "name": "harmony",
+   "file": "harmony.mp3",
+   "group": "harmony",
+   "label": "Harmony and bass (model-written)"
+  },
+  {
+   "name": "geophony",
+   "file": "geophony.mp3",
+   "group": "geophony",
+   "label": "Geophony (recorded Earth sounds)"
+  },
+  {
+   "name": "anthrophony",
+   "file": "anthrophony.mp3",
+   "group": "anthrophony",
+   "label": "Anthrophony (recorded human sounds)"
+  },
+  {
+   "name": "biophony",
+   "file": "biophony.mp3",
+   "group": "biophony",
+   "label": "Biophony (recorded living sounds)"
+  }
+ ],
+ "mix": "mix.mp3",
+ "control": {
+  "file": "control_shuffled.mp3",
+  "replaces": "melody",
+  "label": "Same lead notes, shuffled in time (same arrangement)"
+ },
+ "dates_t": [
+  0.0,
+  0.5,
+  1.1,
+  1.7,
+  2.3,
+  2.867,
+  3.467,
+  4.067,
+  4.633,
+  5.233,
+  5.833,
+  6.433,
+  21.267,
+  27.667,
+  28.267,
+  28.867,
+  29.467,
+  30.033,
+  30.633,
+  31.233,
+  31.8,
+  32.4,
+  33.0,
+  33.6
+ ],
+ "dates": [
+  "2012",
+  "2013",
+  "2014",
+  "2015",
+  "2016",
+  "2017",
+  "2018",
+  "2019",
+  "2020",
+  "2021",
+  "2022",
+  "2023",
+  "2012",
+  "2013",
+  "2014",
+  "2015",
+  "2016",
+  "2017",
+  "2018",
+  "2019",
+  "2020",
+  "2021",
+  "2022",
+  "2023"
+ ],
+ "timeline": "timeline.json",
+ "controls": "controls.json",
+ "voice": "anthrophony",
+ "summary": "Night lights 2012 to 2023: the city hum grows and the birds and insects fade. Anthrophony vs biophony."
+}

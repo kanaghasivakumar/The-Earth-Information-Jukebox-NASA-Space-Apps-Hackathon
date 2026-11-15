@@ -7,3 +7,5 @@
 - **Melody:** mean canopy height of the visible vegetation, 14–24 m. **Bands:** the same value for the upper, middle and lower thirds of the disc (screen thirds, not true latitude).
 - **Controls:** biophony = height × cover in view; geophony = ocean share; brightness = share of trees ≥ 25 m.
 - **Audio round-trip:** melody R² 0.982 (r 0.991, MAE 0.29 m); bands R² 0.90–0.94; shuffled control R² −1.32.
+
+> **Integrated mix:** `mix.mp3` is now the full arrangement from `jukebox.render.arrange` (data melody + bands, model harmony, recorded voices, about −16 LUFS). See `demo/README.md` for the listening guide and the before/after fidelity table; `arrange_report.json` has the numbers.
