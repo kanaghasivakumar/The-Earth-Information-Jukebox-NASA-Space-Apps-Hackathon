@@ -32,12 +32,17 @@
       <p id="track-voice" class="badge" hidden></p>
     </div>
     <p id="track-desc" class="desc"></p>
+    <p id="track-caveat" class="desc caveat" hidden></p>
     <p id="load-status" class="status"></p>
 
     <div class="stage">
       <figure class="video-wrap">
         <video id="video" muted playsinline preload="metadata"
                aria-describedby="track-desc video-note"></video>
+        <div id="still-wrap" class="still-wrap" hidden>
+          <img id="still" alt="">
+          <div id="sweep-line" class="sweep-line" aria-hidden="true"></div>
+        </div>
         <figcaption id="video-note">Video streams from NASA SVS and has no sound; the music plays in sync with it.</figcaption>
       </figure>
 

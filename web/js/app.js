@@ -18,6 +18,7 @@ const engine = new Engine();
 const announcer = new Announcer($('live'), $('live-status'));
 const roll = new Roll($('roll'), { onSeek: (t) => seek(t, true) });
 const video = $('video');
+const still = $('still');
 
 const S = {
   index: [], track: null, base: '', timeline: [], controls: null, lead: [], byGroup: {},
@@ -118,11 +119,14 @@ function groupOf(voice) {
 
 function prepareData(track) {
   S.timeline.sort((a, b) => a.start - b.start);
-  S.lead = S.timeline.filter((n) => groupOf(n.voice) === 'melody');
+  // lead_voices (optional) names the data series the readout speaks; otherwise every melody-group note.
+  // Notes without a numeric value (model-written harmony has value null) never become the lead.
+  const leadVoices = track.lead_voices?.length ? new Set(track.lead_voices) : null;
+  S.lead = S.timeline.filter((n) => (leadVoices ? leadVoices.has(n.voice) : groupOf(n.voice) === 'melody') && Number.isFinite(n.value));
   S.byGroup = {};
   for (const n of S.timeline) (S.byGroup[groupOf(n.voice)] ||= []).push(n);
   const vals = S.lead.map((n) => n.value).filter(Number.isFinite);
-  S.vmin = Math.min(...vals); S.vmax = Math.max(...vals);
+  S.vmin = vals.length ? Math.min(...vals) : 0; S.vmax = vals.length ? Math.max(...vals) : 1;
   S.range = (track.pitch_map ? track.pitch_map.vmax - track.pitch_map.vmin : S.vmax - S.vmin) || 10;
   S.pm = track.pitch_map ? new PitchMap(track.pitch_map) : null;
   S.bandPm = track.band_pitch_map ? new PitchMap(track.band_pitch_map) : null;
@@ -140,6 +144,7 @@ function renderTrack(t) {
   const badge = $('track-voice');
   badge.hidden = !t.voice; badge.textContent = t.voice ? `Voice: ${t.voice}` : '';
   $('track-desc').textContent = t.description || '';
+  $('track-caveat').hidden = !t.caveat; $('track-caveat').textContent = t.caveat ? `Note: ${t.caveat}` : '';
   $('units-big').textContent = t.units || '';
   $('value-big').textContent = '–';
 
@@ -149,11 +154,16 @@ function renderTrack(t) {
   for (const u of [t.video_url, t.video_alt_url].filter(Boolean)) {
     video.append(el('source', { src: u, type: /\.webm$/i.test(u) ? 'video/webm' : 'video/mp4' }));
   }
-  video.closest('figure').hidden = !t.video_url;
+  video.hidden = !t.video_url;
   video.load();
+  // a still image (e.g. 5669 aerosols) is swept west to east: a line marks the column being played
+  $('still-wrap').hidden = !t.image_url || !!t.video_url;
+  if (t.image_url && !t.video_url) { still.src = t.image_url; still.alt = `NASA SVS image: ${t.title}`; } else still.removeAttribute('src');
+  video.closest('figure').hidden = !t.video_url && !t.image_url;
   $('video-note').textContent = t.video_url
     ? 'Video streams from NASA SVS and has no sound; the music plays in sync with it.'
-    : 'No video for this track.';
+    : t.image_url ? 'Still image from NASA SVS. The music sweeps across it from west to east; the line shows where.'
+      : 'No video for this track.';
 
   // legend
   $('legend').replaceChildren(...(t.legend || []).flatMap((l) => [el('dt', { textContent: l.voice }), el('dd', { textContent: l.meaning })]));
@@ -182,7 +192,14 @@ function renderTrack(t) {
 
 function renderFidelity(t) {
   const f = t.fidelity || {};
-  if (f.r2 == null) { $('fid-text').textContent = 'No fidelity check for this track yet.'; $('fid-bars').replaceChildren(); $('fid-detail').textContent = ''; return; }
+  if (f.r2 == null) {
+    const series = Object.entries(f.detail || {}).map(([k, v]) => [k, v.final_stem]).filter(([, r]) => r?.pitch_within_half_semitone != null);
+    $('fid-text').textContent = series.length
+      ? 'This track has no single lead melody. Each series was played back into a pitch tracker on its own: ' +
+        series.map(([k, r]) => `${k}, ${Math.round(r.pitch_within_half_semitone * 100)}% of ${r.n} notes on the right pitch`).join('; ') + '.'
+      : 'No fidelity check for this track yet.';
+    $('fid-bars').replaceChildren(); $('fid-detail').textContent = ''; return;
+  }
   const follow = f.r2 >= 0.9 ? 'follows the data closely' : f.r2 >= 0.6 ? 'follows the data fairly well' : 'follows the data only loosely';
   const ctrl = f.control_r2 == null ? '' : f.control_r2 < 0.2 ? '; shuffled data does not.' : '; shuffled data scores almost as well, so treat this track with care.';
   $('fid-text').textContent = `The melody ${follow}${ctrl || '.'}`;
@@ -197,7 +214,9 @@ function renderFidelity(t) {
     el('span', { textContent: label }),
     el('div', { className: 'fid-track' }, Object.assign(el('div', { className: `fid-fill ${cls}` }), { style: `width:${pct(r)}` })),
     el('span', { textContent: fmtNum(r) }));
-  $('fid-bars').replaceChildren(bar('Real data', f.r2), ...(f.control_r2 != null ? [bar('Shuffled', f.control_r2, 'ctrl')] : []));
+  if (f.mix_r2 != null) $('fid-detail').textContent += ` Measured on the full mix (harmony and Earth sounds included), the pitch still explains ${pct(f.mix_r2)} (R² ${fmtNum(f.mix_r2)}).`;
+  $('fid-bars').replaceChildren(bar('Real data', f.r2), ...(f.mix_r2 != null ? [bar('Full mix', f.mix_r2)] : []),
+    ...(f.control_r2 != null ? [bar('Shuffled', f.control_r2, 'ctrl')] : []));
 }
 
 function renderMixer(t) {
@@ -260,19 +279,52 @@ const noteAt = (notes, t) => {
   return best;
 };
 
+const ymd = (s) => (/^\d{8}$/.test(s) ? `${s.slice(0, 4)}-${s.slice(4, 6)}-${s.slice(6, 8)}` : String(s));
+function dateLabel(iso) {
+  if (/^\d{4}$/.test(iso)) return iso;
+  const d = new Date(`${ymd(iso)}T12:00:00Z`);
+  return Number.isNaN(+d) ? String(iso) : d.toLocaleDateString(undefined, { dateStyle: 'medium', timeZone: 'UTC' });
+}
+function segmentAt(t) {
+  const seg = (S.track?.segments || []).find((s) => t >= s.start && t < s.end);
+  return seg ? `${seg.name}, ` : '';
+}
 function timeLabel(t) {
-  const ax = S.track?.time_axis;
+  const tr = S.track || {};
+  const cal = tr.calendar;
+  if (cal?.ref_date && cal.sec_per_year) {   // e.g. 5011: date = ref_date + (t - t_ref) / sec_per_year years, clamped
+    let ms = Date.parse(`${cal.ref_date}T00:00:00Z`) + ((t - cal.t_ref) / cal.sec_per_year) * 365.2425 * 864e5;
+    if (cal.clamp) ms = Math.min(Math.max(ms, Date.parse(`${cal.clamp[0]}T00:00:00Z`)), Date.parse(`${cal.clamp[1]}T00:00:00Z`));
+    return new Date(ms).toLocaleDateString(undefined, { year: 'numeric', month: 'long', timeZone: 'UTC' });
+  }
+  if (tr.dates?.length) {   // dates_t: explicit anchor times; otherwise evenly spread over the track
+    let i;
+    if (tr.dates_t?.length === tr.dates.length) { i = -1; for (let k = 0; k < tr.dates_t.length && tr.dates_t[k] <= t + 1e-6; k++) i = k; }
+    else i = Math.floor((t / (tr.duration_s || engine.duration || 1)) * tr.dates.length);
+    if (i >= 0) return segmentAt(t) + dateLabel(tr.dates[Math.min(i, tr.dates.length - 1)]);
+  }
+  const ax = tr.time_axis;
   if (ax?.start && ax?.end) {
     const a = Date.parse(ax.start), b = Date.parse(ax.end);
     const d = new Date(a + (b - a) * (t / (engine.duration || 1)));
     return d.toLocaleDateString(undefined, ax.format === 'year' ? { year: 'numeric' } : ax.format === 'day' ? { dateStyle: 'medium' } : { year: 'numeric', month: 'long' });
   }
-  return spokenTime(t);
+  return segmentAt(t) + spokenTime(t);
+}
+
+function sweepFraction(t) {
+  const sw = S.track?.sweep;
+  return Math.min(1, Math.max(0, t / (sw?.duration_s || S.track?.duration_s || engine.duration || 1)));
 }
 
 function describeNow(t, { full = false } = {}) {
   const u = S.track?.units || '';
   const i = leadIndexAt(t);
+  const sw = S.track?.sweep;
+  if (!S.lead.length && sw?.lon_start != null) {
+    const lon = sw.lon_start + sweepFraction(t) * (sw.lon_end - sw.lon_start);
+    return `${spokenTime(t)}: sweep at longitude ${Math.abs(Math.round(lon))} degrees ${lon < 0 ? 'west' : 'east'}.`;
+  }
   if (i < 0) return `${timeLabel(t)}. No data yet.`;
   const n = S.lead[i], prev = S.lead[i - 1];
   let msg = `${timeLabel(t)}: ${spokenValue(n.value, u, S.range)}`;
@@ -364,6 +416,7 @@ function frame() {
   const t = engine.time;
   updateReadout(t);
   roll.draw(t);
+  if (!$('still-wrap').hidden) $('sweep-line').style.left = `${(sweepFraction(t) * 100).toFixed(2)}%`;
   requestAnimationFrame(frame);
 }
 

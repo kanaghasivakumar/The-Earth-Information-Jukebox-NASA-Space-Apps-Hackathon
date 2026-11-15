@@ -1,0 +1,149 @@
+{
+ "id": "5011",
+ "duration_s": 100.033,
+ "seed": 0,
+ "tune_to": {
+  "source": "lead",
+  "segments": 51
+ },
+ "beds": [
+  {
+   "group": "geophony",
+   "kind": "events",
+   "voice": "flashes",
+   "hits": 378
+  },
+  {
+   "group": "geophony",
+   "curve": "geophony",
+   "sources": [
+    "rain",
+    "wind"
+   ],
+   "tune_mix": 0.3,
+   "mean_level": 0.5498532467532468
+  },
+  {
+   "group": "biophony",
+   "curve": "biophony",
+   "sources": [
+    "insects"
+   ],
+   "tune_mix": 0.2,
+   "mean_level": 0.14999999999999997
+  }
+ ],
+ "engines": [
+  "fluidsynth"
+ ],
+ "levels": {
+  "melody": {
+   "group": "melody",
+   "gain_db": 0.0,
+   "target_db_vs_melody": 0.0,
+   "active_rms_db": -21.092597563471017,
+   "peak_db": -6.06275847512737
+  },
+  "events": {
+   "group": "events",
+   "gain_db": -12.967267605906711,
+   "target_db_vs_melody": -5.0,
+   "active_rms_db": -26.092596301273623,
+   "peak_db": -4.308346630124211
+  },
+  "geophony": {
+   "group": "geophony",
+   "gain_db": -29.30026913276788,
+   "target_db_vs_melody_at_level1": -10.0,
+   "curve_peak": 0.7943282347242815,
+   "active_rms_db": -33.33843015186584,
+   "peak_db": -22.88453694024907
+  },
+  "biophony": {
+   "group": "biophony",
+   "gain_db": -20.96911979191606,
+   "target_db_vs_melody_at_level1": -11.0,
+   "curve_peak": 0.15,
+   "active_rms_db": -48.670957915281654,
+   "peak_db": -20.670768158491576
+  }
+ },
+ "loudness": {
+  "ducking": {
+   "margin_db": 8.0,
+   "max_db": 9.0,
+   "groups": [
+    "biophony",
+    "geophony"
+   ],
+   "mean_gr_db": 0.1404024362564087,
+   "max_gr_db": 6.619208335876465,
+   "share_of_time_ducked_over_1db": 0.03881025682256474
+  },
+  "stem_limiter_gr_db": {},
+  "lufs_pre_norm": -24.16941068474043,
+  "lufs_target": -16.0,
+  "lufs_mix": -16.00000024081369,
+  "limiter_max_gr_db": -0.0,
+  "mix_peak_db": -1.5685340931216176,
+  "norm_gain_db": 8.16941068474043
+ },
+ "fidelity": {
+  "storm-belt latitude": {
+   "voices": [
+    "storm-belt latitude"
+   ],
+   "pitch_map": {
+    "vmin": -14.995286112218643,
+    "vmax": 37.5572519384631,
+    "low": 57,
+    "span": 24,
+    "root": 9,
+    "scale": "minor_pent",
+    "polarity": 1
+   },
+   "final_stem": {
+    "n": 104,
+    "r2": 0.9837769005241578,
+    "pearson_r": 0.992309185737694,
+    "mae": 1.2992275155036122,
+    "pitch_within_half_semitone": 1.0,
+    "voiced": 1.0
+   },
+   "before_stem": {
+    "n": 104,
+    "r2": 0.9838620496200918,
+    "pearson_r": 0.9924167332253508,
+    "mae": 1.3057291263558406,
+    "pitch_within_half_semitone": 1.0,
+    "voiced": 1.0
+   },
+   "final_mix": {
+    "n": 104,
+    "r2": 0.9832701650588708,
+    "pearson_r": 0.9923969926560012,
+    "mae": 1.3209276005524029,
+    "pitch_within_half_semitone": 1.0,
+    "voiced": 1.0
+   },
+   "control_stem": {
+    "n": 104,
+    "r2": -1.0326802821094274,
+    "pearson_r": -0.028929803262257255,
+    "mae": 13.376462415538786,
+    "pitch_within_half_semitone": 0.9711538461538461,
+    "voiced": 1.0
+   }
+  }
+ },
+ "timings_s": {
+  "fluidsynth": 17.9,
+  "voices": 14.5,
+  "fidelity": 82.2,
+  "total": 120.5
+ },
+ "data_notes": 482,
+ "data_notes_unchanged": true,
+ "model_notes": 0,
+ "notes": "no model harmony: percussive track; thunder = render_events at every flash-cluster hit"
+}

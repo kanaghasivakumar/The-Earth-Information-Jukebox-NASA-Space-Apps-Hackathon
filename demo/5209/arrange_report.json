@@ -1,0 +1,178 @@
+{
+ "id": "5209",
+ "duration_s": 30.0,
+ "seed": 0,
+ "harmony": {
+  "model": "stanford-crfm/music-medium-800k",
+  "seed": 0,
+  "seconds": 49.6,
+  "kwargs": {
+   "instruments": [
+    {
+     "48": "harmony"
+    },
+    {
+     "32": "bass",
+     "33": "bass"
+    }
+   ],
+   "key": [
+    2,
+    "major"
+   ],
+   "ranges": {
+    "harmony": [
+     43,
+     63
+    ]
+   }
+  },
+  "notes": {
+   "harmony": 86,
+   "bass": 80
+  },
+  "clash_report": {
+   "new_notes": 166,
+   "overlap_pairs": 278,
+   "bass_on_harmony_pc": 0.7875,
+   "dissonant_pairs": 0,
+   "above_lead": 0,
+   "per_voice": {
+    "bass": 80,
+    "harmony": 86
+   }
+  },
+  "cached": false
+ },
+ "tune_to": {
+  "source": "harmony",
+  "segments": 15
+ },
+ "beds": [
+  {
+   "group": "geophony",
+   "curve": "geophony",
+   "sources": [
+    "wind",
+    "ocean",
+    "rain"
+   ],
+   "tune_mix": 0.4,
+   "mean_level": 0.3334027777777778
+  }
+ ],
+ "engines": [
+  "fluidsynth"
+ ],
+ "levels": {
+  "melody": {
+   "group": "melody",
+   "gain_db": 0.0,
+   "target_db_vs_melody": 0.0,
+   "active_rms_db": -20.36273857145026,
+   "peak_db": -5.617368913375342
+  },
+  "bands": {
+   "group": "bands",
+   "gain_db": -16.14962943633344,
+   "target_db_vs_melody": -15.0,
+   "active_rms_db": -35.93293066795242,
+   "peak_db": -20.19846175940544
+  },
+  "harmony": {
+   "group": "harmony",
+   "gain_db": -12.96892351384723,
+   "target_db_vs_melody": -13.0,
+   "active_rms_db": -34.40511914801832,
+   "peak_db": -18.97118027713696
+  },
+  "geophony": {
+   "group": "geophony",
+   "gain_db": -9.48760852728005,
+   "target_db_vs_melody_at_level1": -10.0,
+   "curve_peak": 0.885,
+   "active_rms_db": -32.417152580449,
+   "peak_db": -8.82829124032305
+  }
+ },
+ "loudness": {
+  "ducking": {
+   "margin_db": 8.0,
+   "max_db": 9.0,
+   "groups": [
+    "bands",
+    "geophony",
+    "harmony"
+   ],
+   "mean_gr_db": 0.9214166402816772,
+   "max_gr_db": 9.0,
+   "share_of_time_ducked_over_1db": 0.3198020372170032
+  },
+  "stem_limiter_gr_db": {},
+  "lufs_pre_norm": -26.07579242566914,
+  "lufs_target": -16.0,
+  "lufs_mix": -16.000000031696768,
+  "limiter_max_gr_db": -0.0,
+  "mix_peak_db": -3.55964889854727,
+  "norm_gain_db": 10.075792425669139
+ },
+ "fidelity": {
+  "global anomaly": {
+   "voices": [
+    "lead global"
+   ],
+   "pitch_map": {
+    "vmin": -0.6,
+    "vmax": 1.4,
+    "low": 62,
+    "span": 24,
+    "root": 2,
+    "scale": "major_pent",
+    "polarity": 1
+   },
+   "final_stem": {
+    "n": 68,
+    "r2": 0.9661281197550587,
+    "pearson_r": 0.9847843281253258,
+    "mae": 0.0652450980392158,
+    "pitch_within_half_semitone": 1.0,
+    "voiced": 1.0
+   },
+   "before_stem": {
+    "n": 68,
+    "r2": 0.9645607345544999,
+    "pearson_r": 0.984238527257573,
+    "mae": 0.06705882352941177,
+    "pitch_within_half_semitone": 1.0,
+    "voiced": 1.0
+   },
+   "final_mix": {
+    "n": 68,
+    "r2": 0.9664259625235994,
+    "pearson_r": 0.98478447004162,
+    "mae": 0.06528186274509815,
+    "pitch_within_half_semitone": 1.0,
+    "voiced": 1.0
+   },
+   "control_stem": {
+    "n": 68,
+    "r2": -0.6639079608375977,
+    "pearson_r": 0.142787224261494,
+    "mae": 0.4072426470588236,
+    "pitch_within_half_semitone": 0.9411764705882353,
+    "voiced": 1.0
+   }
+  }
+ },
+ "timings_s": {
+  "harmony": 56.2,
+  "fluidsynth": 5.9,
+  "voices": 3.2,
+  "fidelity": 10.1,
+  "total": 76.8
+ },
+ "data_notes": 565,
+ "data_notes_unchanged": true,
+ "model_notes": 166,
+ "notes": ""
+}

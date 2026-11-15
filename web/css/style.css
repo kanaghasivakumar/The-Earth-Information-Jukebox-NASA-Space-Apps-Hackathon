@@ -102,6 +102,10 @@ select { background: var(--surface-2); border: 1px solid var(--border); border-r
 @media (max-width: 900px) { .stage { grid-template-columns: minmax(0, 1fr); } }
 .video-wrap { margin: 0; }
 video { width: 100%; aspect-ratio: 2 / 1; background: #000; border-radius: var(--radius); display: block; }
+.still-wrap { position: relative; }
+.still-wrap img { width: 100%; display: block; border-radius: var(--radius); background: #000; }
+.sweep-line { position: absolute; top: 0; bottom: 0; left: 0; width: 3px; margin-left: -1px; background: var(--accent); box-shadow: 0 0 0 1px #000; pointer-events: none; }
+.caveat { font-style: italic; }
 figcaption { color: var(--muted); font-size: .85rem; margin-top: .3rem; }
 .readout { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: .75rem 1rem; text-align: right; min-width: 11rem; }
 .readout-value { font-size: 2rem; font-weight: 750; font-variant-numeric: tabular-nums; color: var(--melody); }

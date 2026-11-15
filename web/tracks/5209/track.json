@@ -1,0 +1,341 @@
+{
+ "id": "5209",
+ "title": "Zonal Climate Anomalies 1880-2023",
+ "svs_url": "https://svs.gsfc.nasa.gov/5209/",
+ "video_url": "https://svs.gsfc.nasa.gov/vis/a000000/a005200/a005209/GISTEMP_Zonal_1880-2023_C.mp4",
+ "duration_s": 30.0,
+ "units": "°C anomaly (vs 1951–1980)",
+ "description": "NASA GISS surface temperature anomalies from 1880 to 2023 for eight latitude zones, relative to 1951-1980. Each year is one beat: the flute plays the global mean and eight harp voices, strummed from the Arctic down to Antarctica, play each zone. Higher pitch means warmer; by the end every zone has climbed, the Arctic highest.",
+ "legend": [
+  {
+   "voice": "lead_global",
+   "meaning": "global mean anomaly; D4 = -0.6 degC, D6 = +1.4 degC"
+  },
+  {
+   "voice": "bands",
+   "meaning": "one voice per latitude zone, north panned left, -2.7..+3.3 degC over 3 octaves"
+  },
+  {
+   "voice": "geophony",
+   "meaning": "control curve: global anomaly, louder when warmer"
+  },
+  {
+   "voice": "brightness",
+   "meaning": "control curve: fraction of zones warmer than +1 degC"
+  },
+  {
+   "voice": "anthrophony/biophony",
+   "meaning": "silent: not measured by this dataset"
+  },
+  {
+   "voice": "harmony and bass (model)",
+   "meaning": "written by the Anticipatory Music Transformer around the data melody; it never changes a data note and carries no data"
+  }
+ ],
+ "fidelity": {
+  "r2": 0.9661281197550587,
+  "pearson_r": 0.9847843281253258,
+  "mae": 0.0652450980392158,
+  "n": 68,
+  "control_r2": -0.6639079608375977,
+  "mix_r2": 0.9664259625235994,
+  "pitch_within_half_semitone": 1.0,
+  "mix_pitch_within_half_semitone": 1.0,
+  "method": "note-level register-bounded pyin on the final rendered audio",
+  "series": "global anomaly",
+  "detail": {
+   "global anomaly": {
+    "voices": [
+     "lead global"
+    ],
+    "final_stem": {
+     "n": 68,
+     "r2": 0.9661281197550587,
+     "pearson_r": 0.9847843281253258,
+     "mae": 0.0652450980392158,
+     "pitch_within_half_semitone": 1.0,
+     "voiced": 1.0
+    },
+    "before_stem": {
+     "n": 68,
+     "r2": 0.9645607345544999,
+     "pearson_r": 0.984238527257573,
+     "mae": 0.06705882352941177,
+     "pitch_within_half_semitone": 1.0,
+     "voiced": 1.0
+    },
+    "final_mix": {
+     "n": 68,
+     "r2": 0.9664259625235994,
+     "pearson_r": 0.98478447004162,
+     "mae": 0.06528186274509815,
+     "pitch_within_half_semitone": 1.0,
+     "voiced": 1.0
+    },
+    "control_stem": {
+     "n": 68,
+     "r2": -0.6639079608375977,
+     "pearson_r": 0.142787224261494,
+     "mae": 0.4072426470588236,
+     "pitch_within_half_semitone": 0.9411764705882353,
+     "voiced": 1.0
+    }
+   }
+  }
+ },
+ "data_source": {
+  "music": "NASA GISS GISTEMP v4 ZonAnn.Ts+dSST.csv",
+  "url": "https://data.giss.nasa.gov/gistemp/tabledata_v4/ZonAnn.Ts+dSST.csv",
+  "sync": "SVS movie marker positions (year onsets)"
+ },
+ "video_inversion": {
+  "r": 0.9997048866647865,
+  "mae": 0.00959355642497347
+ },
+ "voice_groups": {
+  "band 24N-44N": "bands",
+  "band 24S-EQU": "bands",
+  "band 44N-64N": "bands",
+  "band 44S-24S": "bands",
+  "band 64N-90N": "bands",
+  "band 64S-44S": "bands",
+  "band 90S-64S": "bands",
+  "band EQU-24N": "bands",
+  "bass": "harmony",
+  "harmony": "harmony",
+  "lead global": "melody"
+ },
+ "lead_voices": [
+  "lead global"
+ ],
+ "lead_voice": "lead global",
+ "pitch_map": {
+  "vmin": -0.6,
+  "vmax": 1.4,
+  "low": 62,
+  "span": 24,
+  "root": 2,
+  "scale": "major_pent",
+  "polarity": 1
+ },
+ "fidelity_builder": {
+  "r2": 0.9709,
+  "pearson_r": 0.9859,
+  "mae": 0.0551,
+  "control_r2": -0.6764
+ },
+ "arrangement": {
+  "engine": "FluidSynth + FluidR3_GM (MIT)",
+  "instruments": {
+   "band 24N-44N": "harp",
+   "band 24S-EQU": "harp",
+   "band 44N-64N": "harp",
+   "band 44S-24S": "harp",
+   "band 64N-90N": "harp",
+   "band 64S-44S": "harp",
+   "band 90S-64S": "harp",
+   "band EQU-24N": "harp",
+   "lead global": "flute"
+  },
+  "harmony": {
+   "model": "stanford-crfm/music-medium-800k",
+   "seed": 0,
+   "notes": {
+    "harmony": 86,
+    "bass": 80
+   }
+  },
+  "form": null,
+  "voices": [
+   {
+    "group": "geophony",
+    "curve": "geophony",
+    "sources": [
+     "wind",
+     "ocean",
+     "rain"
+    ],
+    "tune_mix": 0.4,
+    "mean_level": 0.3334027777777778
+   }
+  ],
+  "loudness_lufs": -16.0,
+  "notes": ""
+ },
+ "stems": [
+  {
+   "name": "melody",
+   "file": "melody.mp3",
+   "group": "melody",
+   "label": "Data melody"
+  },
+  {
+   "name": "bands",
+   "file": "bands.mp3",
+   "group": "bands",
+   "label": "Bands (data)"
+  },
+  {
+   "name": "harmony",
+   "file": "harmony.mp3",
+   "group": "harmony",
+   "label": "Harmony and bass (model-written)"
+  },
+  {
+   "name": "geophony",
+   "file": "geophony.mp3",
+   "group": "geophony",
+   "label": "Geophony (recorded Earth sounds)"
+  }
+ ],
+ "mix": "mix.mp3",
+ "control": {
+  "file": "control_shuffled.mp3",
+  "replaces": "melody",
+  "label": "Same lead notes, shuffled in time (same arrangement)"
+ },
+ "dates_t": [
+  0.0,
+  0.195,
+  0.583,
+  1.361,
+  1.556,
+  1.75,
+  1.945,
+  2.139,
+  3.111,
+  3.5,
+  3.889,
+  4.083,
+  4.472,
+  4.861,
+  5.25,
+  6.611,
+  6.806,
+  7.0,
+  7.389,
+  8.945,
+  9.139,
+  9.528,
+  9.722,
+  9.917,
+  10.111,
+  10.5,
+  10.695,
+  11.083,
+  11.667,
+  12.056,
+  12.25,
+  12.833,
+  13.611,
+  13.806,
+  14.195,
+  14.389,
+  14.778,
+  14.972,
+  16.333,
+  16.528,
+  18.083,
+  18.278,
+  18.861,
+  19.639,
+  19.833,
+  20.028,
+  20.222,
+  20.806,
+  21.195,
+  21.389,
+  21.778,
+  22.167,
+  22.945,
+  23.139,
+  23.528,
+  24.306,
+  24.5,
+  24.694,
+  24.889,
+  25.083,
+  25.472,
+  25.861,
+  26.25,
+  26.833,
+  27.028,
+  27.417,
+  27.611,
+  27.806
+ ],
+ "dates": [
+  "1880",
+  "1881",
+  "1883",
+  "1887",
+  "1888",
+  "1889",
+  "1890",
+  "1891",
+  "1896",
+  "1898",
+  "1900",
+  "1901",
+  "1903",
+  "1905",
+  "1907",
+  "1914",
+  "1915",
+  "1916",
+  "1918",
+  "1926",
+  "1927",
+  "1929",
+  "1930",
+  "1931",
+  "1932",
+  "1934",
+  "1935",
+  "1937",
+  "1940",
+  "1942",
+  "1943",
+  "1946",
+  "1950",
+  "1951",
+  "1953",
+  "1954",
+  "1956",
+  "1957",
+  "1964",
+  "1965",
+  "1973",
+  "1974",
+  "1977",
+  "1981",
+  "1982",
+  "1983",
+  "1984",
+  "1987",
+  "1989",
+  "1990",
+  "1992",
+  "1994",
+  "1998",
+  "1999",
+  "2001",
+  "2005",
+  "2006",
+  "2007",
+  "2008",
+  "2009",
+  "2011",
+  "2013",
+  "2015",
+  "2018",
+  "2019",
+  "2021",
+  "2022",
+  "2023"
+ ],
+ "timeline": "timeline.json",
+ "controls": "controls.json",
+ "voice": "geophony",
+ "summary": "144 years of warming in eight latitude zones, checked against the GISS CSV (r 0.9997). The proof track."
+}

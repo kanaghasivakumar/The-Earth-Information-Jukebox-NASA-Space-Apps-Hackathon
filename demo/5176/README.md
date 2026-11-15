@@ -5,3 +5,5 @@
 The lead is the global mean anomaly (+0.35..+0.87 °C). There are six latitude-band voices. Controls: geophony = global anomaly; brightness = share of the ocean above +1 °C.
 Audio round-trip: R² 0.978 (r 0.990, MAE 0.013 °C); shuffled control R² −1.03. There is no independent ground truth (MUR files need an Earthdata login).
 Rerun to refresh: delete `data/raw/5176/` first, because the movie and the date list are cached.
+
+> **Integrated mix:** `mix.mp3` is now the full arrangement from `jukebox.render.arrange` (data melody + bands, model harmony, recorded voices, about −16 LUFS). See `demo/README.md` for the listening guide and the before/after fidelity table; `arrange_report.json` has the numbers.

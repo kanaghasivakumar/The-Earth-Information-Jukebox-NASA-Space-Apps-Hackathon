@@ -15,3 +15,5 @@
 | shuffled control, lead | R² −0.68 | |
 
 Off-by-one check: shifting the years by ±1 raises the MAE from 0.0096 to 0.23 °C.
+
+> **Integrated mix:** `mix.mp3` is now the full arrangement from `jukebox.render.arrange` (data melody + bands, model harmony, recorded voices, about −16 LUFS). See `demo/README.md` for the listening guide and the before/after fidelity table; `arrange_report.json` has the numbers.

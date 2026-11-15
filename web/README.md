@@ -91,10 +91,31 @@ Optional fields that the player uses when they are present:
 | `lead_voice` (default `"lead"`) and `voice_groups: {voice: group}` | assigning timeline voices to groups. Default: `lead`→melody, `band*`→bands, otherwise a name prefix |
 | `time_axis: {start, end, format: "year" \| "month" \| "day"}` | spoken dates instead of movie time (ISO dates, linear over the track) |
 | `video_alt_url` | a second `<source>`, such as WebM |
+| `image_url` | a still image instead of a video (5669). A line sweeps across it over `sweep.duration_s`; with `sweep.lon_start/lon_end` and no lead, V speaks the longitude |
+| `lead_voices` | the timeline voices the readout, note table and polarity flip use (default: every note in the melody group). Notes with `value: null` (model harmony) are never the lead |
+| `calendar: {ref_date, t_ref, sec_per_year, clamp}` | spoken dates from a fitted calendar (5011) |
+| `dates` (+ optional `dates_t`) | spoken dates: one per anchor time, or spread evenly over the track (5176 frame dates) |
+| `segments: [{name, start, end}]` | the segment name is spoken before the date or time (5313) |
+| `caveat` | a short note shown under the description |
+| `fidelity.mix_r2` | round trip measured on the full mix; shown as a third bar |
 
 All stems play from t = 0 in sample sync. Keep them the same length and render them with the same encoder.
 
 ## Adding a track
+
+The eight current tracks are integrated arrangements: `jukebox.render.arrange` turns a dataset
+builder's `outputs/<id>/` into FluidSynth stems (melody, bands, events, AMT harmony), the three recorded
+voices and a loudness-normalised mix, and writes `track.json` with the stem list. Then:
+
+```bash
+srun -A p32576 -p short -t 01:00:00 --mem=16G -c 4 scripts/arrange_one.sh <id>   # per track
+srun -A p32576 -p short -t 00:20:00 --mem=8G -c 2 scripts/export_all.sh          # all 8 + demo mixes
+python scripts/check_web.py                                                       # contract check
+```
+
+`export_track.py` exports an arranged dir from its `track.json` stem list (melody, mix and control at
+128 kbps, other stems at 96 kbps) and passes every other key through. The older flow below still works
+for a plain pipeline dir.
 
 1. Run the pipeline. It writes `outputs/<id>/` with `report.json`, `timeline.json`, `lead.wav`, `mix.wav` and `control_shuffled.wav`. Extra stems named `<group>*.wav` (for example `geophony_hydrophone.wav`) are picked up automatically.
 2. Optionally, write `scripts/track_meta/<id>.json` to override or extend `track.json`: description, legend, `time_axis`, `sweep` and so on.
@@ -111,11 +132,7 @@ All stems play from t = 0 in sample sync. Keep them the same length and render t
    - If `controls.json` is missing, a synthetic one is written and marked `"synthetic": true`.
    - The video is linked by URL from the SVS catalog (the smallest MP4/M4V at least 600 px wide), never copied.
 
-The 3912 demo was exported with:
-
-```bash
-python scripts/export_track.py demo/3912 --meta scripts/track_meta/3912.json
-```
+`scripts/track_meta/<id>.json` holds the index summary, voice and `order` (story order) for each track.
 
 ## Files
 
@@ -131,4 +148,5 @@ python scripts/export_track.py demo/3912 --meta scripts/track_meta/3912.json
 
 - iOS mutes Web Audio when the ring/silent switch is on.
 - Polarity flip and the live lead use a simple oscillator timbre, not the recorded one.
-- The 3912 `controls.json` is a placeholder: the geophony level and brightness follow the lead.
+- The 3912 `controls.json` is derived, not measured: geophony follows the movie's frame-to-frame activity
+  (moving currents) and brightness follows the lead (global-mean SST).
