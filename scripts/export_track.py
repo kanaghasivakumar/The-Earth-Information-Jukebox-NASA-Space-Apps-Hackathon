@@ -16,6 +16,13 @@ re-rendered from the timeline with jukebox.render.synth at the level it has in m
 (lead 1.0, bands 0.7), so the jukebox can mute lead and bands separately.
 
 Videos are never copied: ``video_url`` points at the SVS server.
+
+Arranged tracks (``jukebox.render.arrange`` output: ``track.json`` with a ``stems`` list) are
+exported from that list instead: each stem keeps its name, group and label; ``mix`` and
+``control`` are encoded too, and every other track.json key (segments, calendar, dates, sweep,
+image_url, video_inversion, voice_groups, lead_voices, arrangement, ...) is passed through.
+A ``video_url`` that is a still image (5669) becomes ``image_url`` (the player draws a sweep line).
+``value: null`` (model-written notes) and NaN values are written as JSON null.
 """
 from __future__ import annotations
 
@@ -43,12 +50,91 @@ def ffmpeg() -> str:
     return found
 
 
-def to_mp3(src: Path, dest: Path, quality: int = 5) -> None:
+def to_mp3(src: Path, dest: Path, quality: int = 5, kbps: int | None = None) -> None:
+    """WAV -> MP3 (VBR quality `quality`, or CBR `kbps` when given); MP3 sources are copied."""
     if src.suffix.lower() == ".mp3":
         shutil.copyfile(src, dest)
         return
-    subprocess.run([ffmpeg(), "-v", "error", "-y", "-i", str(src), "-codec:a", "libmp3lame",
-                    "-q:a", str(quality), str(dest)], check=True)
+    rate = ["-b:a", f"{kbps}k"] if kbps else ["-q:a", str(quality)]
+    subprocess.run([ffmpeg(), "-v", "error", "-y", "-i", str(src), "-codec:a", "libmp3lame", *rate, str(dest)],
+                   check=True)
+
+
+IMAGE_EXT = (".png", ".jpg", ".jpeg", ".gif", ".webp", ".tif", ".tiff")
+PASS_DROP = ("report", "overview", "timeline", "controls", "stems", "mix", "control")
+
+
+def clean_value(v):
+    """NaN / inf -> None so browsers' JSON.parse accepts the file."""
+    return None if isinstance(v, float) and (v != v or v in (float("inf"), float("-inf"))) else v
+
+
+def calendar_from_sources(timeline: list[dict], voices) -> dict | None:
+    """Spoken-date anchors from the data notes' own `source.date` / `source.year` (lead voices first)."""
+    for pick in (lambda n: n["voice"] in voices, lambda n: True):
+        pts = {}
+        for n in timeline:
+            src = n.get("source") or {}
+            if not pick(n) or not isinstance(src, dict):
+                continue
+            d = src.get("date") or (f"{int(src['year'])}" if isinstance(src.get("year"), (int, float)) else None)
+            if d:
+                pts.setdefault(round(float(n["start"]), 3), str(d))
+        if len(pts) >= 2:
+            ts = sorted(pts)
+            return {"dates_t": ts, "dates": [pts[t] for t in ts]}
+    return None
+
+
+def export_arranged(a, src: Path, track_in: dict, timeline: list[dict], meta: dict) -> None:
+    """Export a jukebox.render.arrange output dir (stems listed in track.json)."""
+    tid = str(a.id or meta.get("id") or track_in["id"])
+    dest = a.out / tid
+    if dest.exists():
+        for f in dest.iterdir():
+            if f.suffix in (".mp3", ".json"):
+                f.unlink()
+    dest.mkdir(parents=True, exist_ok=True)
+    loud = ("melody",)
+    stems = []
+    for s in track_in["stems"]:
+        f = src / s["file"]
+        name = Path(s["file"]).stem
+        to_mp3(f, dest / f"{name}.mp3", kbps=a.kbps if s["group"] in loud else a.bed_kbps)
+        stems.append({**s, "file": f"{name}.mp3"})
+    track = {k: v for k, v in track_in.items() if k not in PASS_DROP}
+    track["id"] = tid
+    track["stems"] = stems
+    if track_in.get("mix") and (src / track_in["mix"]).exists():
+        to_mp3(src / track_in["mix"], dest / "mix.mp3", kbps=a.kbps)
+        track["mix"] = "mix.mp3"
+    ctrl = track_in.get("control")
+    if ctrl and (src / ctrl["file"]).exists():
+        to_mp3(src / ctrl["file"], dest / "control_shuffled.mp3", kbps=a.kbps)
+        track["control"] = {k: v for k, v in ctrl.items() if k != "mix"} | {"file": "control_shuffled.mp3"}
+    url = track.get("video_url") or ""
+    if url.lower().endswith(IMAGE_EXT) or track.get("media_type") == "image":
+        track["image_url"] = track.get("image_url") or url
+        track["video_url"] = None
+        track["media_type"] = "image"
+    if not any(k in track for k in ("calendar", "dates", "time_axis")):
+        cal = calendar_from_sources(timeline, track.get("lead_voices") or [track.get("lead_voice", "lead")])
+        if cal:
+            track.update(cal)
+    keep = ("start", "end", "pitch", "velocity", "voice", "value", "pan")
+    (dest / "timeline.json").write_text(json.dumps([{k: clean_value(n.get(k, 0.0)) for k in keep} for n in timeline],
+                                                   allow_nan=False))
+    track["timeline"] = "timeline.json"
+    if (src / "controls.json").exists():
+        shutil.copyfile(src / "controls.json", dest / "controls.json")
+        track["controls"] = "controls.json"
+    track.update({k: v for k, v in meta.items() if k not in ("order",)})
+    track["id"] = tid
+    (dest / "track.json").write_text(json.dumps(track, indent=1, ensure_ascii=False, allow_nan=False) + "\n")
+    upsert_index(a.out, {"id": tid, "title": track["title"], "voice": track.get("voice"),
+                         "summary": track.get("summary") or "", "duration_s": track.get("duration_s"),
+                         **({"order": meta["order"]} if "order" in meta else {})})
+    print(f"wrote {dest}: {[s['file'] for s in stems]}, video={track.get('video_url')}, image={track.get('image_url')}")
 
 
 def find(src: Path, stem: str) -> Path | None:
@@ -150,7 +236,7 @@ def upsert_index(tracks_dir: Path, entry: dict) -> None:
         data = {"tracks": data}
     data["tracks"] = [t for t in data["tracks"] if str(t.get("id") if isinstance(t, dict) else t) != entry["id"]]
     data["tracks"].append(entry)
-    data["tracks"].sort(key=lambda t: str(t["id"]))
+    data["tracks"].sort(key=lambda t: (t.get("order", 999), str(t["id"])))
     idx.write_text(json.dumps(data, indent=1, ensure_ascii=False) + "\n")
 
 
@@ -163,11 +249,17 @@ def main(argv=None):
     ap.add_argument("--id", help="track id (default report.json id)")
     ap.add_argument("--lead-voice", default="lead")
     ap.add_argument("--no-render-bands", action="store_true")
+    ap.add_argument("--kbps", type=int, default=128, help="MP3 bitrate for melody, mix and control (arranged tracks)")
+    ap.add_argument("--bed-kbps", type=int, default=96, help="MP3 bitrate for the other stems (arranged tracks)")
     a = ap.parse_args(argv)
 
-    report = json.loads((a.src / "report.json").read_text())
     timeline = json.loads((a.src / "timeline.json").read_text())
     meta = json.loads(a.meta.read_text()) if a.meta else {}
+    if (a.src / "track.json").exists():
+        track_in = json.loads((a.src / "track.json").read_text())
+        if track_in.get("stems"):
+            return export_arranged(a, a.src, track_in, timeline, meta)
+    report = json.loads((a.src / "report.json").read_text())
     tid = str(a.id or meta.get("id") or report["id"])
     page = load_catalog(tid, a.catalog)
     dest = a.out / tid
@@ -205,7 +297,8 @@ def main(argv=None):
 
     # timeline / controls
     keep = ("start", "end", "pitch", "velocity", "voice", "value", "pan")
-    (dest / "timeline.json").write_text(json.dumps([{k: n.get(k, 0.0) for k in keep} for n in timeline]))
+    (dest / "timeline.json").write_text(json.dumps([{k: clean_value(n.get(k, 0.0)) for k in keep} for n in timeline],
+                                                   allow_nan=False))
     if (a.src / "controls.json").exists():
         shutil.copyfile(a.src / "controls.json", dest / "controls.json")
     else:
