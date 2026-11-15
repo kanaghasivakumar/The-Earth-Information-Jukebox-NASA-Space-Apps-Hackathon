@@ -55,10 +55,14 @@ def compose_midi(features, output, *, tempo=None, key='C', scale=None, timing_mo
         values=np.asarray(features.get(name,[]),dtype=float)
         return bool(values.size and np.nanmax(np.abs(values),initial=0)>1e-6)
     fallback_active=signal_active('activity')
-    has_movement=signal_active('movement') if 'movement' in features else fallback_active
-    has_flow=signal_active('flow_magnitude') if 'flow_magnitude' in features else fallback_active
-    score_active=(movement_weight>0 and has_movement) or (flow_weight>0 and has_flow)
-    melody_active=movement_weight>0 and has_movement
+    movement_signal='director_dynamic_intensity' if 'director_dynamic_intensity' in features else 'movement'
+    flow_signal='director_percussion_density' if 'director_percussion_density' in features else 'flow_magnitude'
+    has_movement=signal_active(movement_signal) if movement_signal in features else fallback_active
+    has_flow=signal_active(flow_signal) if flow_signal in features else fallback_active
+    melody_signal='director_melodic_activity' if 'director_melodic_activity' in features else movement_signal
+    has_melody=signal_active(melody_signal) if melody_signal in features else has_movement
+    score_active=(movement_weight>0 and (has_movement or has_melody)) or (flow_weight>0 and has_flow)
+    melody_active=movement_weight>0 and has_melody
     source_duration=max(0.,float(t[-1]-t[0])); seconds=float(target_duration if timing_mode=='fixed' else source_duration)
     if seconds<=0: seconds=4*60/tempo
     beat_sec=60/tempo; bar_sec=4*beat_sec
@@ -69,10 +73,23 @@ def compose_midi(features, output, *, tempo=None, key='C', scale=None, timing_mo
     allowed=[p for p in range(48,85) if p%12 in pitch_classes]; bass_allowed=[p for p in range(28,53) if p%12 in pitch_classes]
     # Sample at musical eighth-note steps, interpolating timestamp-aware controls.
     def ctl(at,name='activity'):
-        series=np.asarray(features.get(name,a),float)
+        director_names={
+            'movement':'director_dynamic_intensity',
+            'flow_magnitude':'director_percussion_density',
+            'velocity':'director_melodic_activity',
+            'arpeggio_activity':'director_arpeggio_activity',
+        }
+        selected=director_names.get(name)
+        if selected not in features and name=='arpeggio_activity': selected=director_names['velocity']
+        series=np.asarray(features.get(selected,features.get(name,a)),float)
         src_at=t[0]+at/max(seconds,1e-9)*source_duration if timing_mode=='fixed' else min(t[-1],t[0]+at)
         return float(np.interp(src_at,t,series))
     def latent(at,index):
+        director_name='director_melody_contour' if index==0 else 'director_harmony_inversion' if index==1 else None
+        if director_name and director_name in features:
+            series=np.asarray(features[director_name],float)
+            src_at=t[0]+at/max(seconds,1e-9)*source_duration if timing_mode=='fixed' else min(t[-1],t[0]+at)
+            return float(np.interp(src_at,t,series))
         if controls.ndim!=2 or controls.shape[1]<=index:return 0.
         src_at=t[0]+at/max(seconds,1e-9)*source_duration if timing_mode=='fixed' else min(t[-1],t[0]+at)
         return float(np.interp(src_at,t,controls[:,index]))
@@ -240,7 +257,7 @@ def compose_midi(features, output, *, tempo=None, key='C', scale=None, timing_mo
                     for arp_i,beatpos in enumerate(np.arange(0.,4.,style_rhythm.arpeggio_subdivision)):
                         st=bar*bar_sec+float(beatpos)*beat_sec
                         if st>=seconds: continue
-                        velocity=float(np.clip(ctl(st,'velocity')*movement_weight,0,1)) if 'velocity' in features else float(np.clip(ctl(st)*movement_weight,0,1))
+                        velocity=float(np.clip(ctl(st,'arpeggio_activity')*movement_weight,0,1)) if 'velocity' in features or 'director_arpeggio_activity' in features else float(np.clip(ctl(st)*movement_weight,0,1))
                         threshold=1.-style_config.motif.activity_density
                         if velocity<threshold: continue
                         section_arp={'intro':.28,'development':.5,'build':.72,'climax':.86,'resolution':.32}[section]
@@ -300,9 +317,18 @@ def compose_midi(features, output, *, tempo=None, key='C', scale=None, timing_mo
                 st=phrase_start+note.beat_offset*beat_sec
                 if st>=phrase_end or st>=seconds: continue
                 end=min(st+note.duration_beats*beat_sec,phrase_end,seconds)
-                degree=note.scale_degree%len(scale_intervals); pc=(KEYS[key]+scale_intervals[degree])%12
+                degree=note.scale_degree%len(scale_intervals)
+                if 'director_melody_contour' in features:
+                    contour_steps=style_config.motif.nearby_variation_steps if style_config else 1
+                    degree=(degree+int(round(latent(st,0)*contour_steps)))%len(scale_intervals)
+                pc=(KEYS[key]+scale_intervals[degree])%12
                 pitch=_quantize(60+pc,allowed); energy=float(np.clip(ctl(st,'movement')*movement_weight,0,1)) if 'movement' in features else float(np.clip(ctl(st)*movement_weight,0,1))
                 velocity=note.velocity if variation_strength==0 else int(np.clip(note.velocity*(.55+.45*energy),1,127))
+                if 'director_melodic_activity' in features:
+                    activity=float(np.clip(ctl(st,'velocity')*movement_weight,0,1))
+                    threshold=1.-(style_config.motif.activity_density if style_config else 1.)
+                    if activity<threshold: continue
+                    velocity=int(np.clip(velocity*(.35+.65*activity),1,127))
                 melody.append((st,end,pitch,velocity))
     melody.sort(key=lambda n:n[0]); harmony.sort(key=lambda n:n[0]); arpeggio.sort(key=lambda n:n[0]); bass.sort(key=lambda n:n[0]); drums.sort(key=lambda n:n[0])
     default_programs={'melody':73,'pad':89,'pluck':10,'bass':38,'drums':0}
@@ -318,7 +344,7 @@ def compose_midi(features, output, *, tempo=None, key='C', scale=None, timing_mo
             (2,default_programs['pluck'],arpeggio,False),(3,default_programs['bass'],bass,False),(9,0,drums,True)]
     try:
         import pretty_midi
-        pm=pretty_midi.PrettyMIDI(initial_tempo=tempo)
+        pm=pretty_midi.PrettyMIDI(initial_tempo=tempo,resolution=480)
         for name,channel,program,notes,is_drum in [('Melody',0,default_programs['melody'],melody,False),('Pad',1,default_programs['pad'],harmony,False),('Arpeggio',2,default_programs['pluck'],arpeggio,False),('Bass',3,default_programs['bass'],bass,False),('Drums',9,0,drums,True)]:
             inst=pretty_midi.Instrument(program=program,is_drum=is_drum,name=name)
             for st,en,p,v in notes: inst.notes.append(pretty_midi.Note(velocity=v,pitch=p,start=st,end=en))

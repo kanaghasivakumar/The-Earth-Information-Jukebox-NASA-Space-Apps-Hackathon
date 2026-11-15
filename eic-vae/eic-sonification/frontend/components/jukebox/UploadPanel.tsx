@@ -202,7 +202,7 @@ export function UploadPanel({ api, current, onReady, onReset }: Props) {
             {phase.offline ? (
               <details className="jb-fine">
                 <summary>For the team: how to start it</summary>
-                <code>cd eic-sonification &amp;&amp; npm run dev:all</code>
+                <code>cd eic-vae/eic-sonification &amp;&amp; npm run dev:all</code>
               </details>
             ) : null}
           </div>

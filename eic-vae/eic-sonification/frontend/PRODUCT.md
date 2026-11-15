@@ -8,7 +8,7 @@ web
 
 ## Stack
 
-Next.js (App Router) web app in eic-sonification/frontend, talking to a local FastAPI generator (eic-vae/server.py) for uploads.
+Next.js (App Router) web app in eic-vae/eic-sonification/frontend, talking to a local FastAPI generator (eic-vae/server.py) for uploads.
 
 ## Users
 

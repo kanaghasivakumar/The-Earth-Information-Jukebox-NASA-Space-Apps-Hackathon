@@ -18,6 +18,15 @@ def test_few_or_constant_distinct_points_reduce_cluster_count():
     two=LatentMemory().fit(np.array([[0.,0.],[1.,1.],[0.,0.]]),t,n_clusters=9,min_dwell=0,hysteresis=0)
     assert two.n_clusters==2
 
+def test_relative_near_constant_trajectories_collapse_to_one_cluster():
+    t=np.arange(20,dtype=float)
+    around_large=np.full((20,3),1e6)+np.column_stack((np.linspace(0,1e-3,20),np.sin(t)*2e-4,np.zeros(20)))
+    around_zero=np.column_stack((np.linspace(-2e-9,2e-9,20),np.zeros(20)))
+    for trajectory in (around_large,around_zero):
+        memory=LatentMemory(seed=2).fit(trajectory,t,n_clusters=8)
+        assert memory.n_clusters==1
+        assert np.unique(memory.labels_raw).tolist()==[0]
+
 def test_timestamp_dwell_hysteresis_suppresses_short_cluster_bounce():
     t=np.arange(9,dtype=float)
     z=np.array([[0.],[0.],[0.],[0.],[5.],[0.],[5.],[5.],[5.]])
@@ -50,6 +59,19 @@ def test_custom_motif_exact_replay_and_bounded_scale_safe_variation():
     assert all(abs(n.scale_degree-old.scale_degree)%7 in (0,1,6) for n,old in zip(a.notes,motif.notes))
     assert all(n.velocity in range(1,128) and n.duration_beats>0 for n in a.notes)
     with pytest.raises(ValueError): memory.replay(0,variation_strength=1.1)
+
+def test_high_variation_preserves_shared_motif_transposition():
+    t=np.arange(4,dtype=float); z=np.array([[0.],[0.],[1.],[1.]])
+    motif=Motif(tuple(MotifNote(degree,offset,.4,80) for degree,offset in zip((0,1,3,5,4,2,6,1,0,3),(0.,.5,1.,1.5,2.,2.5,3.,3.5,4.,4.5))),name='long-memory')
+    memory=LatentMemory(seed=4).fit(z,t,n_clusters=2,min_dwell=0,hysteresis=0,motif_library={0:motif})
+    varied=memory.replay(0,variation_strength=1.,seed=91,scale_length=7,max_transposition_steps=2)
+    offsets=[(new.scale_degree-old.scale_degree)%7 for old,new in zip(motif.notes,varied.notes)]
+    shared=max(set(offsets),key=offsets.count)
+    assert shared in (5,2) # shared transposition is bounded to two degrees
+    assert sum(offset!=shared for offset in offsets)<=2 # <=20% local changes
+    assert all(0<=note.scale_degree<7 for note in varied.notes)
+    assert all(abs(note.beat_offset-old.beat_offset)<=.12+1e-9 for note,old in zip(varied.notes,motif.notes))
+    assert all(abs(note.duration_beats-old.duration_beats)<=.12*old.duration_beats+1e-9 for note,old in zip(varied.notes,motif.notes))
 
 def test_timestamp_and_shape_validation():
     m=LatentMemory()

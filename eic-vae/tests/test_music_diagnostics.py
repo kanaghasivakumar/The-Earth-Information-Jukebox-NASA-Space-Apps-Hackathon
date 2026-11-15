@@ -14,8 +14,9 @@ def test_style_metrics_and_csv(tmp_path):
         [(0.5, 0.6, 42, 50)],
     ]
     schedule = [
-        {'is_return': False, 'is_variation': False},
-        {'is_return': True, 'is_variation': True},
+        {'is_return': False, 'reuse_count': 0, 'is_variation': False},
+        {'is_return': True, 'reuse_count': 1, 'is_variation': True},
+        {'is_return': False, 'reuse_count': 2, 'is_variation': False},
     ]
     metrics = composition_metrics(
         roll, 2.0, style='ambient', memory_schedule=schedule,
@@ -23,7 +24,8 @@ def test_style_metrics_and_csv(tmp_path):
     )
     assert metrics['total_note_count'] == 4
     assert metrics['pitch_range_semitones'] == 24
-    assert metrics['motif_repetitions'] == 1
+    assert metrics['motif_repetitions'] == 2
+    assert metrics['cluster_motif_returns'] == 1
     assert metrics['motif_variations'] == 1
     assert metrics['cluster_transitions'] == 1
     path = write_style_comparison([metrics], tmp_path / 'style_comparison.csv')

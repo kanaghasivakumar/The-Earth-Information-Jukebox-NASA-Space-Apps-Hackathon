@@ -218,3 +218,17 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+eic-vae/jobs/
+
+# Large data that is downloaded or regenerated, never committed (see README "Get the data")
+eic-vae/data/raw/
+eic-vae/data/cache/
+# Rendered full-length audio. The web app ships the much smaller mp3 exports instead.
+eic-vae/results/**/*.wav
+
+# Node dependencies and build output anywhere in the repo
+node_modules/
+.next/
+
+# macOS
+.DS_Store
