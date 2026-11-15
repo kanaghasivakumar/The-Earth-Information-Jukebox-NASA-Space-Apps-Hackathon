@@ -1,0 +1,20 @@
+{
+  "name": "eic-sonification",
+  "private": true,
+  "version": "0.1.0",
+  "scripts": {
+    "dev:all": "concurrently -k -n api,web -c cyan,magenta \"npm run dev:backend\" \"npm run dev:frontend\"",
+    "dev:backend": "cd .. && .venv/bin/python -m uvicorn main:app --app-dir eic-sonification/backend --port 8000",
+    "dev:frontend": "cd frontend && npm run dev",
+    "setup": "cd .. && uv sync && cd eic-sonification/frontend && npm install",
+    "typecheck": "cd frontend && npx tsc --noEmit",
+    "lint": "cd frontend && npm run lint",
+    "test:py": "cd .. && uv run pytest -q -p no:cacheprovider",
+    "build": "cd frontend && npx next build",
+    "test:web": "cd frontend && npm test",
+    "verify": "npm run typecheck && npm run lint && npm run test:py && npm run test:web"
+  },
+  "devDependencies": {
+    "concurrently": "^9.0.0"
+  }
+}
