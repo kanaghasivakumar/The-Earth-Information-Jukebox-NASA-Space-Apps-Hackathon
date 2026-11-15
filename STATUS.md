@@ -1,50 +1,36 @@
-# MuseControlLite B+ build: status
+# MuseControlLite B+ build: status (11:46, complete)
 
-Branch `feat/mcl-bplus` (worktree `/projects/e32706/omb8654/jukebox-wt/mcl-bplus`), not pushed.
-Deadline triage (coordinator, 11:14): ONE variant "B+" = bass kept, no cymbals / hi-hats, all Earth-voice beds
-kept. GPU queue was ~7 h deep, so every GPU job was cancelled; renders run on CPU (`short`).
+Branch `feat/mcl-bplus` (worktree `/projects/e32706/omb8654/jukebox-wt/mcl-bplus`), merged with three-voices-m1
+(track 5046), NOT pushed. Deadline triage: ONE variant "B+" = bass kept, no cymbals / hi-hats, every Earth-voice
+bed kept. The GPU queue was ~7 h deep; all GPU jobs were cancelled and the new takes rendered on CPU (`short`,
+one job per 47 s window, 16 cores, 50 steps, ~4.5 min per window).
 
-## Per track
+## Done and committed
 
-| track | MCL take | render jobs (CPU, one per 47 s window) | post job (stitch, decymbal, mix, fidelity, export) |
-|---|---|---|---|
-| 5209 | pilot take reused (not regenerated) | – | 8838490 |
-| 5313 | pilot take reused | – | 8838491 |
-| 3912 | pilot take reused (seam at 32–36 s unchanged) | – | 8838492 |
-| 4950 | new render, 2 windows | 8838336–8838339 | 8838494 (afterany renders) |
-| 5176 | new render, 1 window | 8838340–8838341 | 8838495 |
-| 5011 | new render, 3 windows | 8838342–8838347 | 8838496 |
-| 5058 | new render, coarse melody | 8838351–8838352 | 8838497 |
-| 5669 | new render, dominant-voice melody, real only | 8838353 | 8838498 |
-| 5046 | not started (data track lands from another worktree) | – | – |
+- All 9 tracks have `demo/<id>_mclbplus/` (mix.mp3, control.mp3 except 5669, accompaniment.mp3, spectrogram.png,
+  bplus_report.json, README.md) and a Compare entry "MuseControlLite B+ (no cymbals, with Earth voices)".
+  5209, 5313, 3912: the pilot takes were reused with the cymbal post-process. 4950, 5176, 5011, 5058, 5669, 5046:
+  new CPU renders with a cymbal-free prompt and negative prompt, plus the same post-process.
+- `demo/learned/README.md`: B+ section and table (`python scripts/bplus_summary.py`).
+- `scripts/export_next_app.py` was run, then on the login node (compute nodes have no npm): `npm run lint` exit 0,
+  `npm test` 51/51, `npx next build --webpack` exit 0. Logs are in `logs/` (git-ignored).
 
-Final check job 8838549 (afterany on all post jobs): `scripts/export_next_app.py`, `npm run lint`, `npm test`,
-`npx next build --webpack`; exit codes in `logs/final_status.txt`, full logs in `logs/`.
-Job list files: `logs_mcl/render_jobs.txt`, `logs_mcl/post_jobs.txt`, `logs_mcl/final_job.txt`.
+## Not done / open
 
-## Resume (if interrupted)
+- The soft-rhythm / no-percussion pair was dropped (triage). The 5669 dynamics-only alternative was not rendered.
+- The 3912 seam (pilot take, 32–36 s) is not fixed. The new crossfade method is unproven (see the learned README).
+- Nothing has been listened to.
+
+## Re-run one track
 
 ```bash
-cd /projects/e32706/omb8654/jukebox-wt/mcl-bplus
-squeue -u $USER                                         # what is still running
-cat logs/final_status.txt                               # final checks, once job 8838549 ran
-ls demo/*_mclbplus/mix.mp3                              # tracks that finished
-# a track whose post job failed: re-run it (it stitches, mixes and exports)
-sbatch -J bpp-<id> scripts/bplus_post.sbatch <id>
-# a missing render window: python -m jukebox.learned.bplus units <id>  (mcl env), then
+# new track: DESC in jukebox/learned/bplus.py, TRACKS in jukebox/learned/musecontrol.py, then (mcl env)
+PYTHONPATH=. MCL_SRC=<dir containing <id>/> python -m jukebox.learned.bplus prepare <id>
+python -m jukebox.learned.bplus units <id>      # one line per window
 sbatch -J bpc-<id>-<which>-<k> scripts/bplus_render.sbatch <id> <variant> <which> <k>
-# then: sbatch scripts/bplus_final.sbatch ; commit demo/*_mclbplus, the frontend public/ + lib/data changes
+sbatch -J bpp-<id> --dependency=afterany:<render ids> scripts/bplus_post.sbatch <id>
+# per-track trims: BPLUS_GEN_OFFSET_DB (4950 used -10), BPLUS_VARIANT (5058 uses bplus_nomel via outputs/5058_mclbplus/variant.txt)
+python scripts/export_next_app.py && cd eic-vae/eic-sonification/frontend && npm run lint && npm test && npx next build --webpack
 ```
-A new track (e.g. 5046): add its prompt wording to `DESC` in `jukebox/learned/bplus.py` and its window/rhythm to
-`TRACKS` in `jukebox/learned/musecontrol.py`, run `prepare` (mcl env), submit one render per unit, then the post job.
-
-## Committed
-
-- (see `git log`) pipeline code, scripts, frontend export and test changes.
-
-## Remaining
-
-- commit demo/<id>_mclbplus per track as post jobs finish; update `demo/learned/README.md` B+ section
-- run/verify the final checks, commit the exported frontend data
 
 Track 5046 (Arctic sea ice) build notes, merged from three-voices-m1: `git show 74846c6:STATUS.md`.
