@@ -1,0 +1,297 @@
+{
+ "id": "5209",
+ "variant": "wosdd-all_g1.5",
+ "prompt": "Orchestral, warming, solemn strings and piano, slow cinematic build, flute melody",
+ "fidelity_spec": {
+  "label": "global anomaly",
+  "voices": [
+   "lead global"
+  ],
+  "pitch_map": {
+   "vmin": -0.6,
+   "vmax": 1.4,
+   "low": 62,
+   "span": 24,
+   "root": 2,
+   "scale": "major_pent",
+   "polarity": 1
+  },
+  "win": 0.18,
+  "offset": 0.03
+ },
+ "reference": {
+  "integrated_mix": {
+   "n": 68,
+   "r2": 0.9664259625235992,
+   "pearson_r": 0.9847844700416198,
+   "mae": 0.0652818627450982,
+   "pitch_within_half_semitone": 1.0,
+   "voiced": 1.0,
+   "richness": {
+    "non_lead_energy_share": 0.09671321182427141,
+    "spectral_flatness": 0.0004725623584818095
+   }
+  },
+  "integrated_mix_control": {
+   "n": 65,
+   "r2": -0.5513890055788802,
+   "pearson_r": 0.23608354713823224,
+   "mae": 0.37370512820512825,
+   "pitch_within_half_semitone": 0.9384615384615385,
+   "voiced": 0.9558823529411765,
+   "richness": {
+    "non_lead_energy_share": 0.770507612241271,
+    "spectral_flatness": 0.0005020707612857223
+   }
+  },
+  "lead_stem": {
+   "n": 68,
+   "r2": 0.9661281197550587,
+   "pearson_r": 0.9847843281253258,
+   "mae": 0.06524509803921585,
+   "pitch_within_half_semitone": 1.0,
+   "voiced": 1.0,
+   "richness": {
+    "non_lead_energy_share": 0.0219535231349008,
+    "spectral_flatness": 0.0005737971514463425
+   }
+  },
+  "cond_real": {
+   "n": 68,
+   "r2": 0.9645000445551516,
+   "pearson_r": 0.984171576292884,
+   "mae": 0.06705882352941188,
+   "pitch_within_half_semitone": 1.0,
+   "voiced": 1.0,
+   "richness": {
+    "non_lead_energy_share": 0.03212459174346186,
+    "spectral_flatness": 1.6281674106721766e-06
+   }
+  }
+ },
+ "result": {
+  "runs": [
+   {
+    "variant": "wosdd-all_g1.5",
+    "which": "real",
+    "adapter": "wosdd-all",
+    "guidance_con": 1.5,
+    "guidance_text": 7.0,
+    "steps": 50,
+    "seed": 42,
+    "dtype": "fp16",
+    "device": "NVIDIA A100-SXM4-80GB",
+    "segments": [
+     [
+      0.0,
+      31.5
+     ]
+    ],
+    "audio_s": 31.5,
+    "gen_seconds": 5.2,
+    "seconds_per_audio_minute": 9.9,
+    "load_seconds": 50.5,
+    "prompt": "Orchestral, warming, solemn strings and piano, slow cinematic build, flute melody"
+   },
+   {
+    "variant": "wosdd-all_g1.5",
+    "which": "control",
+    "adapter": "wosdd-all",
+    "guidance_con": 1.5,
+    "guidance_text": 7.0,
+    "steps": 50,
+    "seed": 42,
+    "dtype": "fp16",
+    "device": "NVIDIA A100-SXM4-80GB",
+    "segments": [
+     [
+      0.0,
+      31.5
+     ]
+    ],
+    "audio_s": 31.5,
+    "gen_seconds": 5.3,
+    "seconds_per_audio_minute": 10.0,
+    "load_seconds": 50.5,
+    "prompt": "Orchestral, warming, solemn strings and piano, slow cinematic build, flute melody"
+   }
+  ],
+  "audio_s": 31.5,
+  "n_lead_notes": 68,
+  "A": {
+   "real": {
+    "n": 68,
+    "r2": 0.9643034617311756,
+    "pearson_r": 0.9836081237909344,
+    "mae": 0.06698529411764721,
+    "pitch_within_half_semitone": 1.0,
+    "voiced": 1.0,
+    "octave_folded": {
+     "voiced": 0.9852941176470589,
+     "pc_within_half_semitone": 1.0,
+     "exact_within_half_semitone": 1.0,
+     "median_octave_offset": 0.0
+    }
+   },
+   "control": {
+    "n": 68,
+    "r2": -0.9224579128436037,
+    "pearson_r": 0.0863157863403612,
+    "mae": 0.4277818627450981,
+    "pitch_within_half_semitone": 1.0,
+    "voiced": 1.0
+   },
+   "chroma_accuracy_vs_condition": 0.9869172655242306,
+   "richness": {
+    "non_lead_energy_share": 0.12175016615036532,
+    "spectral_flatness": 0.00011341722711222246
+   },
+   "chroma_accuracy_control_vs_its_condition": 0.9889441680486457
+  },
+  "B": {
+   "replace": {
+    "stems": [
+     "bands",
+     "generated"
+    ],
+    "generated_gain_db_vs_lead": -10.0,
+    "ducking": {
+     "mean_gr_db": 0.8706969767808914,
+     "max_gr_db": 8.996515274047852
+    },
+    "lufs": -15.999999909703583,
+    "limiter_gr_db": -0.0,
+    "norm_gain_db": -0.2885563814593316,
+    "mix": {
+     "n": 68,
+     "r2": 0.9664747783926403,
+     "pearson_r": 0.9848175764707727,
+     "mae": 0.06506127450980408,
+     "pitch_within_half_semitone": 1.0,
+     "voiced": 1.0
+    },
+    "control": {
+     "n": 67,
+     "r2": -0.8581166717681303,
+     "pearson_r": 0.038766334812011576,
+     "mae": 0.41281094527363194,
+     "pitch_within_half_semitone": 0.8507462686567164,
+     "voiced": 0.9852941176470589
+    },
+    "control_e2e": {
+     "n": 68,
+     "r2": -0.656649898687282,
+     "pearson_r": 0.14493514966146515,
+     "mae": 0.4059558823529413,
+     "pitch_within_half_semitone": 0.9411764705882353,
+     "voiced": 1.0
+    }
+   },
+   "augment": {
+    "stems": [
+     "bands",
+     "generated",
+     "geophony",
+     "harmony"
+    ],
+    "generated_gain_db_vs_lead": -13.0,
+    "ducking": {
+     "mean_gr_db": 1.2052195519208908,
+     "max_gr_db": 9.000000357627869
+    },
+    "lufs": -15.999999767730941,
+    "limiter_gr_db": -0.0,
+    "norm_gain_db": -0.10205070904778976,
+    "mix": {
+     "n": 68,
+     "r2": 0.9664216746432106,
+     "pearson_r": 0.984820987994488,
+     "mae": 0.06522058823529428,
+     "pitch_within_half_semitone": 1.0,
+     "voiced": 1.0
+    },
+    "control": {
+     "n": 64,
+     "r2": -0.5524428020901335,
+     "pearson_r": 0.309508228577756,
+     "mae": 0.3511197916666668,
+     "pitch_within_half_semitone": 0.921875,
+     "voiced": 0.9411764705882353
+    },
+    "control_e2e": {
+     "n": 67,
+     "r2": -0.7047853700783802,
+     "pearson_r": 0.16320224729633856,
+     "mae": 0.3945522388059703,
+     "pitch_within_half_semitone": 0.9402985074626866,
+     "voiced": 0.9852941176470589
+    }
+   }
+  }
+ },
+ "controls": {
+  "id": "5209",
+  "prompt": "Orchestral, warming, solemn strings and piano, slow cinematic build, flute melody",
+  "duration_s": 30.0,
+  "total_s": 31.5,
+  "segments": [
+   [
+    0.0,
+    31.5
+   ]
+  ],
+  "crossfade_s": 0.0,
+  "melody": {
+   "source": "legato tone of the data lead notes (fidelity voices only)",
+   "voices": [
+    "lead global"
+   ],
+   "n_notes": 68,
+   "format": "top-4 CQT bins per channel (8 x frames), MIDI+1, hop 512",
+   "seconds": 14.9
+  },
+  "full_condition": {
+   "stems": [
+    "harmony.wav",
+    "bands.wav"
+   ],
+   "db_vs_lead": -6
+  },
+  "control_melody": "arrange's shuffled control lead (seed 0), same slots, pitches permuted",
+  "dynamics": {
+   "lead_weight": 0.5,
+   "curves": [
+    "geophony"
+   ],
+   "range_db": [
+    -25.583366271352144,
+    -6.750232240172083
+   ],
+   "frames": 8683,
+   "hop": 160
+  },
+  "rhythm": {
+   "plan": "one year per data step: beat every 2 years, downbeat every 8 years",
+   "n_beats": 72,
+   "n_downbeats": 18,
+   "fps": 100
+  },
+  "fidelity_spec": {
+   "label": "global anomaly",
+   "voices": [
+    "lead global"
+   ],
+   "pitch_map": {
+    "vmin": -0.6,
+    "vmax": 1.4,
+    "low": 62,
+    "span": 24,
+    "root": 2,
+    "scale": "major_pent",
+    "polarity": 1
+   },
+   "win": 0.18,
+   "offset": 0.03
+  }
+ }
+}

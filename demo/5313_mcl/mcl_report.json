@@ -1,0 +1,303 @@
+{
+ "id": "5313",
+ "variant": "wosdd-all_g1.5",
+ "prompt": "Night city electronic ambient, warm synth pads, soft pulse, glowing, flute melody",
+ "fidelity_spec": {
+  "label": "global light / 2012",
+  "voices": [
+   "years"
+  ],
+  "pitch_map": {
+   "vmin": 0.98,
+   "vmax": 1.3667224882345073,
+   "low": 62,
+   "span": 19,
+   "root": 2,
+   "scale": "major_pent",
+   "polarity": 1
+  },
+  "win": 0.45,
+  "offset": 0.1
+ },
+ "reference": {
+  "integrated_mix": {
+   "n": 24,
+   "r2": 0.9771657684236911,
+   "pearson_r": 0.9900498320692511,
+   "mae": 0.01324096071022903,
+   "pitch_within_half_semitone": 1.0,
+   "voiced": 1.0,
+   "richness": {
+    "non_lead_energy_share": 0.11429697798388885,
+    "spectral_flatness": 0.0006094453856348991
+   }
+  },
+  "integrated_mix_control": {
+   "n": 24,
+   "r2": -0.8767606377806665,
+   "pearson_r": -0.04426066570351345,
+   "mae": 0.09712792264154808,
+   "pitch_within_half_semitone": 0.9166666666666666,
+   "voiced": 1.0,
+   "richness": {
+    "non_lead_energy_share": 0.5381937111773138,
+    "spectral_flatness": 0.0006264536059461534
+   }
+  },
+  "lead_stem": {
+   "n": 24,
+   "r2": 0.9756618141472334,
+   "pearson_r": 0.9894455441808471,
+   "mae": 0.013834613652694311,
+   "pitch_within_half_semitone": 1.0,
+   "voiced": 1.0,
+   "richness": {
+    "non_lead_energy_share": 0.019527864304313393,
+    "spectral_flatness": 6.089727321523242e-05
+   }
+  },
+  "cond_real": {
+   "n": 24,
+   "r2": 0.9749486398372266,
+   "pearson_r": 0.9892858595212415,
+   "mae": 0.01400422877911294,
+   "pitch_within_half_semitone": 1.0,
+   "voiced": 1.0,
+   "richness": {
+    "non_lead_energy_share": 0.027048607947730036,
+    "spectral_flatness": 5.294548444112479e-08
+   }
+  }
+ },
+ "result": {
+  "runs": [
+   {
+    "variant": "wosdd-all_g1.5",
+    "which": "real",
+    "adapter": "wosdd-all",
+    "guidance_con": 1.5,
+    "guidance_text": 7.0,
+    "steps": 50,
+    "seed": 42,
+    "dtype": "fp16",
+    "device": "NVIDIA A100-SXM4-80GB",
+    "segments": [
+     [
+      0.0,
+      44.83299319727891
+     ]
+    ],
+    "audio_s": 44.83299319727891,
+    "gen_seconds": 5.2,
+    "seconds_per_audio_minute": 7.0,
+    "load_seconds": 14.1,
+    "prompt": "Night city electronic ambient, warm synth pads, soft pulse, glowing, flute melody"
+   },
+   {
+    "variant": "wosdd-all_g1.5",
+    "which": "control",
+    "adapter": "wosdd-all",
+    "guidance_con": 1.5,
+    "guidance_text": 7.0,
+    "steps": 50,
+    "seed": 42,
+    "dtype": "fp16",
+    "device": "NVIDIA A100-SXM4-80GB",
+    "segments": [
+     [
+      0.0,
+      44.83299319727891
+     ]
+    ],
+    "audio_s": 44.83299319727891,
+    "gen_seconds": 5.2,
+    "seconds_per_audio_minute": 7.0,
+    "load_seconds": 14.1,
+    "prompt": "Night city electronic ambient, warm synth pads, soft pulse, glowing, flute melody"
+   }
+  ],
+  "audio_s": 44.83299319727891,
+  "n_lead_notes": 24,
+  "A": {
+   "real": {
+    "n": 24,
+    "r2": 0.9748893655535538,
+    "pearson_r": 0.9890563431455501,
+    "mae": 0.013919421215903624,
+    "pitch_within_half_semitone": 1.0,
+    "voiced": 1.0,
+    "octave_folded": {
+     "voiced": 0.9166666666666666,
+     "pc_within_half_semitone": 0.8636363636363636,
+     "exact_within_half_semitone": 0.8181818181818182,
+     "median_octave_offset": 0.0
+    }
+   },
+   "control": {
+    "n": 24,
+    "r2": -1.1554587121834996,
+    "pearson_r": -0.027518708280259502,
+    "mae": 0.10744647273012715,
+    "pitch_within_half_semitone": 1.0,
+    "voiced": 1.0
+   },
+   "chroma_accuracy_vs_condition": 0.9952097358881409,
+   "richness": {
+    "non_lead_energy_share": 0.21015941775151806,
+    "spectral_flatness": 0.0021236303728073835
+   },
+   "chroma_accuracy_control_vs_its_condition": 0.9972812014500259
+  },
+  "B": {
+   "replace": {
+    "stems": [
+     "bands",
+     "events",
+     "generated"
+    ],
+    "generated_gain_db_vs_lead": -10.0,
+    "ducking": {
+     "mean_gr_db": 1.9743622839450836,
+     "max_gr_db": 8.999999761581421
+    },
+    "lufs": -15.999999931843588,
+    "limiter_gr_db": -0.0,
+    "norm_gain_db": -0.010101985797275536,
+    "mix": {
+     "n": 24,
+     "r2": 0.9756618141472334,
+     "pearson_r": 0.9894455441808471,
+     "mae": 0.013834613652694311,
+     "pitch_within_half_semitone": 1.0,
+     "voiced": 1.0
+    },
+    "control": {
+     "n": 24,
+     "r2": -0.8636342931414189,
+     "pearson_r": -0.03898264202090147,
+     "mae": 0.0965766734806875,
+     "pitch_within_half_semitone": 0.9166666666666666,
+     "voiced": 1.0
+    },
+    "control_e2e": {
+     "n": 24,
+     "r2": -0.9148145332535,
+     "pearson_r": -0.047221637292374934,
+     "mae": 0.09847185898543849,
+     "pitch_within_half_semitone": 0.9583333333333334,
+     "voiced": 1.0
+    }
+   },
+   "augment": {
+    "stems": [
+     "anthrophony",
+     "bands",
+     "biophony",
+     "events",
+     "generated",
+     "geophony",
+     "harmony"
+    ],
+    "generated_gain_db_vs_lead": -13.0,
+    "ducking": {
+     "mean_gr_db": 2.079933136701584,
+     "max_gr_db": 9.000000357627869
+    },
+    "lufs": -15.999999859771247,
+    "limiter_gr_db": -0.0,
+    "norm_gain_db": -0.05949316026965862,
+    "mix": {
+     "n": 24,
+     "r2": 0.9765650435086003,
+     "pearson_r": 0.9899645427869068,
+     "mae": 0.013580190963066322,
+     "pitch_within_half_semitone": 1.0,
+     "voiced": 1.0
+    },
+    "control": {
+     "n": 24,
+     "r2": -0.8719673594296571,
+     "pearson_r": -0.04207614981300818,
+     "mae": 0.09683109617031545,
+     "pitch_within_half_semitone": 0.9166666666666666,
+     "voiced": 1.0
+    },
+    "control_e2e": {
+     "n": 24,
+     "r2": -0.9148145332535,
+     "pearson_r": -0.047221637292374934,
+     "mae": 0.09847185898543849,
+     "pitch_within_half_semitone": 0.9583333333333334,
+     "voiced": 1.0
+    }
+   }
+  }
+ },
+ "controls": {
+  "id": "5313",
+  "prompt": "Night city electronic ambient, warm synth pads, soft pulse, glowing, flute melody",
+  "duration_s": 43.333,
+  "total_s": 44.83299319727891,
+  "segments": [
+   [
+    0.0,
+    44.83299319727891
+   ]
+  ],
+  "crossfade_s": 0.0,
+  "melody": {
+   "source": "legato tone of the data lead notes (fidelity voices only)",
+   "voices": [
+    "years"
+   ],
+   "n_notes": 24,
+   "format": "top-4 CQT bins per channel (8 x frames), MIDI+1, hop 512",
+   "seconds": 14.8
+  },
+  "full_condition": {
+   "stems": [
+    "harmony.wav",
+    "bands.wav"
+   ],
+   "db_vs_lead": -6
+  },
+  "control_melody": "arrange's shuffled control lead (seed 0), same slots, pitches permuted",
+  "dynamics": {
+   "lead_weight": 0.5,
+   "curves": [
+    "geophony",
+    "anthrophony",
+    "biophony"
+   ],
+   "range_db": [
+    -23.70194879977373,
+    -10.488721497138174
+   ],
+   "frames": 12358,
+   "hop": 160
+  },
+  "rhythm": {
+   "plan": "downbeat at each year boundary (24), 4 beats per year (0.15 s)",
+   "n_beats": 96,
+   "n_downbeats": 24,
+   "fps": 100
+  },
+  "fidelity_spec": {
+   "label": "global light / 2012",
+   "voices": [
+    "years"
+   ],
+   "pitch_map": {
+    "vmin": 0.98,
+    "vmax": 1.3667224882345073,
+    "low": 62,
+    "span": 19,
+    "root": 2,
+    "scale": "major_pent",
+    "polarity": 1
+   },
+   "win": 0.45,
+   "offset": 0.1
+  }
+ }
+}
