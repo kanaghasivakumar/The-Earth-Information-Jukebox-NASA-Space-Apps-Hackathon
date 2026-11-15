@@ -15,8 +15,7 @@ Logs are in `logs_5046/` (gitignored). Inputs are in `data/raw/5046/` (gitignore
 ## Steps
 1. [done] Builder (job 8838139): NSIDC r 0.998, MAE 0.35 M km2; builder lead R2 0.992, control -1.28. Rerun: `sbatch scripts/build_5046.sbatch`.
 2. [done] Arrangement (job 8838203): lead stem R2 0.990, mix R2 0.990, control -1.26, -16.0 LUFS. `_5046` added. Job 8838203: `sbatch scripts/arrange_5046.sbatch` (copies orig_* stems, then runs arrange_one.sh 5046).
-3. [done] Export (job 8838204), check_web OK. `sbatch scripts/export_5046.sbatch` runs export_track, demo copies, check_web and export_next_app (--integrate outputs). Still todo: add 5046 to `export_all.sh`. Old note: `python scripts/export_track.py outputs/5046 --meta scripts/track_meta/5046.json`; add 5046 to `export_all.sh`;
-   copy `mix.mp3`/`arrange_report.json` to `demo/5046`; run `python scripts/check_web.py`; run `scripts/export_next_app.py`.
+3. [done] Export (job 8838204), check_web OK. `sbatch scripts/export_5046.sbatch` runs export_track, demo copies, check_web and export_next_app (--integrate outputs). (5046 is also in export_all.sh.)
 4. [done] `video_rate` support in web/js/app.js and DataPlayer.tsx, a 5046 entry in copy.ts, and 5046 in export_all.sh plus the demo/README listening guide.
 5. [done 11:20, login node] lint exit 0; vitest 50/50 passed; `npx next build --webpack` exit 0 (SWC native load warnings only). Compute nodes have no npm, so job 8838237 failed with exit 127. Run these three on the login node: `cd eic-vae/eic-sonification/frontend && npm run lint && npm test && npx next build --webpack`.
    node_modules can be symlinked from `../ui/eic-vae/eic-sonification/frontend/node_modules`.
