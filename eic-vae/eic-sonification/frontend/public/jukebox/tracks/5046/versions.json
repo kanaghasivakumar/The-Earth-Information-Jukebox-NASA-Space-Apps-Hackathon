@@ -1,0 +1,34 @@
+{
+ "id": "5046",
+ "duration_s": 36.5,
+ "versions": [
+  {
+   "id": "mix",
+   "label": "Deterministic mix",
+   "kind": "deterministic",
+   "file": "mix.mp3",
+   "line": "The data melody and bands (FluidSynth), model-written harmony and the three recorded Earth voices. The reference.",
+   "fidelity": {
+    "r2": 0.9899,
+    "within_half_semitone": 1.0,
+    "control_r2": -1.256,
+    "control_kind": "lead stem, shuffled",
+    "note": "Measured on the full mix."
+   }
+  },
+  {
+   "id": "control",
+   "label": "Shuffled control",
+   "kind": "control",
+   "file": "mix_control.mp3",
+   "line": "The same arrangement with the melody's notes shuffled in time. It should sound like music but no longer follow the data.",
+   "fidelity": {
+    "r2": -1.256,
+    "within_half_semitone": null,
+    "control_r2": null,
+    "control_kind": null,
+    "note": "R\u00b2 of the shuffled melody against the real data. Measured on the shuffled lead stem."
+   }
+  }
+ ]
+}

@@ -5,7 +5,7 @@
  "video_url": "https://svs.gsfc.nasa.gov/vis/a000000/a005000/a005046/arctic_sea_ice_moving_two_year_w_dates.webm",
  "duration_s": 36.5,
  "units": "million km²",
- "description": "Arctic sea ice, one day per frame, from 16 Apr 2021 to 15 Apr 2023: two full years of melt and freeze-up seen from above the North Pole (JAXA AMSR2, 15 % concentration). The flute is the sea-ice extent measured from the movie: more ice plays higher. It falls through each summer to a low in September and climbs back each winter, twice. A soft glass pad an octave and more below plays the 1981-2010 median extent for the same day, so the gap between them is the ice that is missing. Ocean and wind grow as water opens. The audio runs 1.5 times slower than the movie.",
+ "description": "Arctic sea ice, one day per frame, from 16 Apr 2021 to 15 Apr 2023: two full years of melt and freeze-up seen from above the North Pole (JAXA AMSR2, 15 % concentration). The flute is the sea-ice extent measured from the movie: more ice plays higher. It falls through each summer to a low in September and climbs back each winter, twice. A bowed-glass pad an octave and more below plays the 1981-2010 median extent for the same day, so the gap between them is the ice that is missing. Ocean and wind grow as water opens. The audio runs 1.5 times slower than the movie.",
  "legend": [
   {
    "voice": "lead_extent",
@@ -30,27 +30,100 @@
   {
    "voice": "anthrophony",
    "meaning": "silent: not measured by this dataset"
+  },
+  {
+   "voice": "harmony and bass (model)",
+   "meaning": "written by the Anticipatory Music Transformer around the data melody; it never changes a data note and carries no data"
+  },
+  {
+   "voice": "cymbal swells (form)",
+   "meaning": "section changes found in the video frames (DINOv2 novelty); cues only, no data"
   }
  ],
  "stems": [
   {
-   "name": "lead_extent",
-   "file": "lead_extent.wav",
-   "group": "melody"
+   "name": "melody",
+   "file": "melody.wav",
+   "group": "melody",
+   "label": "Data melody"
   },
   {
    "name": "bands",
    "file": "bands.wav",
-   "group": "bands"
+   "group": "bands",
+   "label": "Bands (data)"
+  },
+  {
+   "name": "harmony",
+   "file": "harmony.wav",
+   "group": "harmony",
+   "label": "Harmony and bass (model-written)"
+  },
+  {
+   "name": "geophony",
+   "file": "geophony.wav",
+   "group": "geophony",
+   "label": "Geophony (recorded Earth sounds)"
+  },
+  {
+   "name": "biophony",
+   "file": "biophony.wav",
+   "group": "biophony",
+   "label": "Biophony (recorded living sounds)"
   }
  ],
  "timeline": "timeline.json",
  "controls": "controls.json",
  "fidelity": {
-  "r2": 0.9915,
-  "pearson_r": 0.9958,
-  "mae": 0.2434,
-  "control_r2": -1.2843
+  "r2": 0.9895596565494861,
+  "pearson_r": 0.9950709673648814,
+  "mae": 0.2452162263948698,
+  "n": 49,
+  "control_r2": -1.256047814311534,
+  "mix_r2": 0.9899386079556106,
+  "pitch_within_half_semitone": 1.0,
+  "mix_pitch_within_half_semitone": 1.0,
+  "method": "note-level register-bounded pyin on the final rendered audio",
+  "series": "sea-ice extent",
+  "detail": {
+   "sea-ice extent": {
+    "voices": [
+     "lead extent"
+    ],
+    "final_stem": {
+     "n": 49,
+     "r2": 0.9895596565494861,
+     "pearson_r": 0.9950709673648814,
+     "mae": 0.2452162263948698,
+     "pitch_within_half_semitone": 1.0,
+     "voiced": 1.0
+    },
+    "before_stem": {
+     "n": 49,
+     "r2": 0.988237336749096,
+     "pearson_r": 0.9944391001085813,
+     "mae": 0.26113412612632125,
+     "pitch_within_half_semitone": 1.0,
+     "voiced": 1.0
+    },
+    "final_mix": {
+     "n": 49,
+     "r2": 0.9899386079556106,
+     "pearson_r": 0.9952649182791267,
+     "mae": 0.24099173659895082,
+     "pitch_within_half_semitone": 1.0,
+     "voiced": 1.0
+    },
+    "control_stem": {
+     "n": 49,
+     "r2": -1.256047814311534,
+     "pearson_r": -0.10370872163141795,
+     "mae": 3.203560995177289,
+     "pitch_within_half_semitone": 0.9795918367346939,
+     "voiced": 1.0
+    }
+   }
+  }
  },
  "data_source": {
   "music": "ice / water / land pixel classification of the SVS movie, area-weighted on the globe",
@@ -364,5 +437,104 @@
   "end": "2023-04-15",
   "format": "day"
  },
- "caveat": "Extent is measured from the movie's pixels (blue-white ice against ocean and land), not read from the AMSR2 files. Against NSIDC's daily extent: r = 0.998, mean error 0.35 million km². The video is the 2021-2023 WebM; the SVS MP4 is now a newer 2024-2026 render."
+ "caveat": "Extent is measured from the movie's pixels (blue-white ice against ocean and land), not read from the AMSR2 files. Against NSIDC's daily extent: r = 0.998, mean error 0.35 million km². The video is the 2021-2023 WebM; the SVS MP4 is now a newer 2024-2026 render.",
+ "voice_groups": {
+  "band 1981-2010 median": "bands",
+  "bass": "harmony",
+  "form cymbal": "harmony",
+  "harmony": "harmony",
+  "lead extent": "melody"
+ },
+ "lead_voices": [
+  "lead extent"
+ ],
+ "lead_voice": "lead extent",
+ "pitch_map": {
+  "vmin": 4.9,
+  "vmax": 15.94,
+  "low": 65,
+  "span": 24,
+  "root": 5,
+  "scale": "major",
+  "polarity": 1
+ },
+ "control": {
+  "file": "control_shuffled.wav",
+  "replaces": "melody",
+  "label": "Same lead notes, shuffled in time (same arrangement)",
+  "mix": "mix_control.wav"
+ },
+ "fidelity_builder": {
+  "r2": 0.9915,
+  "pearson_r": 0.9958,
+  "mae": 0.2434,
+  "control_r2": -1.2843
+ },
+ "arrangement": {
+  "engine": "FluidSynth + FluidR3_GM (MIT)",
+  "instruments": {
+   "band 1981-2010 median": "GM 92",
+   "lead extent": "flute"
+  },
+  "harmony": {
+   "model": "stanford-crfm/music-medium-800k",
+   "seed": 0,
+   "notes": {
+    "harmony": 48,
+    "bass": 37
+   }
+  },
+  "form": {
+   "sections": [
+    [
+     0.0,
+     12.75,
+     "A"
+    ],
+    [
+     12.75,
+     21.75,
+     "B"
+    ],
+    [
+     21.75,
+     27.0,
+     "C"
+    ],
+    [
+     27.0,
+     32.25,
+     "A"
+    ],
+    [
+     32.25,
+     36.75,
+     "B"
+    ]
+   ]
+  },
+  "voices": [
+   {
+    "group": "geophony",
+    "curve": "geophony",
+    "sources": [
+     "ocean",
+     "wind"
+    ],
+    "tune_mix": 0.4,
+    "mean_level": 0.5551472602739727
+   },
+   {
+    "group": "biophony",
+    "curve": "biophony",
+    "sources": [
+     "birds"
+    ],
+    "tune_mix": 0.15,
+    "mean_level": 0.08691986301369864
+   }
+  ],
+  "loudness_lufs": -16.0,
+  "notes": "audio is 1.5x slower than the movie (video_rate 2/3); form cues from demo/5046_form (DINOv2 novelty), rescaled to audio time by jukebox.datasets.seaice_5046"
+ }
 }

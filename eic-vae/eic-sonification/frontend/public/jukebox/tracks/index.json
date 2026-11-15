@@ -63,6 +63,14 @@
    "summary": "Daily sea surface temperature anomaly, 2024 to 2026, updated by NASA every day. Geophony.",
    "duration_s": 30.033,
    "order": 8
+  },
+  {
+   "id": "5046",
+   "title": "Daily Arctic Sea Ice, By Year",
+   "voice": "geophony",
+   "summary": "Daily Arctic sea ice, April 2021 to April 2023: two melt seasons and two freeze-ups. Geophony.",
+   "duration_s": 36.5,
+   "order": 9
   }
  ]
 }

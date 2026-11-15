@@ -1,4 +1,4 @@
-# Listening guide: the eight integrated tracks
+# Listening guide: the integrated tracks
 
 Every `demo/<id>/mix.mp3` is the **integrated arrangement** made by `jukebox.render.arrange`. It has the data
 melody and bands (FluidSynth, FluidR3_GM), model-written harmony (Anticipatory Music Transformer, medium) and the
@@ -15,6 +15,7 @@ the web jukebox (`web/tracks/<id>/`), in this story order:
 | 6 | **5669** GEOS aerosols (still image) | A west-to-east sweep with one instrument per aerosol type: double bass for sea salt, clarinet for dust, oboe for sulfate and harp for smoke. Wind and surf, city hum and birds sit underneath. There is no lead and no harmony. | Loudness is how much of a longitude column holds that aerosol, and pitch is its latitude. Listen for Saharan dust and African smoke. | On each type's own stem, 100 % of solo notes come back on the written pitch (dust R² 0.974, sulfate R² 0.79). R² for latitude is limited by the 9° pitch steps. |
 | 7 | **5058** Florida lights after Hurricane Ian | Trumpet runs fall as the "after" picture wipes across the coast, over a pad, sparse strings and bass, traffic, frogs and insects. | Each run is one strip of the map, and a bigger fall means more light was lost (about 63 % of the light is lost overall). City hum fades and frogs take over. | Trumpet stem: R² 0.988 for the light value (the old synth stem scored −0.35). Full mix: R² 0.988, all 20 notes on the right pitch (v1 was 0.69; see below). |
 | 8 | **5176** SST anomaly, 2024–2026 (daily) | A flute over six band pads, strings and bass, and ocean recordings. | Pitch is the global ocean's departure from normal (higher means warmer than normal). | Full mix R² 0.979 (shuffled −1.26). |
+| 9 | **5046** Arctic sea ice, Apr 2021 – Apr 2023 (daily) | A flute rises and falls twice over a bowed-glass pad, with AMT strings and bass, and ocean and wind. Birds appear faintly in the summers. Cymbals mark the A B C A B form. | Pitch is the sea-ice extent measured from the movie: more ice is higher. It falls to each September low and climbs back. The glass pad is the 1981–2010 median for the same day, so the gap is the missing ice. The audio is 1.5× slower than the video. | Movie vs NSIDC daily extent: r 0.998, MAE 0.35 M km². Full mix R² 0.990 (shuffled −1.26). |
 
 ## How the fidelity numbers are measured
 
@@ -35,6 +36,7 @@ same arrangement with the lead's pitches permuted in time, scored against the re
 | 5669 dust / sulfate / sea salt / smoke (pitch hit rate) | 0.97 / 0.89 / n=4 / −1.32 | 87 / 36 / 50 / 100 % | 100 / 100 / 100 / 100 % | not measured (4 voices at once) | none |
 | 5058 | interval r 0.63 | −0.35 | 0.988 | 0.988 | −0.29 |
 | 5176 | 0.978 | 0.979 | 0.979 | 0.979 | −1.26 |
+| 5046 | 0.992 | 0.988 | 0.990 | 0.990 | −1.26 |
 
 Mix decisions that the numbers forced:
 
@@ -69,7 +71,7 @@ plus harmony, bass and form cues, and its lead notes are identical to `demo/3912
 Reproduce (Quest `short` partition):
 
 ```bash
-for id in 3912 5209 5176 4950 5313 5011 5669 5058; do
+for id in 3912 5209 5176 4950 5313 5011 5669 5058 5046; do
   srun -A p32576 -p short -t 01:00:00 --mem=16G -c 4 scripts/arrange_one.sh $id &
 done; wait
 srun -A p32576 -p short -t 00:20:00 --mem=8G -c 2 scripts/export_all.sh

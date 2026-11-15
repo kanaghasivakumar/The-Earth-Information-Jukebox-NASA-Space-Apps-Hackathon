@@ -1,0 +1,242 @@
+{
+ "id": "5046",
+ "duration_s": 36.5,
+ "seed": 0,
+ "harmony": {
+  "model": "stanford-crfm/music-medium-800k",
+  "seed": 0,
+  "seconds": 43.2,
+  "kwargs": {
+   "instruments": [
+    {
+     "48": "harmony"
+    },
+    {
+     "32": "bass",
+     "33": "bass"
+    }
+   ],
+   "key": [
+    5,
+    "major"
+   ],
+   "ranges": {
+    "harmony": [
+     43,
+     64
+    ]
+   }
+  },
+  "notes": {
+   "harmony": 48,
+   "bass": 37
+  },
+  "clash_report": {
+   "new_notes": 85,
+   "overlap_pairs": 196,
+   "bass_on_harmony_pc": 0.7297297297297297,
+   "dissonant_pairs": 0,
+   "above_lead": 0,
+   "per_voice": {
+    "bass": 37,
+    "harmony": 48
+   }
+  },
+  "cached": false
+ },
+ "form": {
+  "sections": [
+   [
+    0.0,
+    12.75,
+    "A"
+   ],
+   [
+    12.75,
+    21.75,
+    "B"
+   ],
+   [
+    21.75,
+    27.0,
+    "C"
+   ],
+   [
+    27.0,
+    32.25,
+    "A"
+   ],
+   [
+    32.25,
+    36.75,
+    "B"
+   ]
+  ],
+  "boundaries": [
+   12.75,
+   21.75,
+   27.0,
+   32.25
+  ],
+  "non_data_changes": {
+   "transposed": 0,
+   "shortened": 12,
+   "rerouted": 0
+  },
+  "kwargs": {
+   "transpose": false,
+   "motifs": false,
+   "cymbal": true,
+   "phrase_break": true
+  },
+  "source": "/gpfs/projects/e32706/omb8654/jukebox-wt/track-5046/demo/5046/form.json"
+ },
+ "tune_to": {
+  "source": "harmony",
+  "segments": 19
+ },
+ "beds": [
+  {
+   "group": "geophony",
+   "curve": "geophony",
+   "sources": [
+    "ocean",
+    "wind"
+   ],
+   "tune_mix": 0.4,
+   "mean_level": 0.5551472602739727
+  },
+  {
+   "group": "biophony",
+   "curve": "biophony",
+   "sources": [
+    "birds"
+   ],
+   "tune_mix": 0.15,
+   "mean_level": 0.08691986301369864
+  }
+ ],
+ "engines": [
+  "fluidsynth"
+ ],
+ "levels": {
+  "melody": {
+   "group": "melody",
+   "gain_db": 0.0,
+   "target_db_vs_melody": 0.0,
+   "active_rms_db": -20.575295000922978,
+   "peak_db": -10.054569444205157
+  },
+  "bands": {
+   "group": "bands",
+   "gain_db": -7.130961306033071,
+   "target_db_vs_melody": -15.0,
+   "active_rms_db": -37.23862976500488,
+   "peak_db": -23.8695197953159
+  },
+  "harmony": {
+   "group": "harmony",
+   "gain_db": -10.790431558769889,
+   "target_db_vs_melody": -13.0,
+   "active_rms_db": -34.98661800091173,
+   "peak_db": -21.88600564680671
+  },
+  "geophony": {
+   "group": "geophony",
+   "gain_db": -7.221886053549548,
+   "target_db_vs_melody_at_level1": -10.0,
+   "curve_peak": 1.0,
+   "active_rms_db": -33.26546782608028,
+   "peak_db": -15.135267695472262
+  },
+  "biophony": {
+   "group": "biophony",
+   "gain_db": -9.759671866239692,
+   "target_db_vs_melody_at_level1": -11.0,
+   "curve_peak": 0.22083507056806762,
+   "active_rms_db": -50.65360503496421,
+   "peak_db": -29.776528211978363
+  }
+ },
+ "loudness": {
+  "ducking": {
+   "margin_db": 8.0,
+   "max_db": 9.0,
+   "groups": [
+    "bands",
+    "biophony",
+    "geophony",
+    "harmony"
+   ],
+   "mean_gr_db": 1.6785095930099487,
+   "max_gr_db": 9.0,
+   "share_of_time_ducked_over_1db": 0.5062859529776823
+  },
+  "stem_limiter_gr_db": {},
+  "lufs_pre_norm": -23.963085353484285,
+  "lufs_target": -16.0,
+  "lufs_mix": -16.000000349165628,
+  "limiter_max_gr_db": -0.0,
+  "mix_peak_db": -8.324968489278726,
+  "norm_gain_db": 7.963085353484284
+ },
+ "fidelity": {
+  "sea-ice extent": {
+   "voices": [
+    "lead extent"
+   ],
+   "pitch_map": {
+    "vmin": 4.9,
+    "vmax": 15.94,
+    "low": 65,
+    "span": 24,
+    "root": 5,
+    "scale": "major",
+    "polarity": 1
+   },
+   "final_stem": {
+    "n": 49,
+    "r2": 0.9895596565494861,
+    "pearson_r": 0.9950709673648814,
+    "mae": 0.2452162263948698,
+    "pitch_within_half_semitone": 1.0,
+    "voiced": 1.0
+   },
+   "before_stem": {
+    "n": 49,
+    "r2": 0.988237336749096,
+    "pearson_r": 0.9944391001085813,
+    "mae": 0.26113412612632125,
+    "pitch_within_half_semitone": 1.0,
+    "voiced": 1.0
+   },
+   "final_mix": {
+    "n": 49,
+    "r2": 0.9899386079556106,
+    "pearson_r": 0.9952649182791267,
+    "mae": 0.24099173659895082,
+    "pitch_within_half_semitone": 1.0,
+    "voiced": 1.0
+   },
+   "control_stem": {
+    "n": 49,
+    "r2": -1.256047814311534,
+    "pearson_r": -0.10370872163141795,
+    "mae": 3.203560995177289,
+    "pitch_within_half_semitone": 0.9795918367346939,
+    "voiced": 1.0
+   }
+  }
+ },
+ "timings_s": {
+  "harmony": 54.3,
+  "fluidsynth": 3.8,
+  "voices": 8.2,
+  "fidelity": 18.8,
+  "total": 87.3
+ },
+ "data_notes": 94,
+ "data_notes_unchanged": true,
+ "model_notes": 137,
+ "notes": "audio is 1.5x slower than the movie (video_rate 2/3); form cues from demo/5046_form (DINOv2 novelty), rescaled to audio time by jukebox.datasets.seaice_5046"
+}
