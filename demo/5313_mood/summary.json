@@ -1,0 +1,443 @@
+{
+ "id": "5313",
+ "tag": "base",
+ "generate": {
+  "id": "5313",
+  "size": "mrt2_base",
+  "tag": "base",
+  "device": "gpu",
+  "devices": [
+   "cuda:0"
+  ],
+  "chunk_frames": 10,
+  "chunk_s": 0.4,
+  "notes_mode": "key",
+  "cfg_style": 3.0,
+  "cfg_notes": 1.0,
+  "temperature": 1.2,
+  "top_k": 40,
+  "preroll_s": 2.0,
+  "prompts": [
+   "night city synthwave",
+   "forest birdsong ambient",
+   "dark empty silence",
+   "warm glowing electric piano",
+   "tense pulsing electronic",
+   "solemn orchestral strings"
+  ],
+  "scale_pcs": [
+   1,
+   2,
+   4,
+   6,
+   7,
+   9,
+   11
+  ],
+  "lead_low": 62,
+  "load_s": 33.2,
+  "gen_s": 68.3,
+  "audio_s": 45.2,
+  "gen_s_per_audio_min": 90.7,
+  "realtime_factor": 0.661
+ },
+ "mix": {
+  "id": "5313",
+  "tag": "base",
+  "label": "base",
+  "mood_db_vs_melody": -14.0,
+  "highpass_hz": 80.0,
+  "ducking": {
+   "margin_db": 8.0,
+   "max_db": 9.0,
+   "mean_gr_db": 2.063323974609375,
+   "share_of_time_ducked_over_1db": 0.5231332205438678
+  },
+  "lufs_pre": -15.973988198427348,
+  "lufs_mix": -16.000000053338688,
+  "limiter_gr_db": -0.0,
+  "norm_gain_db": -0.026011801572652468,
+  "active_rms_db": {
+   "melody": -21.355773429783707,
+   "bands": -41.403529708756714,
+   "events": -35.35576696210243,
+   "harmony": -34.712683518797135,
+   "geophony": -52.65800039181575,
+   "anthrophony": -34.03353521190529,
+   "biophony": -36.6797196701577,
+   "mood": -38.01497473046492
+  },
+  "fidelity": {
+   "mix_without_mood": {
+    "n": 24,
+    "r2": 0.9771657684236911,
+    "pearson_r": 0.9900498320692511,
+    "mae": 0.01324096071022903,
+    "pitch_within_half_semitone": 1.0,
+    "voiced": 1.0
+   },
+   "mix_with_mood": {
+    "n": 24,
+    "r2": 0.9766519813962011,
+    "pearson_r": 0.9898297684208877,
+    "mae": 0.013283364491833696,
+    "pitch_within_half_semitone": 1.0,
+    "voiced": 1.0
+   },
+   "control_mix_without_mood": {
+    "n": 24,
+    "r2": -0.8767606377806669,
+    "pearson_r": -0.04426066570351385,
+    "mae": 0.09712792264154808,
+    "pitch_within_half_semitone": 0.9166666666666666,
+    "voiced": 1.0
+   },
+   "control_mix_with_mood": {
+    "n": 24,
+    "r2": -0.8774324425364419,
+    "pearson_r": -0.0440942991879938,
+    "mae": 0.09721273020475742,
+    "pitch_within_half_semitone": 0.9166666666666666,
+    "voiced": 1.0
+   },
+   "control_stem": {
+    "n": 24,
+    "r2": -0.9148145332535,
+    "pearson_r": -0.047221637292374934,
+    "mae": 0.09847185898543849,
+    "pitch_within_half_semitone": 0.9583333333333334,
+    "voiced": 1.0
+   }
+  },
+  "series": "global light / 2012",
+  "r2_drop": 0.0005137870274899425,
+  "key_check": {
+   "scale_share": 0.7468811869621277,
+   "scale_share_chance": 0.5833333333333334,
+   "mood_chroma_profile": [
+    0.0471000000834465,
+    0.0544000007212162,
+    0.2110999971628189,
+    0.06480000168085098,
+    0.15279999375343323,
+    0.048900000751018524,
+    0.08590000122785568,
+    0.0649000033736229,
+    0.04650000110268593,
+    0.12269999831914902,
+    0.04580000042915344,
+    0.05510000139474869
+   ],
+   "harmony_chroma_cos_shift0": 0.8218142268332568,
+   "harmony_chroma_cos_other_shifts_mean": 0.5494883774725858,
+   "best_shift_semitones": 0,
+   "share_segments_shift0_best": 0.5454545454545454,
+   "segments": 22,
+   "clash": false
+  },
+  "style_follow": {
+   "clips": 18,
+   "clip_s": 10.0,
+   "hop_s": 2.0,
+   "r_per_anchor": {
+    "city": 0.9122034056677208,
+    "forest": 0.31224561287797753,
+    "dark": 0.6814917832122146,
+    "glow": -0.0495852407689046,
+    "change": 0.8312505948566004,
+    "solemn": 0.9281928703191055
+   },
+   "mean_r": 0.6026331710274524,
+   "top_prompt_agreement": 0.8333333333333334,
+   "chance_agreement": 0.16666666666666666,
+   "mean_r_time_reversed_weights": -0.5693861496566447,
+   "closest_prompt_share": {
+    "city": 0.5555555555555556,
+    "forest": 0.0,
+    "dark": 0.0,
+    "glow": 0.0,
+    "change": 0.3333333333333333,
+    "solemn": 0.1111111111111111
+   }
+  },
+  "fidelity_s": 27.5
+ },
+ "weights": {
+  "model": "google/siglip-base-patch16-224",
+  "fps": 2.0,
+  "tau": 0.01,
+  "debias": 0.7,
+  "beta": 2.0,
+  "smooth_s": 1.5,
+  "anchors": [
+   {
+    "name": "city",
+    "music": "night city synthwave",
+    "visual": "bright city lights at night seen from space",
+    "data_link": [
+     "anthrophony",
+     1
+    ]
+   },
+   {
+    "name": "forest",
+    "music": "forest birdsong ambient",
+    "visual": "dark forest and countryside at night",
+    "data_link": [
+     "biophony",
+     1
+    ]
+   },
+   {
+    "name": "dark",
+    "music": "dark empty silence",
+    "visual": "a black empty night with no lights",
+    "data_link": null
+   },
+   {
+    "name": "glow",
+    "music": "warm glowing electric piano",
+    "visual": "warm orange glow of lights",
+    "data_link": null
+   },
+   {
+    "name": "change",
+    "music": "tense pulsing electronic",
+    "visual": "a map of change in purple and orange",
+    "data_link": null
+   },
+   {
+    "name": "solemn",
+    "music": "solemn orchestral strings",
+    "visual": "a calm map of the earth",
+    "data_link": null
+   }
+  ],
+  "mean_weight": {
+   "city": 0.3067921996116638,
+   "forest": 0.06697996705770493,
+   "dark": 0.04981568828225136,
+   "glow": 0.008201152086257935,
+   "change": 0.3749173581600189,
+   "solemn": 0.19329369068145752
+  },
+  "mean_weight_image_only": {
+   "city": 0.2818155288696289,
+   "forest": 0.03459833189845085,
+   "dark": 0.0650448128581047,
+   "glow": 0.013944416306912899,
+   "change": 0.38640668988227844,
+   "solemn": 0.2181902527809143
+  },
+  "linked_correlations": {
+   "city": {
+    "curve": "anthrophony",
+    "sign": 1,
+    "r_image_only": -0.2879060518314854,
+    "r_blended": -0.21416868535624933,
+    "r_image_only_detrended": -0.3612862643845849,
+    "r_image_only_vs_time": 0.5156809830648694,
+    "r_curve_vs_time": 0.04144249398693651,
+    "segments": {
+     "annual series": {
+      "n": 19,
+      "r_image_only": -0.9599517227870468,
+      "r_blended": 0.926769570305737
+     },
+     "change map": {
+      "n": 22,
+      "r_image_only": -0.45020339335976556,
+      "r_blended": -0.494315523143786
+     },
+     "annual series + zooms": {
+      "n": 30,
+      "r_image_only": 0.28166936552608834,
+      "r_blended": 0.5534508159062737
+     },
+     "change map + zooms": {
+      "n": 13,
+      "r_image_only": -0.4478635219573918,
+      "r_blended": -0.4207055713861818
+     }
+    }
+   },
+   "forest": {
+    "curve": "biophony",
+    "sign": 1,
+    "r_image_only": 0.4854471807903446,
+    "r_blended": 0.6977802347739845,
+    "r_image_only_detrended": 0.5131870475489937,
+    "r_image_only_vs_time": 0.2528945000694198,
+    "r_curve_vs_time": -0.04199436550614588,
+    "segments": {
+     "annual series": {
+      "n": 19,
+      "r_image_only": 0.8233906409861825,
+      "r_blended": 0.961950410546202
+     },
+     "change map": {
+      "n": 22,
+      "r_image_only": 0.5548895857587935,
+      "r_blended": 0.5169134151359795
+     },
+     "annual series + zooms": {
+      "n": 30,
+      "r_image_only": 0.637597427630403,
+      "r_blended": 0.9321972968524601
+     },
+     "change map + zooms": {
+      "n": 13,
+      "r_image_only": 0.4706958020130254,
+      "r_blended": 0.48414048444846347
+     }
+    }
+   }
+  }
+ },
+ "other_renders": [
+  {
+   "tag": "base-cpu",
+   "size": "mrt2_base",
+   "device": "cpu",
+   "gen_s_per_audio_min": 3361.1,
+   "fidelity": {
+    "mix_without_mood": {
+     "n": 24,
+     "r2": 0.9771657684236911,
+     "pearson_r": 0.9900498320692511,
+     "mae": 0.01324096071022903,
+     "pitch_within_half_semitone": 1.0,
+     "voiced": 1.0
+    },
+    "mix_with_mood": {
+     "n": 24,
+     "r2": 0.9772500660113878,
+     "pearson_r": 0.9900447505724431,
+     "mae": 0.013198556928624372,
+     "pitch_within_half_semitone": 1.0,
+     "voiced": 1.0
+    },
+    "control_mix_without_mood": {
+     "n": 24,
+     "r2": -0.8767606377806669,
+     "pearson_r": -0.04426066570351385,
+     "mae": 0.09712792264154808,
+     "pitch_within_half_semitone": 0.9166666666666666,
+     "voiced": 1.0
+    },
+    "control_mix_with_mood": {
+     "n": 23,
+     "r2": -0.8846359919879989,
+     "pearson_r": -0.04713268554033564,
+     "mae": 0.10103332402702513,
+     "pitch_within_half_semitone": 0.9565217391304348,
+     "voiced": 0.9583333333333334
+    },
+    "control_stem": {
+     "n": 24,
+     "r2": -0.9148145332535,
+     "pearson_r": -0.047221637292374934,
+     "mae": 0.09847185898543849,
+     "pitch_within_half_semitone": 0.9583333333333334,
+     "voiced": 1.0
+    }
+   },
+   "key_check": {
+    "scale_share": 0.7400285005569458,
+    "scale_share_chance": 0.5833333333333334,
+    "mood_chroma_profile": [
+     0.04569999873638153,
+     0.06279999762773514,
+     0.19779999554157257,
+     0.06729999929666519,
+     0.12999999523162842,
+     0.060600001364946365,
+     0.10140000283718109,
+     0.06129999831318855,
+     0.045899998396635056,
+     0.11749999970197678,
+     0.04050000011920929,
+     0.06909999996423721
+    ],
+    "harmony_chroma_cos_shift0": 0.8209301775152033,
+    "harmony_chroma_cos_other_shifts_mean": 0.5788585930323797,
+    "best_shift_semitones": 0,
+    "share_segments_shift0_best": 0.5909090909090909,
+    "segments": 22,
+    "clash": false
+   }
+  },
+  {
+   "tag": "small",
+   "size": "mrt2_small",
+   "device": "cpu",
+   "gen_s_per_audio_min": 410.7,
+   "fidelity": {
+    "mix_without_mood": {
+     "n": 24,
+     "r2": 0.9771657684236911,
+     "pearson_r": 0.9900498320692511,
+     "mae": 0.01324096071022903,
+     "pitch_within_half_semitone": 1.0,
+     "voiced": 1.0
+    },
+    "mix_with_mood": {
+     "n": 24,
+     "r2": 0.9767709461469609,
+     "pearson_r": 0.9899473350350881,
+     "mae": 0.013325768273438343,
+     "pitch_within_half_semitone": 1.0,
+     "voiced": 1.0
+    },
+    "control_mix_without_mood": {
+     "n": 24,
+     "r2": -0.8767606377806669,
+     "pearson_r": -0.04426066570351385,
+     "mae": 0.09712792264154808,
+     "pitch_within_half_semitone": 0.9166666666666666,
+     "voiced": 1.0
+    },
+    "control_mix_with_mood": {
+     "n": 24,
+     "r2": -0.8729359209630294,
+     "pearson_r": -0.042861503199827594,
+     "mae": 0.09704311507833875,
+     "pitch_within_half_semitone": 0.9166666666666666,
+     "voiced": 1.0
+    },
+    "control_stem": {
+     "n": 24,
+     "r2": -0.9148145332535,
+     "pearson_r": -0.047221637292374934,
+     "mae": 0.09847185898543849,
+     "pitch_within_half_semitone": 0.9583333333333334,
+     "voiced": 1.0
+    }
+   },
+   "key_check": {
+    "scale_share": 0.7481746673583984,
+    "scale_share_chance": 0.5833333333333334,
+    "mood_chroma_profile": [
+     0.05959999933838844,
+     0.07829999923706055,
+     0.16920000314712524,
+     0.06159999966621399,
+     0.1581999957561493,
+     0.048500001430511475,
+     0.09650000184774399,
+     0.04540000110864639,
+     0.04190000146627426,
+     0.13729999959468842,
+     0.040300000458955765,
+     0.0632999986410141
+    ],
+    "harmony_chroma_cos_shift0": 0.8073965094306252,
+    "harmony_chroma_cos_other_shifts_mean": 0.597393587231636,
+    "best_shift_semitones": 0,
+    "share_segments_shift0_best": 0.5,
+    "segments": 22,
+    "clash": false
+   }
+  }
+ ]
+}
