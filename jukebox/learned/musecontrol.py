@@ -72,6 +72,37 @@ TRACKS = {
         win=0.30, offset=0.03,
         rhythm="frames",           # beat every data frame (0.5 s), downbeat every 4
     ),
+    # added for the B+ build (jukebox.learned.bplus); pilot-style prompts are the "base" comparison there
+    "4950": dict(
+        prompt="Forest ambient, woodwinds and warm strings, organic, gentle, flute melody",
+        win=0.22, offset=0.03,
+        rhythm="lead-onsets", lead_voices=("melody canopy",),   # beat at every lead note, downbeat every 4
+    ),
+    "5176": dict(
+        prompt="Ocean ambient, soft pads and strings, calm, warm, flute melody",
+        win=0.22, offset=0.03,
+        rhythm="lead-onsets", lead_voices=("lead global",),
+    ),
+    "5011": dict(
+        prompt="Stormy ambient, dark strings and synth pads, rolling thunder, flute melody",
+        win=0.30, offset=0.03,
+        rhythm="lead-onsets", lead_voices=("storm-belt latitude",),   # not the flashes: those are data drums
+    ),
+    "5058": dict(
+        prompt="Somber ambient, slow strings and warm pads, fading city lights, trumpet melody",
+        win=0.11, offset=0.03,
+        rhythm="lead-onsets", lead_voices=("city",),
+    ),
+    "5046": dict(
+        prompt="Arctic ambient, glassy pads and slow strings, cold and spacious, flute melody",
+        win=0.22, offset=0.03,
+        rhythm="lead-onsets", lead_voices=("lead extent",),
+    ),
+    "5669": dict(
+        prompt="Airy ambient, drifting pads and soft strings, dust and haze, gentle",
+        win=0.20, offset=0.03,
+        rhythm="every", beat_s=1.0,                        # one beat per second (four 0.25 s sweep steps)
+    ),
 }
 COPY_JSON = ("timeline.json", "controls.json", "track.json", "report.json", "arrange_report.json")
 COPY_WAV = ("melody.wav", "control_shuffled.wav", "mix.wav", "mix_control.wav", "bands.wav", "events.wav",
@@ -261,6 +292,16 @@ def rhythm_times(tid: str, notes: list[Note], controls, total: float) -> tuple[n
         beats = np.concatenate([ticks[:, None] + step * np.arange(4)[None] / 4]).ravel()
         down = ticks
         why = f"downbeat at each year boundary ({len(ticks)}), 4 beats per year ({step / 4:.2f} s)"
+    elif plan == "lead-onsets":
+        voices = TRACKS[tid]["lead_voices"]
+        on = np.array(sorted({round(n.start, 3) for n in notes if n.voice in voices}))
+        beats, down = on, on[::4]
+        why = f"a beat at every lead note ({len(on)}), downbeat every 4"
+    elif plan == "every":
+        step = TRACKS[tid]["beat_s"]
+        beats = np.arange(0, total, step)
+        down = beats[::4]
+        why = f"a beat every {step:g} s, downbeat every 4"
     else:
         t = np.asarray(controls[0]) if controls is not None else np.arange(0, total, 0.5)
         beats, down = t, t[::4]

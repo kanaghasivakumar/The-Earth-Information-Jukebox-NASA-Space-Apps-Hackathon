@@ -1,0 +1,239 @@
+{
+ "id": "5669",
+ "source": "/gpfs/projects/e32706/omb8654/jukebox-wt/mcl-bplus/outputs/5669_mclbplus/gen_bplus_real.wav",
+ "reused_pilot_take": false,
+ "decymbal": {
+  "atten_db": 15.0,
+  "above_hz": 5000,
+  "hpss_margin": 1.0,
+  "applied_to": "MCL stem only"
+ },
+ "bed": {
+  "raw": {
+   "perc_ratio": 0.007410086365300046,
+   "hf_perc_share": 7.3307268645344e-08,
+   "hf_share": 1.11524323280442e-07,
+   "hf_perc_of_hf": 0.534227728843689,
+   "low_share": 0.39027950167655945,
+   "low_db": 35.365596771240234,
+   "hat_hits_per_s": 0.0,
+   "kick_flux_db": 1.0562160015106201
+  },
+  "clean": {
+   "perc_ratio": 0.007409784248650843,
+   "hf_perc_share": 1.3040303654018051e-08,
+   "hf_share": 3.8177635588466266e-08,
+   "hf_perc_of_hf": 0.18600933253765106,
+   "low_share": 0.3902798295021057,
+   "low_db": 35.365604400634766,
+   "hat_hits_per_s": 0.0,
+   "kick_flux_db": 1.056215524673462
+  }
+ },
+ "reference": {
+  "deterministic": {
+   "mix": null,
+   "lead_stem": null,
+   "energy_share": {
+    "lead": 0.8848077922020415,
+    "anthrophony": 0.032699871179985594,
+    "biophony": 0.04343002804655086,
+    "geophony": 0.038727812493377894,
+    "voice_beds": 0.11483214185712345
+   },
+   "percussion": {
+    "perc_ratio": 0.017650135712983905,
+    "hf_perc_share": 0.0019697677965428598,
+    "hf_share": 0.004369577642473097,
+    "hf_perc_of_hf": 0.4620499610900879,
+    "low_share": 0.2580399513244629,
+    "low_db": 32.19711685180664,
+    "hat_hits_per_s": 2.3440860215053765,
+    "kick_flux_db": 0.7825326919555664
+   },
+   "lufs": -15.999999676737248,
+   "type_r": {
+    "black carbon": {
+     "n": 27,
+     "r": 0.45155495888713826
+    },
+    "dust": {
+     "n": 17,
+     "r": 0.8918973631202534
+    },
+    "sea salt": {
+     "n": 103,
+     "r": 0.35471382400251933
+    },
+    "sulfate": {
+     "n": 89,
+     "r": 0.6094079750687494
+    }
+   }
+  }
+ },
+ "run": {
+  "prompt": "Airy ambient, drifting pads and soft strings, hazy and slow, warm bass line, no cymbals, no hi-hats, no crash, no ride",
+  "negative_prompt": "cymbals, hi-hats, crash cymbal, ride cymbal, splash cymbal, shaker, tambourine, bright snare",
+  "rhythm_scale": 0.5,
+  "melody_scale": 1.0,
+  "condition": "cond_real.wav",
+  "adapter": "wosdd-all",
+  "guidance_con": 1.5,
+  "guidance_text": 7.0,
+  "steps": 50,
+  "seed": 42,
+  "variant": "bplus",
+  "which": "real",
+  "segments": [
+   [
+    0.0,
+    46.5
+   ]
+  ],
+  "seam": {
+   "windows": 1
+  },
+  "audio_s": 46.5,
+  "device": [
+   "CPU x16"
+  ],
+  "jobs": [
+   "8838353"
+  ],
+  "gen_seconds": 258.6
+ },
+ "choice": {
+  "how": "replace",
+  "chroma_agreement": null,
+  "low_db": {
+   "reference": 32.19711685180664,
+   "replace": 32.31074523925781,
+   "blend": 32.31074523925781
+  },
+  "rule": "the higher full-mix R\u00b2 if they differ by more than 0.002; otherwise blend if it keeps the voice-bed share (\u00b10.005) and its 40-250 Hz level is closer to the old augment's (deterministic mix where none)"
+ },
+ "mix": {
+  "how": "replace",
+  "mcl_db_vs_lead_before_duck": -15.0,
+  "duck_margin_db": 8.0,
+  "duck_max_db": 9.0,
+  "mcl_duck": {
+   "mean_gr_db": 1.4198909997940063,
+   "max_gr_db": 9.0
+  },
+  "lufs": -15.999999744348822,
+  "limiter_gr_db": -0.0,
+  "norm_gain_db": -0.032768911291570654,
+  "mix": null,
+  "energy_share": {
+   "lead": 0.8781077135371284,
+   "anthrophony": 0.03245225614859762,
+   "biophony": 0.0431011604587021,
+   "geophony": 0.03843455175074827,
+   "mcl": 0.015080024781229408,
+   "voice_beds": 0.11396259211933416
+  },
+  "percussion": {
+   "perc_ratio": 0.01769066031774539,
+   "hf_perc_share": 0.0019681391298247836,
+   "hf_share": 0.004366011448433764,
+   "hf_perc_of_hf": 0.4620444178581238,
+   "low_share": 0.2636415660381317,
+   "low_db": 32.31074523925781,
+   "hat_hits_per_s": 2.3440860215053765,
+   "kick_flux_db": 0.7692212462425232
+  },
+  "mcl_low_db_in_mix": -41.46751185098903,
+  "percussion_without_decymbal": {
+   "perc_ratio": 0.01769066514676327,
+   "hf_perc_share": 0.00196814115109601,
+   "hf_share": 0.00436601333008149,
+   "hf_perc_of_hf": 0.4620444178581238,
+   "low_share": 0.2636415660381317,
+   "low_db": 32.31074523925781,
+   "hat_hits_per_s": 2.3440860215053765,
+   "kick_flux_db": 0.7692212462425232
+  },
+  "type_r": {
+   "black carbon": {
+    "n": 27,
+    "r": 0.4372824573128651
+   },
+   "dust": {
+    "n": 17,
+    "r": 0.873614141950062
+   },
+   "sea salt": {
+    "n": 103,
+    "r": 0.37448958566527957
+   },
+   "sulfate": {
+    "n": 89,
+    "r": 0.6313747890935278
+   }
+  }
+ },
+ "other_mix": {
+  "how": "blend",
+  "mcl_db_vs_lead_before_duck": -15.0,
+  "duck_margin_db": 8.0,
+  "duck_max_db": 9.0,
+  "mcl_duck": {
+   "mean_gr_db": 1.4198909997940063,
+   "max_gr_db": 9.0
+  },
+  "lufs": -15.999999744348822,
+  "limiter_gr_db": -0.0,
+  "norm_gain_db": -0.032768911291570654,
+  "mix": null,
+  "energy_share": {
+   "lead": 0.8781077135371284,
+   "anthrophony": 0.03245225614859762,
+   "biophony": 0.0431011604587021,
+   "geophony": 0.03843455175074827,
+   "mcl": 0.015080024781229408,
+   "voice_beds": 0.11396259211933416
+  },
+  "percussion": {
+   "perc_ratio": 0.01769066031774539,
+   "hf_perc_share": 0.0019681391298247836,
+   "hf_share": 0.004366011448433764,
+   "hf_perc_of_hf": 0.4620444178581238,
+   "low_share": 0.2636415660381317,
+   "low_db": 32.31074523925781,
+   "hat_hits_per_s": 2.3440860215053765,
+   "kick_flux_db": 0.7692212462425232
+  },
+  "mcl_low_db_in_mix": -41.46751185098903,
+  "percussion_without_decymbal": {
+   "perc_ratio": 0.01769066514676327,
+   "hf_perc_share": 0.00196814115109601,
+   "hf_share": 0.00436601333008149,
+   "hf_perc_of_hf": 0.4620444178581238,
+   "low_share": 0.2636415660381317,
+   "low_db": 32.31074523925781,
+   "hat_hits_per_s": 2.3440860215053765,
+   "kick_flux_db": 0.7692212462425232
+  },
+  "chroma_agreement_amt_vs_mcl": null,
+  "type_r": {
+   "black carbon": {
+    "n": 27,
+    "r": 0.4372824573128651
+   },
+   "dust": {
+    "n": 17,
+    "r": 0.873614141950062
+   },
+   "sea salt": {
+    "n": 103,
+    "r": 0.37448958566527957
+   },
+   "sulfate": {
+    "n": 89,
+    "r": 0.6313747890935278
+   }
+  }
+ }
+}

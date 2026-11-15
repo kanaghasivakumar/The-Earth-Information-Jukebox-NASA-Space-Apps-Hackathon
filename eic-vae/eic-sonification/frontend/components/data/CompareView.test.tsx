@@ -1,4 +1,5 @@
 // @vitest-environment jsdom
+import { existsSync } from "node:fs";
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 import { act, cleanup, fireEvent, render, screen, waitFor } from "@testing-library/react";
@@ -26,11 +27,13 @@ afterEach(() => {
   vi.unstubAllGlobals();
 });
 
+const hasBplus = (id: string) => existsSync(path.join(PUBLIC, "jukebox/tracks", id, "versions/mcl_bplus.mp3"));
+const N_5209 = hasBplus("5209") ? 7 : 6;
 const versionRadios = () => screen.getAllByRole("radio").filter((r) => r.id.startsWith("ver-"));
 
-test("lists the six versions of 5209 and switches with a click or a digit key", async () => {
+test("lists every version of 5209 and switches with a click or a digit key", async () => {
   render(<CompareView />);
-  await waitFor(() => expect(versionRadios()).toHaveLength(6));
+  await waitFor(() => expect(versionRadios()).toHaveLength(N_5209));
   expect(versionRadios()[0]).toHaveProperty("ariaChecked", "true");
 
   fireEvent.click(versionRadios()[3]);
@@ -47,7 +50,7 @@ test("lists the six versions of 5209 and switches with a click or a digit key", 
 
 test("a rating and a note are stored per track and version", async () => {
   render(<CompareView />);
-  await waitFor(() => expect(versionRadios()).toHaveLength(6));
+  await waitFor(() => expect(versionRadios()).toHaveLength(N_5209));
   fireEvent.click(versionRadios()[1]);
   const four = screen.getAllByRole("radio").find((r) => (r as HTMLInputElement).type === "radio" && r.parentElement?.textContent === "4")!;
   fireEvent.click(four);
@@ -61,9 +64,10 @@ test("a rating and a note are stored per track and version", async () => {
   expect(screen.getByRole("button", { name: /Export ratings \(1\)/ })).toBeTruthy();
 });
 
-test("the other tracks offer the mix and its shuffled control", async () => {
+test("the other tracks offer the mix, B+ where rendered, and its shuffled control", async () => {
   window.history.replaceState(null, "", "/compare?track=5176");
   render(<CompareView />);
-  await waitFor(() => expect(versionRadios()).toHaveLength(2));
-  expect(versionRadios().map((r) => r.querySelector(".jb-style-name")?.firstChild?.textContent)).toEqual(["Deterministic mix", "Shuffled control"]);
+  const names = ["Deterministic mix", ...(hasBplus("5176") ? ["MuseControlLite B+ (no cymbals, with Earth voices)"] : []), "Shuffled control"];
+  await waitFor(() => expect(versionRadios()).toHaveLength(names.length));
+  expect(versionRadios().map((r) => r.querySelector(".jb-style-name")?.firstChild?.textContent)).toEqual(names);
 });

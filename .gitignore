@@ -242,4 +242,7 @@ node_modules/
 
 # The Next.js app keeps its TypeScript helpers in lib/ (the Python "lib/" rule above hid them from git)
 !eic-vae/eic-sonification/frontend/lib/
+
+# B+ final-check logs
+logs/
 logs_5046/

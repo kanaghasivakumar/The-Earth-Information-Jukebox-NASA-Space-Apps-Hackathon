@@ -73,6 +73,20 @@
    }
   },
   {
+   "id": "mcl_bplus",
+   "label": "MuseControlLite B+ (no cymbals, with Earth voices)",
+   "kind": "learned",
+   "file": "versions/mcl_bplus.mp3",
+   "line": "The data melody, bands and every recorded Earth voice at their arranged levels, with a MuseControlLite accompaniment (bass kept) in place of the model harmony. Cymbals removed from the generated part only.",
+   "fidelity": {
+    "r2": 0.9666,
+    "within_half_semitone": 1.0,
+    "control_r2": -0.6378,
+    "control_kind": "shuffled lead through the whole pipeline",
+    "note": "Measured on the full mix."
+   }
+  },
+  {
    "id": "control",
    "label": "Shuffled control",
    "kind": "control",

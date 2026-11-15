@@ -9,7 +9,8 @@ Writes, under eic-vae/eic-sonification/frontend/:
   public/jukebox/tracks/<id>/mix_control.mp3
                                           the full mix with the lead shuffled in time (arrange's
                                           mix_control.wav, 128 kbps), for the Compare view
-  public/jukebox/tracks/<id>/versions/    pilot mixes for 5209, 5313, 3912 (MuseControlLite, mood layer)
+  public/jukebox/tracks/<id>/versions/    pilot mixes for 5209, 5313, 3912 (MuseControlLite, mood layer), and
+                                          mcl_bplus.mp3 wherever demo/<id>_mclbplus/ exists (MuseControlLite B+)
   public/jukebox/tracks/<id>/versions.json
                                           the versions the Compare view offers, with their fidelity numbers
   lib/data/voice-credits.json             the recordings in jukebox/voices/ATTRIBUTION.md, for /credits
@@ -92,6 +93,20 @@ def versions_for(tid: str, track: dict, has_control_mix: bool) -> list[dict]:
             "fidelity": fid(m["mix_with_mood"]["r2"], m["mix_with_mood"]["pitch_within_half_semitone"],
                             m["control_mix_with_mood"]["r2"], "full mix + mood, lead shuffled", "Measured on the full mix."),
         })
+    bplus = demo / f"{tid}_mclbplus" / "bplus_report.json"
+    if bplus.exists():
+        b = json.loads(bplus.read_text())
+        m, c = b["mix"].get("mix") or {}, b["mix"].get("control_e2e") or {}
+        out.append({
+            "id": "mcl_bplus", "label": "MuseControlLite B+ (no cymbals, with Earth voices)", "kind": "learned",
+            "file": "versions/mcl_bplus.mp3",
+            "line": "The data melody, bands and every recorded Earth voice at their arranged levels, with a MuseControlLite "
+                    "accompaniment (bass kept) in place of the model harmony. Cymbals removed from the generated part only.",
+            "fidelity": fid(m.get("r2"), m.get("pitch_within_half_semitone"), c.get("r2"),
+                            "shuffled lead through the whole pipeline" if c else None,
+                            "Measured on the full mix." if m else
+                            "No single data melody to recover; see demo/" + tid + "_mclbplus/README.md for per-type checks."),
+        })
     if has_control_mix:
         out.append({
             "id": "control", "label": "Shuffled control", "kind": "control", "file": "mix_control.mp3",
@@ -160,6 +175,10 @@ def main():
             for a, b in ((f"{tid}_mcl/A_generated.mp3", "mcl_A.mp3"), (f"{tid}_mcl/B_augment_mix.mp3", "mcl_B_augment.mp3"),
                          (f"{tid}_mcl/B_replace_mix.mp3", "mcl_B_replace.mp3"), (f"{tid}_mood/mix_mood.mp3", "mood_mix.mp3")):
                 shutil.copy2(ROOT / "demo" / a, dst / "versions" / b)
+        bp = ROOT / "demo" / f"{tid}_mclbplus" / "mix.mp3"
+        if bp.exists():
+            (dst / "versions").mkdir(exist_ok=True)
+            shutil.copy2(bp, dst / "versions" / "mcl_bplus.mp3")
         track = json.loads((dst / "track.json").read_text())
         vs = versions_for(tid, track, ctl.exists())
         (dst / "versions.json").write_text(json.dumps({"id": tid, "duration_s": track["duration_s"], "versions": vs}, indent=1))
