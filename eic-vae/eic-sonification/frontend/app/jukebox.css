@@ -2346,9 +2346,6 @@ body:has(.jb) {
   height: 100%;
   background: var(--accent);
 }
-.jb-fid-fill.ctrl {
-  background: var(--ink-3);
-}
 .jb-fid-all {
   margin-top: 32px;
 }
@@ -2510,5 +2507,369 @@ body:has(.jb) {
   }
   .jb :focus-visible {
     outline-color: Highlight;
+  }
+}
+
+/* =====================================================================
+   Big footage layout (Listen and Compare): a title bar with the hamburger
+   track menu, the footage as large as the screen allows, the score strip
+   right under it, and a narrow control column beside it. Tokens only.
+   ===================================================================== */
+.jb-listen.jb-listen-wide,
+.jb-section.jb-wide-page {
+  max-width: 1920px;
+  padding-top: 12px;
+}
+.jb-listen-in {
+  display: grid;
+  gap: 12px;
+}
+.jb-titlebar {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  min-height: 56px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--rule);
+}
+.jb-titlebar-text {
+  min-width: 0;
+}
+.jb-title {
+  margin: 0;
+  font-size: clamp(1.35rem, 2vw, 1.75rem);
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+.jb-subtitle {
+  margin: 2px 0 0;
+  font-size: 0.9rem;
+  color: var(--ink-3);
+}
+.jb-subtitle .jb-code {
+  font-size: 0.82rem;
+}
+
+/* hamburger */
+.jb-menu {
+  position: relative;
+  flex: none;
+}
+.jb-menu-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 0 14px;
+  background: transparent;
+  color: var(--ink);
+  border: 2px solid var(--rule);
+  border-radius: 6px;
+  font: 600 0.95rem var(--font);
+  cursor: pointer;
+  transition: border-color 0.15s ease-out, background-color 0.15s ease-out;
+}
+.jb-menu-btn:hover,
+.jb-menu-btn[aria-expanded="true"] {
+  border-color: var(--ink);
+  background: rgb(255 255 255 / 0.08);
+}
+.jb-menu-panel {
+  position: absolute;
+  z-index: 20;
+  top: calc(100% + 8px);
+  left: 0;
+  width: min(360px, calc(100vw - 32px));
+  max-height: min(72vh, 680px);
+  overflow: auto;
+  padding: 8px;
+  background: var(--deep);
+  border: 1px solid var(--rule);
+  border-radius: 8px;
+}
+.jb-menu-panel[hidden] {
+  display: none;
+}
+.jb-menu-list {
+  display: grid;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.jb a.jb-menu-item {
+  color: var(--ink);
+  text-decoration: none;
+}
+.jb-menu-item[aria-current="page"] {
+  background: rgb(200 220 235 / 0.12);
+  border-color: var(--ink);
+}
+
+/* the deck: footage + strip, control column */
+.jb-deck {
+  --frame-h: max(280px, calc(100vh - 330px));
+  display: grid;
+  gap: 16px;
+  grid-template-columns: minmax(0, 1fr);
+}
+@supports (height: 100svh) {
+  .jb-deck {
+    --frame-h: max(280px, calc(100svh - 330px));
+  }
+}
+.jb-deck-main {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 0;
+}
+.jb-video.jb-frame {
+  order: 0;
+  aspect-ratio: var(--ar, 16 / 9);
+  width: min(100%, calc(var(--frame-h) * var(--ar, 1.7778)));
+  margin-inline: auto;
+}
+.jb-frame-link {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: block;
+  border-radius: 8px;
+}
+.jb-frame-link:focus-visible {
+  outline-offset: -3px;
+}
+.jb-frame-cap {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  padding: 4px 10px;
+  background: rgb(2 6 10 / 0.72);
+  color: var(--ink);
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  font: 600 0.85rem var(--font);
+}
+.jb-frame-link:hover .jb-frame-cap {
+  border-color: var(--ink);
+}
+.jb-frame-fail {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  text-align: center;
+  color: var(--ink-2);
+}
+.jb-frame-fail img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  opacity: 0.35;
+}
+.jb-frame-fail p {
+  position: relative;
+  max-width: 44ch;
+  margin: 0;
+}
+
+/* score strip: the data timeline, compact */
+.jb-strip {
+  padding: 2px 16px 6px;
+  border: 1px solid var(--rule);
+  border-radius: 8px;
+  background: var(--panel);
+}
+.jb-strip .jb-timeline {
+  padding-top: 26px;
+}
+.jb-strip .jb-lane {
+  gap: 2px 12px;
+  margin-bottom: 6px;
+}
+.jb-strip .jb-lane-label {
+  font-size: 0.82rem;
+}
+.jb-strip .jb-lane-label small {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+.jb-strip .jb-lane-body {
+  height: 34px;
+}
+.jb-strip .jb-axis {
+  height: 18px;
+  margin-top: 2px;
+}
+@media (min-width: 720px) {
+  .jb-strip .jb-lane {
+    grid-template-columns: 120px 1fr;
+  }
+  .jb-strip .jb-rail {
+    left: 132px;
+  }
+  .jb-strip .jb-axis {
+    margin-left: 132px;
+  }
+}
+
+/* control column */
+.jb-side {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 0;
+}
+.jb-side-transport {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.jb-side-transport .jb-play {
+  min-width: 0;
+  padding: 0 18px;
+}
+.jb-side-transport .jb-clock {
+  order: 0;
+  width: auto;
+  margin: 0;
+  font-size: 1.15rem;
+}
+.jb-side-skips {
+  display: flex;
+  gap: 6px;
+}
+.jb-skip.jb-skip-sm {
+  flex: 1;
+  justify-content: center;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0;
+}
+.jb-side .jb-vae-slider {
+  max-width: none;
+  margin: 0;
+}
+.jb-side .jb-status {
+  margin: 0;
+  font-size: 0.82rem;
+}
+.jb-side-h {
+  margin: 0 0 6px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+.jb-now-mini p {
+  margin: 0;
+  color: var(--ink-2);
+  font-size: 0.9rem;
+}
+.jb-now-mini .jb-readout-value {
+  font-size: 1.5rem;
+}
+.jb-mixer-compact {
+  gap: 4px;
+  border-top: 0;
+}
+.jb-mixer-compact .jb-group-row {
+  grid-template-columns: 32px minmax(0, 1fr) minmax(64px, 96px);
+  grid-template-areas: "chip name vol";
+  column-gap: 8px;
+  padding: 0 8px;
+}
+.jb-mixer-compact .jb-group-name {
+  gap: 8px;
+  font-size: 0.95rem;
+}
+.jb-mixer-compact .jb-group-row kbd {
+  display: none;
+}
+.jb-mixer-compact .jb-mixer-absent {
+  font-size: 0.8rem;
+}
+.jb-side-tools {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+  margin-top: 0;
+}
+.jb-data .jb-side-tools .jb-chip-btn {
+  justify-content: space-between;
+  padding: 0 8px;
+  font-size: 0.85rem;
+}
+.jb-side-more summary {
+  font-size: 0.95rem;
+}
+.jb-side-more .jb-settings {
+  margin-top: 0;
+}
+.jb-side-lede {
+  color: var(--ink-2);
+  font-size: 0.92rem;
+}
+.jb-side .jb-fine {
+  font-size: 0.85rem;
+}
+@media (min-width: 980px) {
+  .jb-deck {
+    grid-template-columns: minmax(0, 1fr) clamp(260px, 22vw, 320px);
+    gap: 20px;
+    align-items: start;
+  }
+}
+@media (max-width: 979px) {
+  .jb-deck {
+    --frame-h: 70vh;
+  }
+}
+
+/* Vincent's hurricane player, restyled by CSS only: footage as big as the screen allows, his style list in the side column */
+@media (min-width: 980px) {
+  .jb-season .jb-stage {
+    --frame-h: max(280px, calc(100vh - 360px));
+    grid-template-columns: minmax(0, 1fr) clamp(260px, 22vw, 320px);
+    gap: 20px;
+  }
+  .jb-season .jb-video {
+    width: min(100%, var(--frame-h));
+    margin-inline: auto;
+  }
+  .jb-season .jb-right .jb-h1 {
+    font-size: 1.5rem;
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+  }
+  .jb-season .jb-right .jb-lede {
+    font-size: 0.92rem;
+  }
+  .jb-season .jb-onscreen,
+  .jb-season .jb-now {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (forced-colors: active) {
+  .jb-menu-item[aria-current="page"] {
+    outline: 2px solid Highlight;
+    outline-offset: -2px;
+  }
+  .jb-frame-cap,
+  .jb-menu-panel,
+  .jb-strip {
+    border: 1px solid CanvasText;
   }
 }

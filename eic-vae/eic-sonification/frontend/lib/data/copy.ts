@@ -19,48 +19,57 @@ export interface CatalogueEntry {
 
 export const CATALOGUE = catalogueJson as CatalogueEntry[];
 
-export const TRACK_COPY: Record<string, { name: string; heading: string; lede: string }> = {
+export const TRACK_COPY: Record<string, { name: string; heading: string; lede: string; years?: string }> = {
   "5209": {
+    years: "1880–2023",
     name: "Warming, 1880 to 2023",
     heading: "Hear 144 years of warming.",
     lede: "One note a year. The flute plays the global temperature anomaly and eight harps play the latitude zones, from the Arctic down to Antarctica. Higher means warmer.",
   },
   "5313": {
+    years: "2012–2023",
     name: "Night lights",
     heading: "Hear the lights come on.",
     lede: "Night lights seen from space, 2012 to 2023. The flute rises as the world gets brighter, the city hum grows, and the birds and insects fade.",
   },
   "3912": {
+    years: "2007–2008",
     name: "Ocean temperature",
     heading: "Hear the ocean warm and cool.",
     lede: "The flute follows the global sea surface temperature, frame by frame, over a hydrophone in the Pacific. Higher means warmer.",
   },
   "5011": {
+    years: "2017–2023",
     name: "Lightning from the ISS",
     heading: "Hear six years of lightning.",
     lede: "Every drum hit is a cluster of new flashes seen from the space station, panned to where the storms are. The flute follows the storm belt north and south with the seasons.",
   },
   "4950": {
+    years: "2019–2020",
     name: "Forest height",
     heading: "Hear the forests go by.",
     lede: "The globe turns under a lidar in orbit. The flute follows how tall the visible forest is, and a forest chorus swells over the rainforests.",
   },
   "5669": {
+    years: "19 Aug 2025",
     name: "Aerosols",
     heading: "Hear what is in the air.",
     lede: "One snapshot of the world's aerosols, swept from west to east. Each kind has its own instrument: double bass for sea salt, clarinet for dust, oboe for sulfate, harp for smoke.",
   },
   "5058": {
+    years: "Aug–Sep 2022",
     name: "Florida after Ian",
     heading: "Hear a city go dark.",
     lede: "Southwest Florida's lights before and after Hurricane Ian. Trumpet runs fall as the lights go out, the traffic fades, and the frogs and insects take over.",
   },
   "5176": {
+    years: "2024–2026",
     name: "Sea temperature, daily",
     heading: "Hear the ocean run warm.",
     lede: "The daily sea surface temperature anomaly, 2024 to 2026. The flute follows the global ocean's departure from normal; higher means warmer than usual.",
   },
   "5046": {
+    years: "2021–2023",
     name: "Arctic sea ice, daily",
     heading: "Hear the ice melt and return.",
     lede: "Two years of Arctic sea ice, one day per frame, April 2021 to April 2023. The flute is the ice extent: it falls each summer and climbs back each winter. A bowed-glass pad plays the 1981 to 2010 average, so the gap is the missing ice.",

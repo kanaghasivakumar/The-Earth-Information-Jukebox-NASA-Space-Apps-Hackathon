@@ -20,6 +20,8 @@ interface Props {
   store: TimeStore;
   onSeek: (seconds: number) => void;
   onToggle: () => void;
+  /** accessible name of the scrub slider */
+  label?: string;
 }
 
 const W = 1000;
@@ -35,7 +37,7 @@ function areaPath(points: [number, number][]) {
   return `M0,${H} L${points.map(([x, y]) => `${x.toFixed(1)},${y.toFixed(1)}`).join(" L")} L${W},${H} Z`;
 }
 
-const Lanes = memo(function Lanes({ track, prep, controls, duration }: Omit<Props, "store" | "onSeek" | "onToggle">) {
+const Lanes = memo(function Lanes({ track, prep, controls, duration }: Omit<Props, "store" | "onSeek" | "onToggle" | "label">) {
   const lead = useMemo(() => {
     const { lead: notes, vmin, vmax } = prep;
     if (!notes.length) return "";
@@ -130,7 +132,7 @@ const Lanes = memo(function Lanes({ track, prep, controls, duration }: Omit<Prop
   );
 });
 
-export function DataTimeline({ track, prep, controls, duration, store, onSeek, onToggle }: Props) {
+export function DataTimeline({ track, prep, controls, duration, store, onSeek, onToggle, label = "Playback position" }: Props) {
   const time = useTime(store);
   const rail = useRef<HTMLDivElement>(null);
   const dragging = useRef(false);
@@ -172,7 +174,7 @@ export function DataTimeline({ track, prep, controls, duration, store, onSeek, o
             className="jb-scrub"
             role="slider"
             tabIndex={0}
-            aria-label="Playback position"
+            aria-label={label}
             aria-valuemin={0}
             aria-valuemax={Math.round(duration)}
             aria-valuenow={Math.round(time)}

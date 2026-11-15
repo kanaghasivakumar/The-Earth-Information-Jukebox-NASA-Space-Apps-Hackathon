@@ -88,7 +88,7 @@ export default function AccessibilityPage() {
         </li>
         <li>
           <strong>Choose what you hear.</strong> Seven groups (melody, bands, events, harmony and the three recorded voices) each have a switch and a
-          volume, and keys 1 to 7. P flips the polarity, so higher values play lower. A swaps the real data for a shuffled control.
+          volume, and keys 1 to 7. P flips the polarity, so higher values play lower.
         </li>
         <li>
           <strong>Headphone 3D.</strong> H places Earth sounds to the left, human sounds to the right, living sounds above and the data melody in

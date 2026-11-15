@@ -27,7 +27,10 @@ export function parseTrack(raw: unknown): DataTrack {
     if (!GROUPS.includes(s.group as Group)) throw new TrackError(`stem ${s.name} has an unknown group "${s.group}"`);
   }
   if (typeof t.duration_s !== "number" || !(t.duration_s > 0)) throw new TrackError("duration_s must be a positive number");
-  return { ...(t as unknown as DataTrack), id: String(t.id) };
+  // the shuffled-control stem (track.json "control") was a fidelity test, not something the site plays: never load it
+  const { control: _control, ...rest } = t;
+  void _control;
+  return { ...(rest as unknown as DataTrack), id: String(t.id) };
 }
 
 /** Validate timeline.json: numbers everywhere, except `value`, which may be null (model-written notes). */
@@ -68,8 +71,11 @@ export async function loadTrack(id: string, fetcher: Fetcher = fetch, base = TRA
 
 export async function loadVersions(id: string, fetcher: Fetcher = fetch, base = TRACKS_BASE): Promise<VersionsFile> {
   const v = await getJSON<VersionsFile>(fetcher, `${base}/${encodeURIComponent(id)}/versions.json`);
-  if (!Array.isArray(v.versions) || !v.versions.length) throw new TrackError("versions.json lists no versions");
-  return v;
+  if (!Array.isArray(v.versions)) throw new TrackError("versions.json lists no versions");
+  // a shuffled control is a test, not a version to listen to; older exports still list one
+  const versions = v.versions.filter((x) => (x.kind as string) !== "control");
+  if (!versions.length) throw new TrackError("versions.json lists no versions");
+  return { ...v, versions };
 }
 
 /** Which stem group a timeline voice belongs to (voice_groups, then lead_voice, then name prefix). */
@@ -92,7 +98,7 @@ export interface Prepared {
   pm: PitchMap | null;
   bandPm: PitchMap | null;
   bandPms: Record<string, PitchMap>;
-  /** groups that have a stem (or the control) in this track, in GROUPS order */
+  /** groups that have a stem in this track, in GROUPS order */
   present: Group[];
 }
 
@@ -116,7 +122,6 @@ export function prepare(track: DataTrack, timeline: Timeline): Prepared {
     }
   }
   const has = new Set<Group>(track.stems.map((s) => s.group));
-  if (track.control) has.add(track.control.replaces ?? "melody");
   const present = GROUPS.filter((g) => has.has(g));
   return { lead, byGroup, vmin, vmax, range, pm, bandPm, bandPms, present };
 }

@@ -8,7 +8,8 @@ Writes, under eic-vae/eic-sonification/frontend/:
   public/jukebox/tracks/<id>/...          every file of web/tracks/<id>/ (track contract: web/README.md)
   public/jukebox/tracks/<id>/mix_control.mp3
                                           the full mix with the lead shuffled in time (arrange's
-                                          mix_control.wav, 128 kbps), for the Compare view
+                                          mix_control.wav, 128 kbps): kept on disk as fidelity evidence, not listed in versions.json
+  public/jukebox/tracks/<id>/video.mp4    web copy of the SVS movie, when --web-video has one (track.json video_local)
   public/jukebox/tracks/<id>/versions/    pilot mixes for 5209, 5313, 3912 (MuseControlLite, mood layer), and
                                           mcl_bplus.mp3 wherever demo/<id>_mclbplus/ exists (MuseControlLite B+)
   public/jukebox/tracks/<id>/versions.json
@@ -107,14 +108,8 @@ def versions_for(tid: str, track: dict, has_control_mix: bool) -> list[dict]:
                             "Measured on the full mix." if m else
                             "No single data melody to recover; see demo/" + tid + "_mclbplus/README.md for per-type checks."),
         })
-    if has_control_mix:
-        out.append({
-            "id": "control", "label": "Shuffled control", "kind": "control", "file": "mix_control.mp3",
-            "line": "The same arrangement with the melody's notes shuffled in time. It should sound like music but no longer follow the data.",
-            "fidelity": fid(mixctl if mixctl is not None else f.get("control_r2"), None, None, None,
-                            "R² of the shuffled melody against the real data." +
-                            ("" if mixctl is not None else " Measured on the shuffled lead stem.")),
-        })
+    # The shuffled control (mix_control.mp3) stays on disk as the fidelity test's evidence, but the site no
+    # longer offers it as a version to play: has_control_mix is kept only so callers need not change.
     return out
 
 
@@ -153,6 +148,9 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--integrate", type=Path, default=ROOT.parent / "integrate" / "outputs",
                     help="arrange outputs with mix_control.wav per track")
+    ap.add_argument("--web-video", type=Path, default=None,
+                    help="folder of web-friendly H.264 copies <id>.mp4 (<=1920 wide, 30 fps); each is copied to "
+                         "tracks/<id>/video.mp4 and set as track.json video_local (video_url stays the SVS original)")
     args = ap.parse_args()
     OUT.mkdir(parents=True, exist_ok=True)
     shutil.copy2(WEB / "index.json", OUT / "index.json")
@@ -180,6 +178,11 @@ def main():
             (dst / "versions").mkdir(exist_ok=True)
             shutil.copy2(bp, dst / "versions" / "mcl_bplus.mp3")
         track = json.loads((dst / "track.json").read_text())
+        web = args.web_video / f"{tid}.mp4" if args.web_video else None
+        if web and web.exists():
+            shutil.copy2(web, dst / "video.mp4")
+            track["video_local"] = "video.mp4"
+            (dst / "track.json").write_text(json.dumps(track, indent=1, ensure_ascii=False))
         vs = versions_for(tid, track, ctl.exists())
         (dst / "versions.json").write_text(json.dumps({"id": tid, "duration_s": track["duration_s"], "versions": vs}, indent=1))
         f = track.get("fidelity") or {}

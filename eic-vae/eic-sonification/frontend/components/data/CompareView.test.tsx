@@ -28,7 +28,7 @@ afterEach(() => {
 });
 
 const hasBplus = (id: string) => existsSync(path.join(PUBLIC, "jukebox/tracks", id, "versions/mcl_bplus.mp3"));
-const N_5209 = hasBplus("5209") ? 7 : 6;
+const N_5209 = hasBplus("5209") ? 6 : 5;
 const versionRadios = () => screen.getAllByRole("radio").filter((r) => r.id.startsWith("ver-"));
 
 test("lists every version of 5209 and switches with a click or a digit key", async () => {
@@ -64,10 +64,11 @@ test("a rating and a note are stored per track and version", async () => {
   expect(screen.getByRole("button", { name: /Export ratings \(1\)/ })).toBeTruthy();
 });
 
-test("the other tracks offer the mix, B+ where rendered, and its shuffled control", async () => {
+test("the other tracks offer the mix and B+ where rendered; no shuffled control anywhere", async () => {
   window.history.replaceState(null, "", "/compare?track=5176");
   render(<CompareView />);
-  const names = ["Deterministic mix", ...(hasBplus("5176") ? ["MuseControlLite B+ (no cymbals, with Earth voices)"] : []), "Shuffled control"];
+  const names = ["Deterministic mix", ...(hasBplus("5176") ? ["MuseControlLite B+ (no cymbals, with Earth voices)"] : [])];
   await waitFor(() => expect(versionRadios()).toHaveLength(names.length));
   expect(versionRadios().map((r) => r.querySelector(".jb-style-name")?.firstChild?.textContent)).toEqual(names);
+  expect(document.body.textContent).not.toMatch(/shuffled control/i);
 });

@@ -98,6 +98,10 @@ export interface DataTrack {
   /** movie seconds per audio second (default 1); below 1 the video plays slowed down */
   video_rate?: number;
   image_url?: string;
+  /** web-friendly H.264 copy of the SVS movie, relative to the track folder (played before video_url) */
+  video_local?: string;
+  /** a still frame shown before the video loads and when it cannot play, relative to the track folder */
+  poster?: string;
   duration_s: number;
   units: string;
   description: string;
@@ -107,7 +111,6 @@ export interface DataTrack {
   controls: string;
   fidelity: Fidelity;
   data_source: string | Record<string, unknown>;
-  control?: { file: string; replaces?: Group; label?: string };
   mix?: string;
   pitch_map?: PitchMapSpec;
   band_pitch_map?: PitchMapSpec;
@@ -138,7 +141,7 @@ export interface TrackIndexEntry {
 export interface Version {
   id: string;
   label: string;
-  kind: "deterministic" | "learned" | "control";
+  kind: "deterministic" | "learned";
   file: string;
   line: string;
   fidelity: {

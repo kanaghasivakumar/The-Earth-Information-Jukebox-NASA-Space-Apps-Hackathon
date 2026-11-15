@@ -28,6 +28,8 @@ export interface Source {
   tracks: Track[];
   /** Written description of the footage. Uploaded sources have none. */
   scenes: boolean;
+  /** NASA SVS page of the footage; the frame links to it (new tab). Uploads have none. */
+  svs?: string;
 }
 
 const TIME_HZ = 20;
@@ -251,6 +253,13 @@ export function Player({ source }: { source: Source }) {
             preload="metadata"
             aria-label={source.scenes ? "Silent NASA visualization, played in step with the music" : "Your silent visualization, played in step with the music"}
           />
+          {source.svs && showVideo ? (
+            <a className="jb-frame-link" href={source.svs} target="_blank" rel="noopener noreferrer" aria-label="Open NASA SVS page for the 2022 hurricane season (new tab)">
+              <span className="jb-frame-cap" aria-hidden="true">
+                View on NASA SVS ↗
+              </span>
+            </a>
+          ) : null}
         </div>
 
         <div className="jb-transport-wrap">

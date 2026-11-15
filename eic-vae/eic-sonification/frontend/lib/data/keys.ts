@@ -11,7 +11,6 @@ export type DataAction =
   | { type: "sweep" }
   | { type: "overview" }
   | { type: "polarity" }
-  | { type: "ab" }
   | { type: "hrtf" }
   | { type: "mute"; group: Group }
   | { type: "muteAll" }
@@ -66,7 +65,7 @@ function yields(e: KeyInput): boolean {
 
 /**
  * Space play/pause, ←/→ 5 s, Shift+←/→ previous/next lead note, Home start, L legend, V value,
- * S sweep, Shift+S overview, P polarity, A real/shuffled, H headphone 3D, 1–7 mute a group, M mute all,
+ * S sweep, Shift+S overview, P polarity, H headphone 3D, 1–7 mute a group, M mute all,
  * ? help, Esc stop speech, sweep or overview.
  */
 export function keyAction(e: KeyInput, { helpOpen = false } = {}): DataAction | null {
@@ -92,8 +91,6 @@ export function keyAction(e: KeyInput, { helpOpen = false } = {}): DataAction | 
       return e.shiftKey ? { type: "overview" } : { type: "sweep" };
     case "p":
       return { type: "polarity" };
-    case "a":
-      return { type: "ab" };
     case "h":
       return { type: "hrtf" };
     case "m":
@@ -133,7 +130,6 @@ export const DATA_KEYS: [string, string][] = [
   ["S", "Sweep: every band at this moment, north to south, panned left to right"],
   ["Shift + S", "Overview: the whole melody in about 8 seconds"],
   ["P", "Flip polarity: higher values play lower (the melody is synthesized live)"],
-  ["A", "Switch between the real data and the shuffled control"],
   ["H", "Headphone 3D sound (binaural)"],
   ["1 to 7", "Mute a group: 1 melody, 2 bands, 3 events, 4 harmony, 5 geophony, 6 anthrophony, 7 biophony"],
   ["M", "Mute or unmute everything"],

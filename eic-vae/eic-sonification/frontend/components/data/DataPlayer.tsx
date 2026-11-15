@@ -11,11 +11,12 @@ import { loadTrack, prepare, sweepVoices, groupOf } from "@/lib/data/load";
 import { Engine, audioSupported, type GroupState } from "@/lib/data/engine";
 import { Announcer, canSpeak, cancelSpeech, sleep, speak, toggleSame } from "@/lib/data/speech";
 import { fromEvent, keyAction, type DataAction } from "@/lib/data/keys";
-import { GROUP_LABELS, fmtValue, shortUnits, spokenNum, spokenTime, spokenValue } from "@/lib/data/music";
-import { describeNow, fmtTime, hasDates, leadIndexAt, noteAt, sweepFraction, timeLabel } from "@/lib/data/time";
+import { GROUP_LABELS, fmtValue, shortUnits, spokenTime, spokenValue } from "@/lib/data/music";
+import { describeNow, fmtTime, hasDates, leadIndexAt, noteAt, scoreSummary, sweepFraction, timeLabel } from "@/lib/data/time";
 import { Roll } from "@/lib/data/roll";
 import { GROUPS, type Group, type LoadedTrack, type TimelineNote } from "@/lib/data/types";
 import { DataTimeline } from "./DataTimeline";
+import { Footage, syncFootage } from "./Footage";
 import { FidelityPanel, HelpDialog, LegendPanel, ScorePanel, StemMixer } from "./Panels";
 
 const TIME_HZ = 20;
@@ -40,6 +41,26 @@ function Clock({ store, duration }: { store: TimeStore; duration: number }) {
   );
 }
 
+/** Compact scrub for the side column; the score strip under the video has the full timeline slider. */
+function Position({ store, duration, disabled, onSeek, label }: { store: TimeStore; duration: number; disabled: boolean; onSeek: (t: number) => void; label?: (t: number) => string }) {
+  const t = useTime(store);
+  return (
+    <label className="jb-vae-slider jb-side-pos">
+      <span className="jb-sr">Playback position</span>
+      <input
+        type="range"
+        min={0}
+        max={Math.max(1, Math.round(duration * 10) / 10)}
+        step={0.1}
+        value={Math.min(t, duration)}
+        disabled={disabled}
+        onChange={(e) => onSeek(Number(e.target.value))}
+        aria-valuetext={`${fmtTime(t)} of ${fmtTime(duration)}${label ? `, ${label(t)}` : ""}`}
+      />
+    </label>
+  );
+}
+
 interface Busy {
   kind: "legend" | "sweep" | "overview";
   cancelled: boolean;
@@ -55,7 +76,6 @@ export function DataPlayer({ id }: { id: string }) {
   const [fallback, setFallback] = useState<string | null>(null);
   const [ready, setReady] = useState(false);
   const [playing, setPlaying] = useState(false);
-  const [shuffled, setShuffled] = useState(false);
   const [polarity, setPolarity] = useState(1);
   const [binaural, setBinaural] = useState(false);
   const [allMuted, setAllMuted] = useState(false);
@@ -84,10 +104,10 @@ export function DataPlayer({ id }: { id: string }) {
   const roll = useRef<Roll | null>(null);
   const busy = useRef<Busy | null>(null);
   // the latest settings, for the clock loop and the key handler (kept in sync after each render)
-  const S = useRef({ shuffled, polarity, binaural, cadence, motion, helpOpen, lastAnnounceT: -1, lastLeadIdx: -1 });
+  const S = useRef({ polarity, binaural, cadence, motion, helpOpen, lastAnnounceT: -1, lastLeadIdx: -1 });
   useEffect(() => {
-    Object.assign(S.current, { shuffled, polarity, binaural, cadence, motion, helpOpen });
-  }, [shuffled, polarity, binaural, cadence, motion, helpOpen]);
+    Object.assign(S.current, { polarity, binaural, cadence, motion, helpOpen });
+  }, [polarity, binaural, cadence, motion, helpOpen]);
   useEffect(() => {
     if (announcer.current) announcer.current.speech = voice;
   }, [voice]);
@@ -157,32 +177,8 @@ export function DataPlayer({ id }: { id: string }) {
 
   // ---- transport --------------------------------------------------------------
   const syncVideo = useCallback((force = false) => {
-    const v = video.current;
     const eng = engine.current;
-    if (!v || !eng || !v.querySelector("source")) return;
-    // video_rate < 1: the music runs slower than the movie (5046), so the video plays slowed down
-    const rate = Number(v.dataset.rate) || 1;
-    const t = eng.time * rate;
-    if (v.playbackRate !== rate) v.playbackRate = rate;
-    if (eng.playing && S.current.motion) {
-      if (v.paused) v.play().catch(() => {});
-      if (force || Math.abs(v.currentTime - t) > 0.3) {
-        try {
-          v.currentTime = t;
-        } catch {
-          /* not seekable yet */
-        }
-      }
-    } else {
-      if (!v.paused) v.pause();
-      if (force) {
-        try {
-          v.currentTime = t;
-        } catch {
-          /* not seekable yet */
-        }
-      }
-    }
+    if (eng) syncFootage(video.current, eng.time, eng.playing && S.current.motion, force);
   }, []);
 
   const stopBusy = useCallback(() => {
@@ -194,7 +190,7 @@ export function DataPlayer({ id }: { id: string }) {
 
   const describe = useCallback(
     (t: number, full = false) =>
-      track && prep ? describeNow(track, prep, t, { full, shuffled: S.current.shuffled, controls: loaded?.controls ?? null }) : "",
+      track && prep ? describeNow(track, prep, t, { full, controls: loaded?.controls ?? null }) : "",
     [track, prep, loaded],
   );
 
@@ -377,43 +373,12 @@ export function DataPlayer({ id }: { id: string }) {
     );
   }, [prep, track, pausePlayback, stopBusy, pitchOf]);
 
-  const setAB = useCallback(
-    (on: boolean) => {
-      const eng = engine.current;
-      if (!eng || !track) return;
-      if (!eng.hasControl) {
-        announcer.current?.status("This track has no shuffled control.");
-        return;
-      }
-      if (on && S.current.polarity < 0) {
-        S.current.polarity = 1;
-        setPolarity(1);
-        eng.setLiveLead(false);
-      }
-      S.current.shuffled = on;
-      setShuffled(on);
-      eng.setShuffled(on);
-      const f = track.fidelity;
-      announcer.current?.status(
-        on
-          ? `Shuffled control: the same notes in random time order${f.control_r2 != null ? `, R squared ${spokenNum(f.control_r2)}` : ""}.`
-          : `Real data${f.r2 != null ? `, R squared ${spokenNum(f.r2)}` : ""}.`,
-      );
-    },
-    [track],
-  );
-
   const togglePolarity = useCallback(() => {
     const eng = engine.current;
     if (!eng || !prep) return;
     if (!prep.pm) {
       announcer.current?.status("Polarity flip is not available for this track.");
       return;
-    }
-    if (S.current.shuffled) {
-      S.current.shuffled = false;
-      setShuffled(false);
-      eng.setShuffled(false);
     }
     const next = -S.current.polarity;
     S.current.polarity = next;
@@ -490,7 +455,7 @@ export function DataPlayer({ id }: { id: string }) {
     if (!ready || !track || !prep) return;
     let raf = 0;
     let shown = -1;
-    const still = !track.video_url && !!track.image_url;
+    const still = !track.video_url && !track.video_local && !!track.image_url;
     const frame = () => {
       const eng = engine.current;
       if (!eng) return;
@@ -568,8 +533,6 @@ export function DataPlayer({ id }: { id: string }) {
           return void overview();
         case "polarity":
           return togglePolarity();
-        case "ab":
-          return setAB(!S.current.shuffled);
         case "hrtf":
           return toggleBinaural();
         case "mute":
@@ -585,7 +548,7 @@ export function DataPlayer({ id }: { id: string }) {
           }
       }
     },
-    [togglePlay, seek, stepNote, legend, sayValue, sweep, overview, togglePolarity, setAB, toggleBinaural, toggleGroup, toggleMuteAll, stopBusy, setHelpOpen],
+    [togglePlay, seek, stepNote, legend, sayValue, sweep, overview, togglePolarity, toggleBinaural, toggleGroup, toggleMuteAll, stopBusy, setHelpOpen],
   );
 
   useEffect(() => {
@@ -620,101 +583,121 @@ export function DataPlayer({ id }: { id: string }) {
       : "";
   const units = track ? shortUnits(track.units) : "";
   const tag = fidelityTag(entry?.r2 ?? null);
-  const still = track && !track.video_url && track.image_url ? track.image_url : null;
-
-  const abKey = (e: React.KeyboardEvent) => {
-    if (["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown"].includes(e.key)) {
-      e.preventDefault();
-      setAB(!shuffled);
-      document.getElementById(shuffled ? "ab-real" : "ab-ctrl")?.focus();
-    }
-  };
+  const base = loaded?.base ?? `/jukebox/tracks/${id}/`;
 
   return (
     <>
-      <div className="jb-stage jb-data">
-        <div className="jb-left">
-          <div className="jb-video jb-wide">
-            {track?.video_url ? (
-              <video
-                key={track.id}
-                ref={video}
-                data-rate={track.video_rate ?? 1}
-                muted
-                playsInline
-                preload="metadata"
-                aria-label={`Silent NASA visualization, ${track.title}, played in step with the music`}
-                onError={() => setStatus("The NASA video could not be loaded. The music still plays.")}
-              >
-                {[track.video_url, track.video_alt_url].filter(Boolean).map((u) => (
-                  <source key={u} src={u} type={/\.webm$/i.test(u as string) ? "video/webm" : "video/mp4"} />
-                ))}
-              </video>
+      <div className="jb-deck jb-data">
+        <div className="jb-deck-main">
+          {track ? <Footage track={track} base={base} videoRef={video} sweepRef={sweepLine} /> : <div className="jb-video jb-frame" aria-hidden="true" />}
+
+          <section className="jb-strip" aria-label="Score: the melody value over time">
+            {track && prep ? (
+              <>
+                <DataTimeline
+                  track={track}
+                  prep={prep}
+                  controls={loaded?.controls ?? null}
+                  duration={duration}
+                  store={store}
+                  onSeek={(t) => seek(t, true)}
+                  onToggle={() => void togglePlay()}
+                  label="Playback position on the score"
+                />
+                <p className="jb-sr">{scoreSummary(track, prep)}</p>
+              </>
             ) : null}
-            {still ? (
-              <div className="jb-still">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={still} alt={`NASA SVS image: ${track?.title}. The music sweeps across it from west to east.`} />
-                <div ref={sweepLine} className="jb-sweep-line" aria-hidden="true" />
-              </div>
-            ) : null}
+          </section>
+        </div>
+
+        <aside className="jb-side" aria-label="Player controls">
+          <div className="jb-side-transport">
+            <button type="button" className="jb-play" onClick={() => void togglePlay()} disabled={!ready} aria-label={playing ? "Pause" : "Play"} aria-keyshortcuts="Space">
+              {playing ? <Pause size={22} aria-hidden="true" /> : <Play size={22} aria-hidden="true" />}
+              <span>{playing ? "Pause" : "Play"}</span>
+            </button>
+            <Clock store={store} duration={duration} />
+          </div>
+          <div className="jb-side-skips">
+            <button type="button" className="jb-skip jb-skip-sm" onClick={() => seek(store.get() - 5, true)} disabled={!ready} aria-label="Back 5 seconds" aria-keyshortcuts="ArrowLeft" title="Back 5 seconds">
+              <RotateCcw size={18} aria-hidden="true" />
+            </button>
+            <button type="button" className="jb-skip jb-skip-sm" onClick={() => seek(store.get() + 5, true)} disabled={!ready} aria-label="Forward 5 seconds" aria-keyshortcuts="ArrowRight" title="Forward 5 seconds">
+              <RotateCw size={18} aria-hidden="true" />
+            </button>
+            <button type="button" className="jb-skip jb-skip-sm" onClick={() => stepNote(-1)} disabled={!ready || !prep?.lead.length} aria-label="Previous melody note" aria-keyshortcuts="Shift+ArrowLeft" title="Previous melody note">
+              <ChevronLeft size={18} aria-hidden="true" />
+            </button>
+            <button type="button" className="jb-skip jb-skip-sm" onClick={() => stepNote(1)} disabled={!ready || !prep?.lead.length} aria-label="Next melody note" aria-keyshortcuts="Shift+ArrowRight" title="Next melody note">
+              <ChevronRight size={18} aria-hidden="true" />
+            </button>
+          </div>
+          <Position store={store} duration={duration} disabled={!ready} onSeek={(t) => seek(t)} label={track && hasDates(track) ? (t) => timeLabel(track, t) : undefined} />
+
+          <p className="jb-status" role="status">
+            {failed ? (
+              <>This track did not load ({failed}).</>
+            ) : status ? (
+              status
+            ) : (
+              <span className="jb-keys">
+                <kbd>Space</kbd> play · <kbd>1</kbd>–<kbd>7</kbd> mute ·{" "}
+                <button type="button" className="jb-link" onClick={() => setHelpOpen(true)}>
+                  all shortcuts <kbd>?</kbd>
+                </button>
+              </span>
+            )}
+          </p>
+
+          <section className="jb-now-mini" aria-labelledby="now-data-h">
+            <h2 id="now-data-h" className="jb-side-h">
+              Right now
+            </h2>
+            {nowNote ? (
+              <p className="jb-readout">
+                <span className="jb-readout-value jb-code">{fmtValue(nowNote.value, "", prep?.range ?? 10)}</span>
+                <span>
+                  {units}
+                  {trend ? `, ${trend}` : ""}
+                  {dateNow ? <strong>{dateNow}</strong> : null}
+                </span>
+              </p>
+            ) : (
+              <p className="jb-readout-none">{prep && !prep.lead.length ? "No single melody: each series has its own voice." : "The melody has not started yet."}</p>
+            )}
+          </section>
+
+          {track && prep ? <StemMixer track={track} present={prep.present} state={groups} onChange={changeGroup} compact /> : null}
+
+          <div className="jb-tools jb-side-tools" role="group" aria-label="Listening tools">
+            <button type="button" className="jb-chip-btn" onClick={toggleBinaural} disabled={!ready} aria-pressed={binaural} aria-keyshortcuts="H">
+              Headphones 3D <kbd>H</kbd>
+            </button>
+            <button type="button" className="jb-chip-btn" onClick={togglePolarity} disabled={!ready || !prep?.pm} aria-pressed={polarity < 0} aria-keyshortcuts="P">
+              Flip polarity <kbd>P</kbd>
+            </button>
+            <button type="button" className="jb-chip-btn" onClick={() => void legend()} disabled={!ready} aria-keyshortcuts="L">
+              Legend <kbd>L</kbd>
+            </button>
+            <button type="button" className="jb-chip-btn" onClick={sayValue} disabled={!ready} aria-keyshortcuts="V">
+              Say value <kbd>V</kbd>
+            </button>
+            <button type="button" className="jb-chip-btn" onClick={() => void sweep()} disabled={!ready || !sweeps.length} aria-keyshortcuts="S">
+              Sweep <kbd>S</kbd>
+            </button>
+            <button type="button" className="jb-chip-btn" onClick={() => void overview()} disabled={!ready || !prep?.lead.length} aria-keyshortcuts="Shift+S">
+              Overview <kbd>⇧S</kbd>
+            </button>
+            <button type="button" className="jb-chip-btn" onClick={toggleMuteAll} disabled={!ready} aria-pressed={allMuted} aria-keyshortcuts="M">
+              Mute all <kbd>M</kbd>
+            </button>
+            <button type="button" className="jb-chip-btn" onClick={() => setHelpOpen(true)} aria-keyshortcuts="Shift+Slash" aria-haspopup="dialog">
+              Help <kbd>?</kbd>
+            </button>
           </div>
 
-          <div className="jb-transport-wrap">
-            <div className="jb-transport">
-              <button type="button" className="jb-play" onClick={() => void togglePlay()} disabled={!ready} aria-label={playing ? "Pause" : "Play"} aria-keyshortcuts="Space">
-                {playing ? <Pause size={22} aria-hidden="true" /> : <Play size={22} aria-hidden="true" />}
-                <span>{playing ? "Pause" : "Play"}</span>
-              </button>
-              <button type="button" className="jb-skip" onClick={() => seek(store.get() - 5, true)} disabled={!ready} aria-label="Back 5 seconds" aria-keyshortcuts="ArrowLeft">
-                <RotateCcw size={18} aria-hidden="true" />
-                <span>5s</span>
-              </button>
-              <button type="button" className="jb-skip" onClick={() => seek(store.get() + 5, true)} disabled={!ready} aria-label="Forward 5 seconds" aria-keyshortcuts="ArrowRight">
-                <RotateCw size={18} aria-hidden="true" />
-                <span>5s</span>
-              </button>
-              <button type="button" className="jb-skip" onClick={() => stepNote(-1)} disabled={!ready || !prep?.lead.length} aria-label="Previous melody note" aria-keyshortcuts="Shift+ArrowLeft">
-                <ChevronLeft size={18} aria-hidden="true" />
-                <span>Note</span>
-              </button>
-              <button type="button" className="jb-skip" onClick={() => stepNote(1)} disabled={!ready || !prep?.lead.length} aria-label="Next melody note" aria-keyshortcuts="Shift+ArrowRight">
-                <span>Note</span>
-                <ChevronRight size={18} aria-hidden="true" />
-              </button>
-              <Clock store={store} duration={duration} />
-            </div>
-
-            <div className="jb-ab" role="radiogroup" aria-label="What plays the melody">
-              <button
-                id="ab-real"
-                type="button"
-                role="radio"
-                aria-checked={!shuffled}
-                tabIndex={shuffled ? -1 : 0}
-                className="jb-chip-btn"
-                onClick={() => setAB(false)}
-                onKeyDown={abKey}
-                disabled={!ready}
-              >
-                Real data
-              </button>
-              <button
-                id="ab-ctrl"
-                type="button"
-                role="radio"
-                aria-checked={shuffled}
-                tabIndex={shuffled ? 0 : -1}
-                className="jb-chip-btn"
-                onClick={() => setAB(true)}
-                onKeyDown={abKey}
-                disabled={!ready || !track?.control}
-                aria-keyshortcuts="A"
-              >
-                Shuffled control <kbd aria-hidden="true">A</kbd>
-              </button>
-            </div>
-
+          <details className="jb-details jb-side-more">
+            <summary>Announcements and motion</summary>
             <div className="jb-settings">
               <label className="jb-select">
                 <span>Announce while playing</span>
@@ -729,118 +712,47 @@ export function DataPlayer({ id }: { id: string }) {
                 <input type="checkbox" checked={voice} disabled={!speechOk} onChange={(e) => setVoice(e.target.checked)} />
                 <span>Also speak them with the browser voice</span>
               </label>
-              {track?.video_url ? (
+              {track?.video_url || track?.video_local ? (
                 <label className="jb-narrate">
                   <input type="checkbox" checked={motion} onChange={(e) => setMotionPref(e.target.checked)} />
                   <span>Play the video (turn off to reduce motion)</span>
                 </label>
               ) : null}
             </div>
-            <p className="jb-status" role="status">
-              {failed ? (
-                <>This track did not load ({failed}).</>
-              ) : status ? (
-                status
-              ) : (
-                <span className="jb-keys">
-                  <kbd>Space</kbd> play · <kbd>⇧</kbd> <kbd>←</kbd> <kbd>→</kbd> step notes · <kbd>1</kbd>–<kbd>7</kbd> mute a group ·{" "}
-                  <button type="button" className="jb-link" onClick={() => setHelpOpen(true)}>
-                    all shortcuts <kbd>?</kbd>
-                  </button>
-                </span>
-              )}
-            </p>
-          </div>
-        </div>
+          </details>
 
-        <div className="jb-right">
-          <div className="jb-intro">
-            <p className="jb-tag">
-              {tag.kind}
-              {tag.value ? (
+          <details className="jb-details jb-side-more">
+            <summary>About this track</summary>
+            <p className="jb-side-lede">
+              <strong>{copy.heading}</strong> {copy.lede}
+            </p>
+            {entry?.r2 != null ? (
+              <p className="jb-fine">
+                The melody follows the data: <span className="jb-code">{tag.value}</span>.
+              </p>
+            ) : null}
+            <p className="jb-fine">{track?.description}</p>
+            {track?.caveat ? <p className="jb-fine">Note: {track.caveat}</p> : null}
+            <p className="jb-fine">
+              Visualization: NASA Scientific Visualization Studio
+              {track?.svs_url ? (
                 <>
-                  {" "}
-                  · <span className="jb-code">{tag.value}</span>
+                  , <a href={track.svs_url}>SVS {track.id}</a>
                 </>
               ) : null}
+              . The video has no sound. {track?.mix ? <a href={`/jukebox/tracks/${id}/${track.mix}`} download>Download the mix (MP3)</a> : null}
             </p>
-            <h1 className="jb-h1">{copy.heading}</h1>
-            <p className="jb-lede">{copy.lede}</p>
-          </div>
-          {track && prep ? <StemMixer track={track} present={prep.present} state={groups} onChange={changeGroup} /> : null}
-        </div>
+            <p className="jb-fine">
+              <Link href={`/compare?track=${id}`}>Compare versions of this track</Link>
+            </p>
+          </details>
 
-        <section className="jb-timeline-wrap" aria-label="Timeline">
-          {track && prep ? <DataTimeline track={track} prep={prep} controls={loaded?.controls ?? null} duration={duration} store={store} onSeek={(t) => seek(t, true)} onToggle={() => void togglePlay()} /> : null}
-        </section>
-
-        <section className="jb-onscreen" aria-labelledby="data-h">
-          <h2 id="data-h" className="jb-h2">
-            What the data is
-          </h2>
-          <p>{track?.description}</p>
-          {track?.caveat ? <p className="jb-fine">Note: {track.caveat}</p> : null}
           {fallback ? (
-            <p>
-              <audio controls preload="none" src={fallback} className="jb-fallback">
-                <a href={fallback}>Download the mix</a>
-              </audio>
-            </p>
+            <audio controls preload="none" src={fallback} className="jb-fallback">
+              <a href={fallback}>Download the mix</a>
+            </audio>
           ) : null}
-          <small>
-            Visualization: NASA Scientific Visualization Studio
-            {track?.svs_url ? (
-              <>
-                , <a href={track.svs_url}>SVS {track.id}</a>
-              </>
-            ) : null}
-            . The video streams from NASA and has no sound. {track?.mix ? <a href={`/jukebox/tracks/${id}/${track.mix}`} download>Download the mix (MP3)</a> : null}
-          </small>
-        </section>
-
-        <section className="jb-now" aria-labelledby="now-data-h">
-          <h2 id="now-data-h" className="jb-h2">
-            Right now
-          </h2>
-          {nowNote ? (
-            <p className="jb-readout">
-              <span className="jb-readout-value jb-code">{fmtValue(nowNote.value, "", prep?.range ?? 10)}</span>
-              <span>
-                {units}
-                {trend ? `, ${trend}` : ""}
-                {dateNow ? <strong>{dateNow}</strong> : null}
-              </span>
-            </p>
-          ) : (
-            <p className="jb-readout-none">{prep && !prep.lead.length ? "This track has no single melody: listen to each series in the mixer." : "The melody has not started yet."}</p>
-          )}
-          <div className="jb-tools" role="group" aria-label="Listening tools">
-            <button type="button" className="jb-chip-btn" onClick={() => void legend()} disabled={!ready} aria-keyshortcuts="L">
-              Spoken legend <kbd>L</kbd>
-            </button>
-            <button type="button" className="jb-chip-btn" onClick={sayValue} disabled={!ready} aria-keyshortcuts="V">
-              Say the value <kbd>V</kbd>
-            </button>
-            <button type="button" className="jb-chip-btn" onClick={() => void sweep()} disabled={!ready || !sweeps.length} aria-keyshortcuts="S">
-              Sweep <kbd>S</kbd>
-            </button>
-            <button type="button" className="jb-chip-btn" onClick={() => void overview()} disabled={!ready || !prep?.lead.length} aria-keyshortcuts="Shift+S">
-              Overview <kbd>⇧S</kbd>
-            </button>
-            <button type="button" className="jb-chip-btn" onClick={togglePolarity} disabled={!ready || !prep?.pm} aria-pressed={polarity < 0} aria-keyshortcuts="P">
-              Flip polarity <kbd>P</kbd>
-            </button>
-            <button type="button" className="jb-chip-btn" onClick={toggleBinaural} disabled={!ready} aria-pressed={binaural} aria-keyshortcuts="H">
-              Headphones 3D <kbd>H</kbd>
-            </button>
-            <button type="button" className="jb-chip-btn" onClick={toggleMuteAll} disabled={!ready} aria-pressed={allMuted} aria-keyshortcuts="M">
-              Mute all <kbd>M</kbd>
-            </button>
-            <button type="button" className="jb-chip-btn" onClick={() => setHelpOpen(true)} aria-keyshortcuts="Shift+Slash" aria-haspopup="dialog">
-              Shortcuts <kbd>?</kbd>
-            </button>
-          </div>
-        </section>
+        </aside>
       </div>
 
       {track && prep ? (
@@ -848,14 +760,6 @@ export function DataPlayer({ id }: { id: string }) {
           <ScorePanel track={track} prep={prep} canvasRef={canvas} onSeek={(t) => seek(t, true)} />
           <FidelityPanel track={track} />
           <LegendPanel track={track} prep={prep} onLegend={() => void legend()} />
-          <Link href={`/compare?track=${id}`} className="jb-explore-link">
-            <strong>Compare versions</strong>
-            <span>
-              {entry?.learned
-                ? "Switch between this mix, the MuseControlLite and mood-layer versions and the shuffled control at the same moment, and rate each one."
-                : "Switch between this mix and its shuffled control at the same moment, and rate each one."}
-            </span>
-          </Link>
         </div>
       ) : null}
 

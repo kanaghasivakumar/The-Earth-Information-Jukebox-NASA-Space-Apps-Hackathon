@@ -8,7 +8,7 @@
   "svs_url": "https://svs.gsfc.nasa.gov/5209/",
   "r2": 0.9664,
   "control_r2": -0.6639,
-  "versions": 7,
+  "versions": 6,
   "learned": true,
   "data": "NASA GISS GISTEMP v4 ZonAnn.Ts+dSST.csv"
  },
@@ -21,7 +21,7 @@
   "svs_url": "https://svs.gsfc.nasa.gov/5313",
   "r2": 0.9772,
   "control_r2": -0.9148,
-  "versions": 7,
+  "versions": 6,
   "learned": true,
   "data": "NASA Black Marble (VIIRS, Suomi NPP) annual composites"
  },
@@ -34,7 +34,7 @@
   "svs_url": "https://svs.gsfc.nasa.gov/3912/",
   "r2": 0.9869,
   "control_r2": -1.1079,
-  "versions": 7,
+  "versions": 6,
   "learned": true,
   "data": "ECCO2 ocean model (MIT/JPL), as rendered in NASA SVS visualization 3912"
  },
@@ -47,7 +47,7 @@
   "svs_url": "https://svs.gsfc.nasa.gov/5011",
   "r2": 0.9833,
   "control_r2": -1.0327,
-  "versions": 3,
+  "versions": 2,
   "learned": true,
   "data": "ISS LIS quality-controlled science data V1 (GHRC DAAC)"
  },
@@ -60,7 +60,7 @@
   "svs_url": "https://svs.gsfc.nasa.gov/4950/",
   "r2": 0.9828,
   "control_r2": -1.255,
-  "versions": 3,
+  "versions": 2,
   "learned": true,
   "data": "GEDI L2B RH100, Apr 2019 - Apr 2020"
  },
@@ -86,7 +86,7 @@
   "svs_url": "https://svs.gsfc.nasa.gov/5058",
   "r2": 0.9877,
   "control_r2": -0.2889,
-  "versions": 3,
+  "versions": 2,
   "learned": true,
   "data": "NASA Black Marble (VIIRS) nightly radiance, 2022-08-30 vs 2022-09-30"
  },
@@ -99,7 +99,7 @@
   "svs_url": "https://svs.gsfc.nasa.gov/5176/",
   "r2": 0.9795,
   "control_r2": -1.2573,
-  "versions": 3,
+  "versions": 2,
   "learned": true,
   "data": "JPL MUR SST anomaly (PO.DAAC)"
  },
@@ -112,7 +112,7 @@
   "svs_url": "https://svs.gsfc.nasa.gov/5046/",
   "r2": 0.9899,
   "control_r2": -1.256,
-  "versions": 3,
+  "versions": 2,
   "learned": true,
   "data": "JAXA AMSR2 (GCOM-W1) 10 km sea-ice concentration, 3-day running minimum, 15 % threshold"
  }

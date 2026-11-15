@@ -19,7 +19,6 @@ describe("data player shortcuts", () => {
     expect(k("s")).toEqual({ type: "sweep" });
     expect(k("S", { shiftKey: true })).toEqual({ type: "overview" });
     expect(k("p")).toEqual({ type: "polarity" });
-    expect(k("a")).toEqual({ type: "ab" });
     expect(k("h")).toEqual({ type: "hrtf" });
     expect(k("m")).toEqual({ type: "muteAll" });
     expect(k("Escape")).toEqual({ type: "stop" });
@@ -68,7 +67,13 @@ describe("data player shortcuts", () => {
   });
   test("the help list documents every shortcut", () => {
     const keys = DATA_KEYS.map(([key]) => key).join(" ");
-    for (const want of ["Space", "Shift + ← →", "L", "V", "S", "P", "A", "H", "1 to 7", "?"]) expect(keys).toContain(want);
+    for (const want of ["Space", "Shift + ← →", "L", "V", "S", "P", "H", "1 to 7", "?"]) expect(keys).toContain(want);
+  });
+  test("A no longer does anything: the shuffled control is gone from the player", () => {
+    expect(k("a")).toBeNull();
+    expect(k("A", { shiftKey: true })).toBeNull();
+    expect(DATA_KEYS.map(([key]) => key)).not.toContain("A");
+    expect(DATA_KEYS.map(([, v]) => v).join(" ")).not.toMatch(/shuffl/i);
   });
 });
 

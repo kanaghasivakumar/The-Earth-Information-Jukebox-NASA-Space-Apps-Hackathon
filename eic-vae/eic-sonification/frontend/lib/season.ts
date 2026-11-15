@@ -21,5 +21,6 @@ export function getSeason(): Source {
     signals,
     tracks,
     scenes: true,
+    svs: "https://svs.gsfc.nasa.gov/5097/",
   };
 }
