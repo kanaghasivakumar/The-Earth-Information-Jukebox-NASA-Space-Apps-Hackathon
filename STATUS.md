@@ -17,8 +17,8 @@ Logs are in `logs_5046/` (gitignored). Inputs are in `data/raw/5046/` (gitignore
 2. [done] Arrangement (job 8838203): lead stem R2 0.990, mix R2 0.990, control -1.26, -16.0 LUFS. `_5046` added. Job 8838203: `sbatch scripts/arrange_5046.sbatch` (copies orig_* stems, then runs arrange_one.sh 5046).
 3. [done] Export (job 8838204), check_web OK. `sbatch scripts/export_5046.sbatch` runs export_track, demo copies, check_web and export_next_app (--integrate outputs). Still todo: add 5046 to `export_all.sh`. Old note: `python scripts/export_track.py outputs/5046 --meta scripts/track_meta/5046.json`; add 5046 to `export_all.sh`;
    copy `mix.mp3`/`arrange_report.json` to `demo/5046`; run `python scripts/check_web.py`; run `scripts/export_next_app.py`.
-4. [done, uncommitted until the export] `video_rate` support in web/js/app.js and DataPlayer.tsx. [todo] Add 5046 to `lib/data/copy.ts` TRACK_COPY. [todo] Support `video_rate` in `web/js/app.js` and in the Next player. Add a line to `demo/README.md`.
-5. [queued, job 8838237, afterok export 8838204] `sbatch scripts/frontend_5046.sbatch` (lint, test, build; log in logs_5046/fe5046-*.out). In `eic-vae/eic-sonification/frontend`: `npm run lint`, `npm test`, `npx next build --webpack`.
+4. [done] `video_rate` support in web/js/app.js and DataPlayer.tsx, a 5046 entry in copy.ts, and 5046 in export_all.sh plus the demo/README listening guide.
+5. [done 11:20, login node] lint exit 0; vitest 50/50 passed; `npx next build --webpack` exit 0 (SWC native load warnings only). Compute nodes have no npm, so job 8838237 failed with exit 127. Run these three on the login node: `cd eic-vae/eic-sonification/frontend && npm run lint && npm test && npx next build --webpack`.
    node_modules can be symlinked from `../ui/eic-vae/eic-sonification/frontend/node_modules`.
 
-Deadline: commit by 12:10.
+All steps are done and committed on feat/track-5046 (not pushed). outputs/5046 is a complete arranged dir for a later MuseControlLite B+ pass.
