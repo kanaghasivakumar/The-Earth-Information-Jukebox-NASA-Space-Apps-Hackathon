@@ -5,7 +5,7 @@ import { ListenSwitch } from "@/components/data/ListenSwitch";
 export default function ListenPage() {
   return (
     <>
-      <section id="listen" className="jb-section jb-listen" aria-label="Listen">
+      <section id="listen" className="jb-section jb-listen jb-listen-wide" aria-label="Listen">
         <ListenSwitch season={getSeason()} />
       </section>
       <section className="jb-section jb-explore" aria-label="Keep exploring">

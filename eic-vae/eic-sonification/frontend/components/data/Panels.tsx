@@ -15,17 +15,20 @@ export const StemMixer = memo(function StemMixer({
   present,
   state,
   onChange,
+  compact = false,
 }: {
   track: DataTrack;
   present: Group[];
   state: Record<Group, GroupState>;
   onChange: (g: Group, patch: Partial<GroupState>) => void;
+  /** the side column: one row per group, the description read by screen readers only */
+  compact?: boolean;
 }) {
   const absent = GROUPS.filter((g) => !present.includes(g)).map((g) => GROUP_LABELS[g]);
   return (
-    <div className="jb-styles jb-mixer" role="group" aria-labelledby="mixer-h">
-      <h2 id="mixer-h" className="jb-h2 jb-mixer-h">
-        What you are hearing
+    <div className={`jb-styles jb-mixer${compact ? " jb-mixer-compact" : ""}`} role="group" aria-labelledby="mixer-h">
+      <h2 id="mixer-h" className={compact ? "jb-side-h" : "jb-h2 jb-mixer-h"}>
+        {compact ? "Sound groups" : "What you are hearing"}
       </h2>
       {present.map((g) => {
         const n = GROUPS.indexOf(g) + 1;
@@ -46,7 +49,7 @@ export const StemMixer = memo(function StemMixer({
               />
               <span>{GROUP_LABELS[g]}</span>
             </label>
-            <span className="jb-group-line" id={`line-${g}`}>
+            <span className={compact ? "jb-sr" : "jb-group-line"} id={`line-${g}`}>
               {GROUP_LINES[g]}
               {stems.length > 1 ? <span className="jb-sr"> Stems: {stems.join(", ")}.</span> : null}
             </span>
