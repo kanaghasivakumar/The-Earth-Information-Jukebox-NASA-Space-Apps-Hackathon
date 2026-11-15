@@ -102,5 +102,18 @@
   "versions": 2,
   "learned": false,
   "data": "JPL MUR SST anomaly (PO.DAAC)"
+ },
+ {
+  "id": "5046",
+  "title": "Daily Arctic Sea Ice, By Year",
+  "voice": "geophony",
+  "summary": "Daily Arctic sea ice, April 2021 to April 2023: two melt seasons and two freeze-ups. Geophony.",
+  "duration_s": 36.5,
+  "svs_url": "https://svs.gsfc.nasa.gov/5046/",
+  "r2": 0.9899,
+  "control_r2": -1.256,
+  "versions": 2,
+  "learned": false,
+  "data": "JAXA AMSR2 (GCOM-W1) 10 km sea-ice concentration, 3-day running minimum, 15 % threshold"
  }
 ]

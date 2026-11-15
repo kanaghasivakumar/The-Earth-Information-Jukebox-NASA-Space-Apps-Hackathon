@@ -91,6 +91,7 @@ Optional fields that the player uses when they are present:
 | `lead_voice` (default `"lead"`) and `voice_groups: {voice: group}` | assigning timeline voices to groups. Default: `lead`→melody, `band*`→bands, otherwise a name prefix |
 | `time_axis: {start, end, format: "year" \| "month" \| "day"}` | spoken dates instead of movie time (ISO dates, linear over the track) |
 | `video_alt_url` | a second `<source>`, such as WebM |
+| `video_rate` | movie seconds per audio second (default 1). Below 1 the video plays slowed down so the music can be longer than the movie (5046: 1/1.5) |
 | `image_url` | a still image instead of a video (5669). A line sweeps across it over `sweep.duration_s`; with `sweep.lon_start/lon_end` and no lead, V speaks the longitude |
 | `lead_voices` | the timeline voices the readout, note table and polarity flip use (default: every note in the melody group). Notes with `value: null` (model harmony) are never the lead |
 | `calendar: {ref_date, t_ref, sec_per_year, clamp}` | spoken dates from a fitted calendar (5011) |

@@ -217,8 +217,26 @@ def _5058(out):
               "(note-level pitch recovery 60 % flute vs 100 % trumpet, solo stem)")
 
 
+def _5046(out):
+    r = _report(out)
+    return Arrangement(
+        id="5046", lead_voices=("lead extent",),
+        # bands = the 1981-2010 median extent on a bowed-glass pad (GM 93): the "glassy" ice voice
+        programs={"lead extent": 73, "band 1981-2010 median": 92}, cc7={"band 1981-2010 median": 85},
+        harmony={},
+        form="demo/5046/form.json",   # demo/5046_form sections, times x1.5 (audio time): cymbal cues only
+        beds=[Bed("geophony", sources=("ocean", "wind"), tune_mix=0.4, width=0.7),
+              Bed("biophony", sources=("birds",), tune_mix=0.15, width=0.8, gain_db=-4)],
+        fidelity=[FidSpec(("lead extent",), _pm(r["lead_pitchmap"]), "sea-ice extent",
+                          orig_stem="orig_lead_extent.wav", win=0.22)],
+        text_subs=[("The flute is the sea-ice extent", "The flute is the sea-ice extent"),
+                   ("A soft glass pad", "A bowed-glass pad")],
+        notes="audio is 1.5x slower than the movie (video_rate 2/3); form cues from demo/5046_form (DINOv2 novelty), "
+              "rescaled to audio time by jukebox.datasets.seaice_5046")
+
+
 TRACKS = {"3912": _3912, "5209": _5209, "5176": _5176, "4950": _4950, "5313": _5313, "5011": _5011,
-          "5669": _5669, "5058": _5058}
+          "5669": _5669, "5058": _5058, "5046": _5046}
 
 
 def get(track_id: str, out: Path | None = None) -> Arrangement:

@@ -1,4 +1,4 @@
-/** Words for the eight data tracks, in the voice of the rest of the site. Numbers come from catalogue.json. */
+/** Words for the data tracks, in the voice of the rest of the site. Numbers come from catalogue.json. */
 import catalogueJson from "./catalogue.json";
 
 export interface CatalogueEntry {
@@ -59,6 +59,11 @@ export const TRACK_COPY: Record<string, { name: string; heading: string; lede: s
     name: "Sea temperature, daily",
     heading: "Hear the ocean run warm.",
     lede: "The daily sea surface temperature anomaly, 2024 to 2026. The flute follows the global ocean's departure from normal; higher means warmer than usual.",
+  },
+  "5046": {
+    name: "Arctic sea ice, daily",
+    heading: "Hear the ice melt and return.",
+    lede: "Two years of Arctic sea ice, one day per frame, April 2021 to April 2023. The flute is the ice extent: it falls each summer and climbs back each winter. A bowed-glass pad plays the 1981 to 2010 average, so the gap is the missing ice.",
   },
 };
 

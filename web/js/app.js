@@ -370,7 +370,9 @@ function seek(t, announce = false) {
 
 function syncVideo(force = false) {
   if (!video.currentSrc && !video.querySelector('source')) return;
-  const t = engine.time;
+  const rate = (S.track && S.track.video_rate) || 1;   // < 1: music slower than the movie (5046)
+  const t = engine.time * rate;
+  if (video.playbackRate !== rate) video.playbackRate = rate;
   const animate = $('motion-chk').checked;
   if (engine.playing && animate) {
     if (video.paused) video.play().catch(() => {});
