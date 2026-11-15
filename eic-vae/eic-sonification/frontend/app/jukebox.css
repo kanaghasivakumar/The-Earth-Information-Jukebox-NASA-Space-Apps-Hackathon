@@ -2346,9 +2346,6 @@ body:has(.jb) {
   height: 100%;
   background: var(--accent);
 }
-.jb-fid-fill.ctrl {
-  background: var(--ink-3);
-}
 .jb-fid-all {
   margin-top: 32px;
 }

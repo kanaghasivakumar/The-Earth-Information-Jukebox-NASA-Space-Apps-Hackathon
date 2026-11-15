@@ -26,11 +26,9 @@ export function switchVersion(versions: Version[], current: number, index: numbe
 /** One-line fidelity for a version, for display. */
 export function fidelityLine(v: Version): string {
   const f = v.fidelity;
-  if (v.kind === "control") return f.r2 != null ? `R² ${fmtNum(f.r2)} against the real data` : "No fidelity number";
   const parts: string[] = [];
   if (f.r2 != null) parts.push(`R² ${fmtNum(f.r2, 3)}`);
   if (f.within_half_semitone != null) parts.push(`${Math.round(f.within_half_semitone * 100)}% of notes within ½ semitone`);
-  if (f.control_r2 != null) parts.push(`shuffled ${fmtNum(f.control_r2)}`);
   return parts.join(" · ") || "No fidelity number";
 }
 

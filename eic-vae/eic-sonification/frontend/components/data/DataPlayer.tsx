@@ -11,7 +11,7 @@ import { loadTrack, prepare, sweepVoices, groupOf } from "@/lib/data/load";
 import { Engine, audioSupported, type GroupState } from "@/lib/data/engine";
 import { Announcer, canSpeak, cancelSpeech, sleep, speak, toggleSame } from "@/lib/data/speech";
 import { fromEvent, keyAction, type DataAction } from "@/lib/data/keys";
-import { GROUP_LABELS, fmtValue, shortUnits, spokenNum, spokenTime, spokenValue } from "@/lib/data/music";
+import { GROUP_LABELS, fmtValue, shortUnits, spokenTime, spokenValue } from "@/lib/data/music";
 import { describeNow, fmtTime, hasDates, leadIndexAt, noteAt, sweepFraction, timeLabel } from "@/lib/data/time";
 import { Roll } from "@/lib/data/roll";
 import { GROUPS, type Group, type LoadedTrack, type TimelineNote } from "@/lib/data/types";
@@ -55,7 +55,6 @@ export function DataPlayer({ id }: { id: string }) {
   const [fallback, setFallback] = useState<string | null>(null);
   const [ready, setReady] = useState(false);
   const [playing, setPlaying] = useState(false);
-  const [shuffled, setShuffled] = useState(false);
   const [polarity, setPolarity] = useState(1);
   const [binaural, setBinaural] = useState(false);
   const [allMuted, setAllMuted] = useState(false);
@@ -84,10 +83,10 @@ export function DataPlayer({ id }: { id: string }) {
   const roll = useRef<Roll | null>(null);
   const busy = useRef<Busy | null>(null);
   // the latest settings, for the clock loop and the key handler (kept in sync after each render)
-  const S = useRef({ shuffled, polarity, binaural, cadence, motion, helpOpen, lastAnnounceT: -1, lastLeadIdx: -1 });
+  const S = useRef({ polarity, binaural, cadence, motion, helpOpen, lastAnnounceT: -1, lastLeadIdx: -1 });
   useEffect(() => {
-    Object.assign(S.current, { shuffled, polarity, binaural, cadence, motion, helpOpen });
-  }, [shuffled, polarity, binaural, cadence, motion, helpOpen]);
+    Object.assign(S.current, { polarity, binaural, cadence, motion, helpOpen });
+  }, [polarity, binaural, cadence, motion, helpOpen]);
   useEffect(() => {
     if (announcer.current) announcer.current.speech = voice;
   }, [voice]);
@@ -194,7 +193,7 @@ export function DataPlayer({ id }: { id: string }) {
 
   const describe = useCallback(
     (t: number, full = false) =>
-      track && prep ? describeNow(track, prep, t, { full, shuffled: S.current.shuffled, controls: loaded?.controls ?? null }) : "",
+      track && prep ? describeNow(track, prep, t, { full, controls: loaded?.controls ?? null }) : "",
     [track, prep, loaded],
   );
 
@@ -377,43 +376,12 @@ export function DataPlayer({ id }: { id: string }) {
     );
   }, [prep, track, pausePlayback, stopBusy, pitchOf]);
 
-  const setAB = useCallback(
-    (on: boolean) => {
-      const eng = engine.current;
-      if (!eng || !track) return;
-      if (!eng.hasControl) {
-        announcer.current?.status("This track has no shuffled control.");
-        return;
-      }
-      if (on && S.current.polarity < 0) {
-        S.current.polarity = 1;
-        setPolarity(1);
-        eng.setLiveLead(false);
-      }
-      S.current.shuffled = on;
-      setShuffled(on);
-      eng.setShuffled(on);
-      const f = track.fidelity;
-      announcer.current?.status(
-        on
-          ? `Shuffled control: the same notes in random time order${f.control_r2 != null ? `, R squared ${spokenNum(f.control_r2)}` : ""}.`
-          : `Real data${f.r2 != null ? `, R squared ${spokenNum(f.r2)}` : ""}.`,
-      );
-    },
-    [track],
-  );
-
   const togglePolarity = useCallback(() => {
     const eng = engine.current;
     if (!eng || !prep) return;
     if (!prep.pm) {
       announcer.current?.status("Polarity flip is not available for this track.");
       return;
-    }
-    if (S.current.shuffled) {
-      S.current.shuffled = false;
-      setShuffled(false);
-      eng.setShuffled(false);
     }
     const next = -S.current.polarity;
     S.current.polarity = next;
@@ -568,8 +536,6 @@ export function DataPlayer({ id }: { id: string }) {
           return void overview();
         case "polarity":
           return togglePolarity();
-        case "ab":
-          return setAB(!S.current.shuffled);
         case "hrtf":
           return toggleBinaural();
         case "mute":
@@ -585,7 +551,7 @@ export function DataPlayer({ id }: { id: string }) {
           }
       }
     },
-    [togglePlay, seek, stepNote, legend, sayValue, sweep, overview, togglePolarity, setAB, toggleBinaural, toggleGroup, toggleMuteAll, stopBusy, setHelpOpen],
+    [togglePlay, seek, stepNote, legend, sayValue, sweep, overview, togglePolarity, toggleBinaural, toggleGroup, toggleMuteAll, stopBusy, setHelpOpen],
   );
 
   useEffect(() => {
@@ -621,14 +587,6 @@ export function DataPlayer({ id }: { id: string }) {
   const units = track ? shortUnits(track.units) : "";
   const tag = fidelityTag(entry?.r2 ?? null);
   const still = track && !track.video_url && track.image_url ? track.image_url : null;
-
-  const abKey = (e: React.KeyboardEvent) => {
-    if (["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown"].includes(e.key)) {
-      e.preventDefault();
-      setAB(!shuffled);
-      document.getElementById(shuffled ? "ab-real" : "ab-ctrl")?.focus();
-    }
-  };
 
   return (
     <>
@@ -683,36 +641,6 @@ export function DataPlayer({ id }: { id: string }) {
                 <ChevronRight size={18} aria-hidden="true" />
               </button>
               <Clock store={store} duration={duration} />
-            </div>
-
-            <div className="jb-ab" role="radiogroup" aria-label="What plays the melody">
-              <button
-                id="ab-real"
-                type="button"
-                role="radio"
-                aria-checked={!shuffled}
-                tabIndex={shuffled ? -1 : 0}
-                className="jb-chip-btn"
-                onClick={() => setAB(false)}
-                onKeyDown={abKey}
-                disabled={!ready}
-              >
-                Real data
-              </button>
-              <button
-                id="ab-ctrl"
-                type="button"
-                role="radio"
-                aria-checked={shuffled}
-                tabIndex={shuffled ? 0 : -1}
-                className="jb-chip-btn"
-                onClick={() => setAB(true)}
-                onKeyDown={abKey}
-                disabled={!ready || !track?.control}
-                aria-keyshortcuts="A"
-              >
-                Shuffled control <kbd aria-hidden="true">A</kbd>
-              </button>
             </div>
 
             <div className="jb-settings">
@@ -852,8 +780,8 @@ export function DataPlayer({ id }: { id: string }) {
             <strong>Compare versions</strong>
             <span>
               {entry?.learned
-                ? "Switch between this mix, the MuseControlLite and mood-layer versions and the shuffled control at the same moment, and rate each one."
-                : "Switch between this mix and its shuffled control at the same moment, and rate each one."}
+                ? "Switch between this mix and the MuseControlLite and mood-layer versions at the same moment, and rate each one."
+                : "Switch between this mix and its learned version at the same moment, and rate each one."}
             </span>
           </Link>
         </div>

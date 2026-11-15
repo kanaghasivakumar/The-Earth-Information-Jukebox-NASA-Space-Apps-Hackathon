@@ -95,7 +95,7 @@ export function describeNow(
   track: DataTrack,
   prep: Prepared,
   t: number,
-  { full = false, shuffled = false, controls = null as Controls | null } = {},
+  { full = false, controls = null as Controls | null } = {},
 ): string {
   const u = track.units || "";
   const i = leadIndexAt(prep.lead, t);
@@ -111,7 +111,6 @@ export function describeNow(
   if (prev && full && n.value != null && prev.value != null) {
     msg += n.value > prev.value + 1e-9 ? ", rising" : n.value < prev.value - 1e-9 ? ", falling" : ", steady";
   }
-  if (shuffled) msg += ". Shuffled control is playing";
   if (full && controls && !controls.synthetic) {
     const k = controls.t.findIndex((x) => x >= t);
     const j = k < 0 ? controls.t.length - 1 : k;

@@ -19,7 +19,7 @@ export default function ListenPage() {
         </Link>
         <Link href="/compare" className="jb-explore-link">
           <strong>Compare versions of the data tracks</strong>
-          <span>Switch between the deterministic mix, the learned versions and the shuffled control at the same moment, and rate each one.</span>
+          <span>Switch between the deterministic mix and the learned versions at the same moment, and rate each one.</span>
         </Link>
       </section>
     </>

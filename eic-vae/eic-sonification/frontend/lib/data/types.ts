@@ -107,7 +107,6 @@ export interface DataTrack {
   controls: string;
   fidelity: Fidelity;
   data_source: string | Record<string, unknown>;
-  control?: { file: string; replaces?: Group; label?: string };
   mix?: string;
   pitch_map?: PitchMapSpec;
   band_pitch_map?: PitchMapSpec;
@@ -138,7 +137,7 @@ export interface TrackIndexEntry {
 export interface Version {
   id: string;
   label: string;
-  kind: "deterministic" | "learned" | "control";
+  kind: "deterministic" | "learned";
   file: string;
   line: string;
   fidelity: {

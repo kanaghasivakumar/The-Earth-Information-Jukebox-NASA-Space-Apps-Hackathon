@@ -2,9 +2,8 @@
  * Web Audio engines (browser only).
  *
  * Engine: the data player. Every stem starts on the same AudioContext tick, so stems stay sample-synced;
- * each stem group has a gain (mute, volume), a dry path and an HRTF path (headphone 3D); the shuffled
- * control stem plays alongside the melody and the two swap by gain (A/B); polarity flip re-synthesizes
- * the melody live from the timeline.
+ * each stem group has a gain (mute, volume), a dry path and an HRTF path (headphone 3D); polarity flip
+ * re-synthesizes the melody live from the timeline.
  *
  * MultiPlayer: the Compare view. Every version is decoded and started together; choosing a version only
  * moves gains, so the switch lands on the same sample.
@@ -72,7 +71,6 @@ export class Engine {
   private ui!: GainNode;
   private groups = {} as Record<Group, GroupNode>;
   private stems: StemEntry[] = [];
-  private control: (StemEntry & { replaces: Group }) | null = null;
   private sources: AudioBufferSourceNode[] = [];
   private liveVoices: OscillatorNode[] = [];
   private live: { notes: TimelineNote[]; pitchOf: (n: TimelineNote) => number; cursor: number | null; fresh: boolean } | null = null;
@@ -81,7 +79,6 @@ export class Engine {
   playing = false;
   offset = 0;
   duration = 0;
-  shuffled = false;
   liveLead = false;
   binaural = false;
   masterMuted = false;
@@ -149,14 +146,13 @@ export class Engine {
     } else (p as unknown as { setPosition: (x: number, y: number, z: number) => void }).setPosition(x, y, z);
   }
 
-  /** Decode every stem (and the control) of a track. Resolves to false when a newer load superseded it. */
+  /** Decode every stem of a track. Resolves to false when a newer load superseded it. */
   async load(track: DataTrack, base: string, onProgress: (done: number, total: number) => void = () => {}): Promise<boolean> {
     const token = ++this.loadToken;
     this.pause();
     this.offset = 0;
     const ctx = this.ensure();
-    const jobs = track.stems.map((s) => ({ name: s.name, group: s.group, url: base + s.file, isControl: false }));
-    if (track.control?.file) jobs.push({ name: "__control", group: track.control.replaces ?? "melody", url: base + track.control.file, isControl: true });
+    const jobs = track.stems.map((s) => ({ name: s.name, group: s.group, url: base + s.file }));
     let done = 0;
     const decoded = await Promise.all(
       jobs.map(async (j) => {
@@ -167,26 +163,17 @@ export class Engine {
     );
     if (token !== this.loadToken) return false;
     for (const s of this.stems) s.gain.disconnect();
-    this.control?.gain.disconnect();
     this.stems = [];
-    this.control = null;
     for (const j of decoded) {
       const gain = ctx.createGain();
       const group = GROUPS.includes(j.group) ? j.group : "melody";
       gain.connect(this.groups[group].gain);
-      const entry = { name: j.name, group, buffer: j.buffer, gain };
-      if (j.isControl) this.control = { ...entry, replaces: group };
-      else this.stems.push(entry);
+      this.stems.push({ name: j.name, group, buffer: j.buffer, gain });
     }
     this.duration = Math.max(track.duration_s || 0, ...decoded.map((d) => d.buffer.duration));
-    this.shuffled = false;
     this.setLiveLead(false);
     this.applyStemGains(true);
     return true;
-  }
-
-  get hasControl() {
-    return !!this.control;
   }
 
   get time(): number {
@@ -201,8 +188,7 @@ export class Engine {
     if (this.offset >= this.duration - 0.05) this.offset = 0;
     const when = ctx.currentTime + 0.03;
     this.startedAt = when - this.offset;
-    const all = [...this.stems, ...(this.control ? [this.control] : [])];
-    this.sources = all
+    this.sources = this.stems
       .filter((s) => this.offset < s.buffer.duration)
       .map((s) => {
         const src = ctx.createBufferSource();
@@ -259,17 +245,7 @@ export class Engine {
   }
 
   private applyStemGains(immediate = false) {
-    const ctrlOn = this.shuffled && !!this.control;
-    for (const s of this.stems) {
-      const off = (ctrlOn && s.group === this.control!.replaces) || (this.liveLead && s.group === "melody");
-      this.ramp(s.gain.gain, off ? 0 : 1, immediate);
-    }
-    if (this.control) this.ramp(this.control.gain.gain, ctrlOn ? 1 : 0, immediate);
-  }
-
-  setShuffled(on: boolean) {
-    this.shuffled = on;
-    this.applyStemGains();
+    for (const s of this.stems) this.ramp(s.gain.gain, this.liveLead && s.group === "melody" ? 0 : 1, immediate);
   }
 
   setGroup(g: Group, { volume, muted }: Partial<GroupState> = {}) {

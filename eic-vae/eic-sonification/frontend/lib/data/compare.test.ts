@@ -11,7 +11,7 @@ const v = (id: string, kind: Version["kind"], r2: number | null, control: number
   line: "",
   fidelity: { r2, within_half_semitone: r2 == null ? null : 1, control_r2: control, control_kind: control == null ? null : "x", note: null },
 });
-const VERSIONS = [v("mix", "deterministic", 0.966, -0.55), v("mcl_a", "learned", 0.964, -0.92), v("control", "control", -0.55)];
+const VERSIONS = [v("mix", "deterministic", 0.966, -0.55), v("mcl_a", "learned", 0.964, -0.92), v("odd", "learned", -0.55)];
 
 class MemoryStorage {
   data = new Map<string, string>();
@@ -45,14 +45,15 @@ describe("switching versions", () => {
     expect(switchVersion(VERSIONS, 2, -1, 3).gains).toEqual([0, 0, 1]);
   });
   test("speaks a negative R² as minus", () => {
-    expect(switchVersion(VERSIONS, 0, 2, 0).announcement).toBe("CONTROL, R squared minus 0.55. Same moment.");
+    expect(switchVersion(VERSIONS, 0, 2, 0).announcement).toBe("ODD, R squared minus 0.55. Same moment.");
   });
   test("versionGains is one-hot", () => {
     expect(versionGains(4, 3)).toEqual([0, 0, 0, 1]);
   });
   test("fidelity lines", () => {
-    expect(fidelityLine(VERSIONS[0])).toBe("R² 0.966 · 100% of notes within ½ semitone · shuffled −0.55");
-    expect(fidelityLine(VERSIONS[2])).toBe("R² −0.55 against the real data");
+    // the shuffled-control number is not shown on the site any more, only the real-data fidelity
+    expect(fidelityLine(VERSIONS[0])).toBe("R² 0.966 · 100% of notes within ½ semitone");
+    expect(fidelityLine(v("x", "learned", null))).toBe("No fidelity number");
   });
 });
 
@@ -87,7 +88,7 @@ describe("ratings in localStorage", () => {
     store.setItem(RATINGS_KEY, "[1,2]");
     expect(loadRatings(store)).toEqual({});
   });
-  test("export flattens ratings with labels and fidelity, skipping empty entries", () => {
+  test("export flattens ratings with labels and fidelity, skipping empty entries; an old control rating keeps its id", () => {
     const ratings: Ratings = {
       "5209": {
         mix: { rating: 4, notes: "", updated: "a" },
@@ -98,7 +99,7 @@ describe("ratings in localStorage", () => {
     const out = exportRatings(ratings, { "5209": VERSIONS }, fixed);
     expect(out.exported).toBe("2026-11-15T12:00:00.000Z");
     expect(out.ratings.map((r) => [r.version, r.label, r.rating, r.r2])).toEqual([
-      ["control", "CONTROL", null, -0.55],
+      ["control", "control", null, null],
       ["mix", "MIX", 4, 0.966],
     ]);
   });

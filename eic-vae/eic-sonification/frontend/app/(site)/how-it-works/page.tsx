@@ -97,8 +97,8 @@ export default function HowItWorksPage() {
         <li>
           <h3>We check it.</h3>
           <p>
-            A pitch tracker listens to the finished mix and turns each melody note back into a number. The track passes when that matches the data and
-            the same notes, shuffled in time, do not.
+            A pitch tracker listens to the finished mix and turns each melody note back into a number. The track passes when that matches the data.
+            To be sure the test is not fooled by any tune, we also ran it on the same notes shuffled in time, which fail it.
           </p>
         </li>
       </ol>
@@ -108,12 +108,11 @@ export default function HowItWorksPage() {
           How closely each melody follows its data
         </h3>
         <table className="jb-table jb-fid-table">
-          <caption className="jb-sr">R squared of the melody recovered from the full mix, against the same notes shuffled in time. 1 is a perfect match.</caption>
+          <caption className="jb-sr">R squared of the melody recovered from the full mix against the data. 1 is a perfect match.</caption>
           <thead>
             <tr>
               <th scope="col">Track</th>
-              <th scope="col">Real data</th>
-              <th scope="col">Shuffled</th>
+              <th scope="col">R² against the data</th>
             </tr>
           </thead>
           <tbody>
@@ -125,12 +124,6 @@ export default function HowItWorksPage() {
                     <span className="jb-fid-fill" style={{ width: `${Math.max(0, c.r2 as number) * 100}%` }} />
                   </span>
                   <span className="jb-code">{fmtNum(c.r2 as number)}</span>
-                </td>
-                <td>
-                  <span className="jb-fid-track" aria-hidden="true">
-                    <span className="jb-fid-fill ctrl" style={{ width: `${Math.max(0, c.control_r2 ?? 0) * 100}%` }} />
-                  </span>
-                  <span className="jb-code">{c.control_r2 != null ? fmtNum(c.control_r2) : "–"}</span>
                 </td>
               </tr>
             ))}

@@ -119,13 +119,24 @@ describe("loadTrack on the bundled tracks", () => {
 const bplus = (id: string) => (existsSync(path.join(PUBLIC, "jukebox/tracks", id, "versions/mcl_bplus.mp3")) ? ["mcl_bplus"] : []);
 
 describe("versions", () => {
-  test("the three pilots offer the pilot versions, the others the mix and its control, B+ where rendered", async () => {
+  test("the three pilots offer the pilot versions, the others the mix, B+ where rendered; never a shuffled control", async () => {
     for (const id of ["5209", "5313", "3912"]) {
       const v = await loadVersions(id, fsFetch);
-      expect(v.versions.map((x) => x.id)).toEqual(["mix", "mcl_a", "mcl_b_augment", "mcl_b_replace", "mood", ...bplus(id), "control"]);
+      expect(v.versions.map((x) => x.id)).toEqual(["mix", "mcl_a", "mcl_b_augment", "mcl_b_replace", "mood", ...bplus(id)]);
     }
-    expect((await loadVersions("5176", fsFetch)).versions.map((x) => x.id)).toEqual(["mix", ...bplus("5176"), "control"]);
+    expect((await loadVersions("5176", fsFetch)).versions.map((x) => x.id)).toEqual(["mix", ...bplus("5176")]);
     expect((await loadVersions("5669", fsFetch)).versions.map((x) => x.id)).toEqual(["mix", ...bplus("5669")]);
+  });
+
+  test("an older versions.json that still lists a control is filtered", async () => {
+    const old = { id: "x", duration_s: 1, versions: [{ id: "mix", kind: "deterministic" }, { id: "control", kind: "control" }] };
+    const fake = async () => ({ ok: true, status: 200, json: async () => old });
+    expect((await loadVersions("x", fake)).versions.map((x) => x.id)).toEqual(["mix"]);
+  });
+
+  test("the loader drops the shuffled-control stem from track.json", async () => {
+    const t = await loadTrack("5209", fsFetch);
+    expect("control" in t.track).toBe(false);
   });
 
   test("every version file exists", async () => {

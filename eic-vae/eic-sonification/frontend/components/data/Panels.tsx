@@ -84,7 +84,7 @@ export const FidelityPanel = memo(function FidelityPanel({ track }: { track: Dat
             <div key={b.label} className="jb-fid-row">
               <span>{b.label}</span>
               <span className="jb-fid-track">
-                <span className={`jb-fid-fill${b.kind === "control" ? " ctrl" : ""}`} style={{ width: `${Math.max(0, b.r2) * 100}%` }} />
+                <span className="jb-fid-fill" style={{ width: `${Math.max(0, b.r2) * 100}%` }} />
               </span>
               <span className="jb-code">{fmtNum(b.r2)}</span>
             </div>

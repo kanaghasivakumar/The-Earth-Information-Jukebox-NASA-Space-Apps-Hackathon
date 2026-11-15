@@ -29,20 +29,6 @@
     "control_kind": "shuffled lead through the whole pipeline",
     "note": "Measured on the full mix."
    }
-  },
-  {
-   "id": "control",
-   "label": "Shuffled control",
-   "kind": "control",
-   "file": "mix_control.mp3",
-   "line": "The same arrangement with the melody's notes shuffled in time. It should sound like music but no longer follow the data.",
-   "fidelity": {
-    "r2": -1.2573,
-    "within_half_semitone": null,
-    "control_r2": null,
-    "control_kind": null,
-    "note": "R\u00b2 of the shuffled melody against the real data. Measured on the shuffled lead stem."
-   }
   }
  ]
 }

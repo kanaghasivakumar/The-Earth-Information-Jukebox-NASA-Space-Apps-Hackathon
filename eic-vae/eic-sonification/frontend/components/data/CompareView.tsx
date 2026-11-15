@@ -14,7 +14,7 @@ import type { Version } from "@/lib/data/types";
 
 const EVENT = "jb:compare";
 const RATING_EVENT = "jb:ratings";
-const KIND_TAG: Record<Version["kind"], string> = { deterministic: "Data-faithful", learned: "Learned layer", control: "Control" };
+const KIND_TAG: Record<Version["kind"], string> = { deterministic: "Data-faithful", learned: "Learned layer" };
 
 // ---- ?track= in the address bar -------------------------------------------------
 function subscribeTrack(fn: () => void) {
@@ -382,8 +382,7 @@ export function CompareView() {
           {current ? (
             <>
               <p className="jb-fine">
-                {current.fidelity.note} {fidelityLine(current)}
-                {current.fidelity.control_kind ? ` (control: ${current.fidelity.control_kind}).` : "."}
+                {current.fidelity.note} {fidelityLine(current)}.
               </p>
               <fieldset className="jb-fieldset">
                 <legend>How good does it sound? 1 is poor, 5 is excellent.</legend>
