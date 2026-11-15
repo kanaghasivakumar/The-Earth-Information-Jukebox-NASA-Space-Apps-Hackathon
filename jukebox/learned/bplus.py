@@ -99,8 +99,9 @@ VARIANTS = {
 # The shipped single variant (deadline triage): bass kept, no cymbals / hi-hats, rhythm control halved.
 VARIANTS["bplus"] = V("cym", "soft", 0.5)
 VARIANTS["bplus_coarse"] = V("cym", "soft", 0.5, cond="_coarse")     # 5058: coarse 0.5 s melody control
+VARIANTS["bplus_nomel"] = V("cym", "soft", 0.5, melody=0.0)          # 5058: no melody control (dynamics + key)
 DEFAULT_VARIANTS = ["bplus"]
-TRACK_VARIANTS = {"5058": ["bplus_coarse"]}
+TRACK_VARIANTS = {"5058": ["bplus_coarse", "bplus_nomel"]}
 # 3912, 5209, 5313 are not regenerated: the pilot's wosdd-all CFG 1.5 take (rated as mode B augment) is reused
 REUSE_PILOT = {"5209", "5313", "3912"}
 LEADLESS = {"5669"}                     # no data lead: the four aerosol instruments act as the lead
@@ -517,13 +518,19 @@ def pilot_dir(tid: str) -> Path:
     return PILOT / f"{tid}_mcl"
 
 
+def chosen_variant(tid: str) -> str:
+    """BPLUS_VARIANT overrides; else outputs/<id>_mclbplus/variant.txt (written when a choice was made); else the first."""
+    p = out_dir(tid) / "variant.txt"
+    return os.environ.get("BPLUS_VARIANT") or (p.read_text().strip() if p.exists() else variants_for(tid)[0])
+
+
 def raw_gen(tid: str, which: str) -> tuple[np.ndarray | None, str]:
     """The MCL take before cleanup: the pilot's wosdd-all CFG 1.5 seed 42 render (3912, 5209, 5313) or the
     B+ render stitched here."""
     if tid in REUSE_PILOT:
         p = pilot_dir(tid) / f"gen_wosdd-all_g1.5_{which}.wav"
     else:
-        p = out_dir(tid) / f"gen_{variants_for(tid)[0]}_{which}.wav"
+        p = out_dir(tid) / f"gen_{chosen_variant(tid)}_{which}.wav"
     return (M.read_wav(p) if p.exists() else None), str(p)
 
 
@@ -694,7 +701,7 @@ def postprocess(tid: str) -> dict:
            "decymbal": {"atten_db": DECYMBAL_DB, "above_hz": 5000, "hpss_margin": 1.0, "applied_to": "MCL stem only"},
            "bed": {"raw": percussiveness(g_raw), "clean": percussiveness(g)}, "mixes": {}, "reference": {}}
     runs = json.loads((out / "gen_runs.json").read_text()) if (out / "gen_runs.json").exists() else []
-    run = next((r for r in runs if r["which"] == "real"), None)
+    run = next((r for r in runs if r["which"] == "real" and r["variant"] == chosen_variant(tid)), None)
     if run is None and tid in REUSE_PILOT:
         pr = json.loads((pilot_dir(tid) / "gen_runs.json").read_text())
         run = next(r for r in pr if r["variant"] == "wosdd-all_g1.5" and r["which"] == "real")
@@ -761,22 +768,30 @@ def postprocess(tid: str) -> dict:
               f"(det {dref['energy_share']['voice_beds']:.3f}) hf_perc={r['percussion']['hf_perc_share']:.5f} "
               f"(no decymbal {r['percussion_without_decymbal']['hf_perc_share']:.5f})", flush=True)
     rep["choice"] = choose_mix(rep)
+    rep["variant"] = None if tid in REUSE_PILOT else chosen_variant(tid)
     (out / "bplus_report.json").write_text(json.dumps(A.json_safe(rep), indent=1))
+    if rep["variant"]:
+        (out / f"bplus_report_{rep['variant']}.json").write_text(json.dumps(A.json_safe(rep), indent=1))
     return rep
 
 
 def choose_mix(rep: dict) -> dict:
-    """Replace unless blend is clearly better: blend must keep R² (within 0.002), keep the voice-bed share at
-    least as close to the deterministic mix, and the AMT and MCL chords must agree (chroma cosine >= 0.7),
-    since two independent harmonisations under one melody can clash."""
+    """Blend (AMT harmony and MCL both 3 dB down) or replace (MCL in the AMT slot)? The AMT harmony stem carries
+    the deterministic bass line, so replace thins the low end. Blend wins when it keeps R² (within 0.002) and the
+    voice-bed share (within 0.005), and its 40-250 Hz level is closer to the old augment's (the version whose bass
+    the user liked; the deterministic mix where there is no old augment)."""
+    ref = rep["reference"].get("old_augment") or rep["reference"]["deterministic"]
+    low = ref["percussion"]["low_db"]
     d = rep["reference"]["deterministic"]["energy_share"]["voice_beds"]
     rp, bl = rep["mixes"]["replace"], rep["mixes"]["blend"]
-    agree = bl.get("chroma_agreement_amt_vs_mcl")
     r2 = lambda r: (r["mix"] or {}).get("r2") or 0.0
-    blend_ok = (agree is not None and agree >= 0.7 and r2(bl) >= r2(rp) - 0.002
-                and abs(bl["energy_share"]["voice_beds"] - d) <= abs(rp["energy_share"]["voice_beds"] - d) + 0.005)
-    return {"how": "blend" if blend_ok else "replace", "chroma_agreement": agree,
-            "rule": "replace unless blend keeps R² (±0.002), the voice-bed share, and AMT/MCL chroma agreement >= 0.7"}
+    blend_ok = (r2(bl) >= r2(rp) - 0.002
+                and abs(bl["energy_share"]["voice_beds"] - d) <= abs(rp["energy_share"]["voice_beds"] - d) + 0.005
+                and abs(bl["percussion"]["low_db"] - low) < abs(rp["percussion"]["low_db"] - low))
+    return {"how": "blend" if blend_ok else "replace", "chroma_agreement": bl.get("chroma_agreement_amt_vs_mcl"),
+            "low_db": {"reference": low, "replace": rp["percussion"]["low_db"], "blend": bl["percussion"]["low_db"]},
+            "rule": "blend if it keeps R² (±0.002) and the voice-bed share (±0.005) and its 40-250 Hz level is closer "
+                    "to the old augment's (deterministic mix where none)"}
 
 
 # ---------------------------------------------------------------- export (demo/<id>_mclbplus)
@@ -821,9 +836,16 @@ def _f(x, nd=3):
     return "–" if x is None else f"{x:.{nd}f}"
 
 
+def _dbs(x):
+    """an energy share as dB re the total"""
+    return "–" if x is None else f"{10 * np.log10(max(x, 1e-12)):.1f} dB"
+
+
 def export(tid: str) -> None:
     out = out_dir(tid)
     rep = json.loads((out / "bplus_report.json").read_text())
+    rep["choice"] = choose_mix(rep)
+    (out / "bplus_report.json").write_text(json.dumps(A.json_safe(rep), indent=1))
     dest = DEMO / f"{tid}_mclbplus"
     dest.mkdir(parents=True, exist_ok=True)
     how = rep["choice"]["how"]
@@ -843,7 +865,9 @@ def export(tid: str) -> None:
     mm, dm = m["mix"] or {}, det["mix"] or {}
     L = [f"# {tid} with MuseControlLite B+ (no cymbals, bass kept, with Earth voices)", "",
          "The data lead, the bands and every recorded Earth-voice bed stay exactly at their arranged levels; a",
-         f"MuseControlLite accompaniment (with its bass) takes the AMT harmony's place ({how}). **Nothing here has",
+         ("MuseControlLite accompaniment (with its bass) shares the AMT harmony's slot (blend: both 3 dB down, so the "
+          "AMT bass line stays). **Nothing here has" if how == "blend" else
+          "MuseControlLite accompaniment (with its bass) takes the AMT harmony's place (replace). **Nothing here has"),
          "been listened to**: judged by pyin, HPSS and spectrograms only. Method and table: `demo/learned/README.md`.", ""]
     if rep["reused_pilot_take"]:
         L += ["- **MCL take:** the pilot's existing render (wosdd-all, control CFG 1.5, seed 42; the mode-B augment",
@@ -866,12 +890,15 @@ def export(tid: str) -> None:
               f"{_f((old or {}).get('control_e2e', {}).get('r2'))} | {_f((m.get('control_e2e') or {}).get('r2'))} |"]
     L += [f"| voice-bed share of K-weighted energy | {_f(det['energy_share']['voice_beds'])} | "
           f"{_f((old or {}).get('energy_share', {}).get('voice_beds'))} | {_f(m['energy_share']['voice_beds'])} |",
-          f"| HF (5–16 kHz) percussive share, full mix | {_f(det['percussion']['hf_perc_share'], 4)} | "
-          f"{_f((old or {}).get('percussion', {}).get('hf_perc_share'), 4)} | {_f(m['percussion']['hf_perc_share'], 4)} |",
+          f"| HF (5–16 kHz) percussive energy, full mix (re total, A-weighted) | {_dbs(det['percussion']['hf_perc_share'])} | "
+          f"{_dbs((old or {}).get('percussion', {}).get('hf_perc_share'))} | {_dbs(m['percussion']['hf_perc_share'])} |",
+          f"| whole-mix 40–250 Hz level at -23 LUFS (bass) | {_f(det['percussion']['low_db'], 1)} dB | "
+          f"{_f((old or {}).get('percussion', {}).get('low_db'), 1)} dB | {_f(m['percussion']['low_db'], 1)} dB |",
           f"| HPSS percussive share, full mix | {_f(det['percussion']['perc_ratio'])} | "
           f"{_f((old or {}).get('percussion', {}).get('perc_ratio'))} | {_f(m['percussion']['perc_ratio'])} |",
           f"| MCL stem 40–250 Hz level in the mix (dB) | – | {_f((old or {}).get('mcl_low_db_in_mix'), 1)} | {_f(m['mcl_low_db_in_mix'], 1)} |",
-          "", f"MCL stem alone, before / after cleanup: HF percussive share {_f(br['hf_perc_share'], 4)} / {_f(bc['hf_perc_share'], 4)}, "
+          "", f"MCL stem alone, before / after cleanup: HF (5–16 kHz) percussive energy {_dbs(br['hf_perc_share'])} / {_dbs(bc['hf_perc_share'])}, "
+          f"all HF energy {_dbs(br['hf_share'])} / {_dbs(bc['hf_share'])}, "
           f"HPSS percussive share {_f(br['perc_ratio'])} / {_f(bc['perc_ratio'])}, 40–250 Hz {_f(br['low_db'], 1)} / {_f(bc['low_db'], 1)} dB.", ""]
     if "data_hits" in m:
         L += [f"Data drum hits (5011): onset salience at the hits {_f(m['data_hits']['hit_salience'], 2)} vs "
