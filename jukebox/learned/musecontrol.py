@@ -93,6 +93,11 @@ TRACKS = {
         win=0.11, offset=0.03,
         rhythm="lead-onsets", lead_voices=("city",),
     ),
+    "5046": dict(
+        prompt="Arctic ambient, glassy pads and slow strings, cold and spacious, flute melody",
+        win=0.22, offset=0.03,
+        rhythm="lead-onsets", lead_voices=("lead extent",),
+    ),
     "5669": dict(
         prompt="Airy ambient, drifting pads and soft strings, dust and haze, gentle",
         win=0.20, offset=0.03,

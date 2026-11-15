@@ -57,7 +57,7 @@ from . import musecontrol as M
 SR = M.SR
 ROOT = M.ROOT
 ADAPTER, GUIDANCE, TEXT_CFG, STEPS, SEED = "wosdd-all", 1.5, 7.0, 50, 42
-IDS = ("5209", "5313", "3912", "4950", "5176", "5011", "5058", "5669")
+IDS = ("5209", "5313", "3912", "4950", "5176", "5011", "5058", "5669", "5046")
 DESC = {   # per-track wording; the bass is asked for explicitly so "no percussion" does not take it away
     "5209": "Solemn orchestral strings and piano, slow cinematic build, warm bass line",
     "5313": "Night ambient, warm synth pads and soft piano, glowing, warm bass line",
@@ -67,6 +67,7 @@ DESC = {   # per-track wording; the bass is asked for explicitly so "no percussi
     "5011": "Stormy ambient, dark strings and low synth pads, slow and brooding, warm bass line",
     "5058": "Somber ambient in G major, slow strings and warm pads, fading light, warm bass line",
     "5669": "Airy ambient, drifting pads and soft strings, hazy and slow, warm bass line",
+    "5046": "Arctic ambient, glassy pads and slow strings, cold and spacious, warm bass line",
 }
 NO_CYM = "no cymbals, no hi-hats, no crash, no ride"
 TAIL = {"soft": f"soft low drums, {NO_CYM}", "nop": f"no drums, no percussion, {NO_CYM}", "cym": NO_CYM}
