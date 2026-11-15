@@ -14,3 +14,4 @@ Deck: https://claude.ai/artifact/HCtfDvBpHKTm8dUnaKG2os (share it from its Share
 | `slide02_5209_video_silent.mp4` | 2 · the 5209 video for the years just heard | no, loop |
 | `slide11_5313_night_lights_with_sound.mp4` | 11 · demo backup, video and music synced | yes, start on click |
 | `slide14_5176_ocean_silent.mp4` | 14 · Imagine a room, background | no, loop |
+| `slide14_5176_ocean_with_sound.mp4` | 14 · Imagine a room, ocean anomaly 2024 to today with its B+ music | yes, start on click |
