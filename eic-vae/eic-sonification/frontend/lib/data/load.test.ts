@@ -115,14 +115,25 @@ describe("loadTrack on the bundled tracks", () => {
   });
 });
 
+/** MuseControlLite B+ is offered wherever its mix was exported (demo/<id>_mclbplus). */
+const bplus = (id: string) => (existsSync(path.join(PUBLIC, "jukebox/tracks", id, "versions/mcl_bplus.mp3")) ? ["mcl_bplus"] : []);
+
 describe("versions", () => {
-  test("the three pilots offer six versions, the others the mix and its control", async () => {
+  test("the three pilots offer the pilot versions, the others the mix and its control, B+ where rendered", async () => {
     for (const id of ["5209", "5313", "3912"]) {
       const v = await loadVersions(id, fsFetch);
-      expect(v.versions.map((x) => x.id)).toEqual(["mix", "mcl_a", "mcl_b_augment", "mcl_b_replace", "mood", "control"]);
+      expect(v.versions.map((x) => x.id)).toEqual(["mix", "mcl_a", "mcl_b_augment", "mcl_b_replace", "mood", ...bplus(id), "control"]);
     }
-    expect((await loadVersions("5176", fsFetch)).versions.map((x) => x.id)).toEqual(["mix", "control"]);
-    expect((await loadVersions("5669", fsFetch)).versions.map((x) => x.id)).toEqual(["mix"]);
+    expect((await loadVersions("5176", fsFetch)).versions.map((x) => x.id)).toEqual(["mix", ...bplus("5176"), "control"]);
+    expect((await loadVersions("5669", fsFetch)).versions.map((x) => x.id)).toEqual(["mix", ...bplus("5669")]);
+  });
+
+  test("every version file exists", async () => {
+    for (const c of catalogue) {
+      for (const v of (await loadVersions(c.id, fsFetch)).versions) {
+        expect(existsSync(path.join(PUBLIC, "jukebox/tracks", c.id, v.file)), `${c.id}/${v.file}`).toBe(true);
+      }
+    }
   });
 });
 
