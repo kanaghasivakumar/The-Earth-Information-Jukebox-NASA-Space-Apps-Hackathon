@@ -215,5 +215,6 @@
  "timeline": "timeline.json",
  "controls": "controls.json",
  "voice": "anthrophony",
- "summary": "Southwest Florida's lights before and after Hurricane Ian: the city hum fades and frogs and insects take over."
+ "summary": "Southwest Florida's lights before and after Hurricane Ian: the city hum fades and frogs and insects take over.",
+ "video_local": "video.mp4"
 }

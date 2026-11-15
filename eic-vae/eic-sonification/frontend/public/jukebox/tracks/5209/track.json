@@ -337,5 +337,6 @@
  "timeline": "timeline.json",
  "controls": "controls.json",
  "voice": "geophony",
- "summary": "144 years of warming in eight latitude zones, checked against the GISS CSV (r 0.9997). The proof track."
+ "summary": "144 years of warming in eight latitude zones, checked against the GISS CSV (r 0.9997). The proof track.",
+ "video_local": "video.mp4"
 }

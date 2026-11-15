@@ -9,6 +9,7 @@ Writes, under eic-vae/eic-sonification/frontend/:
   public/jukebox/tracks/<id>/mix_control.mp3
                                           the full mix with the lead shuffled in time (arrange's
                                           mix_control.wav, 128 kbps): kept on disk as fidelity evidence, not listed in versions.json
+  public/jukebox/tracks/<id>/video.mp4    web copy of the SVS movie, when --web-video has one (track.json video_local)
   public/jukebox/tracks/<id>/versions/    pilot mixes for 5209, 5313, 3912 (MuseControlLite, mood layer), and
                                           mcl_bplus.mp3 wherever demo/<id>_mclbplus/ exists (MuseControlLite B+)
   public/jukebox/tracks/<id>/versions.json
@@ -147,6 +148,9 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--integrate", type=Path, default=ROOT.parent / "integrate" / "outputs",
                     help="arrange outputs with mix_control.wav per track")
+    ap.add_argument("--web-video", type=Path, default=None,
+                    help="folder of web-friendly H.264 copies <id>.mp4 (<=1920 wide, 30 fps); each is copied to "
+                         "tracks/<id>/video.mp4 and set as track.json video_local (video_url stays the SVS original)")
     args = ap.parse_args()
     OUT.mkdir(parents=True, exist_ok=True)
     shutil.copy2(WEB / "index.json", OUT / "index.json")
@@ -174,6 +178,11 @@ def main():
             (dst / "versions").mkdir(exist_ok=True)
             shutil.copy2(bp, dst / "versions" / "mcl_bplus.mp3")
         track = json.loads((dst / "track.json").read_text())
+        web = args.web_video / f"{tid}.mp4" if args.web_video else None
+        if web and web.exists():
+            shutil.copy2(web, dst / "video.mp4")
+            track["video_local"] = "video.mp4"
+            (dst / "track.json").write_text(json.dumps(track, indent=1, ensure_ascii=False))
         vs = versions_for(tid, track, ctl.exists())
         (dst / "versions.json").write_text(json.dumps({"id": tid, "duration_s": track["duration_s"], "versions": vs}, indent=1))
         f = track.get("fidelity") or {}
