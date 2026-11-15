@@ -1,0 +1,659 @@
+[
+ {
+  "group": "geophony",
+  "title": "Leaves in the wind (Gravity Sound).wav",
+  "author": "Gravity Sound",
+  "license": "CC BY 4.0",
+  "license_url": "https://creativecommons.org/licenses/by/4.0",
+  "source": "Wikimedia Commons",
+  "url": "https://commons.wikimedia.org/wiki/File:Leaves_in_the_wind_(Gravity_Sound).wav"
+ },
+ {
+  "group": "geophony",
+  "title": "Light Rain Distant Thunder July 5th 2016.wav",
+  "author": "https://freesound.org/people/kvgarlic/",
+  "license": "CC0",
+  "license_url": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+  "source": "Wikimedia Commons",
+  "url": "https://commons.wikimedia.org/wiki/File:Light_Rain_Distant_Thunder_July_5th_2016.wav"
+ },
+ {
+  "group": "geophony",
+  "title": "20161210 02:00 UTC, 60 s window",
+  "author": "Monterey Bay Aquarium Research Institute (MBARI)",
+  "license": "CC BY 4.0",
+  "license_url": "https://creativecommons.org/licenses/by/4.0/",
+  "source": "MBARI Pacific Sound (MARS hydrophone, 891 m, Monterey Bay)",
+  "url": "https://pacific-sound-16khz.s3.amazonaws.com/2016/12/MARS-20161210T000000Z-16kHz.wav"
+ },
+ {
+  "group": "geophony",
+  "title": "20170120 12:00 UTC, 60 s window",
+  "author": "Monterey Bay Aquarium Research Institute (MBARI)",
+  "license": "CC BY 4.0",
+  "license_url": "https://creativecommons.org/licenses/by/4.0/",
+  "source": "MBARI Pacific Sound (MARS hydrophone, 891 m, Monterey Bay)",
+  "url": "https://pacific-sound-16khz.s3.amazonaws.com/2017/01/MARS-20170120T000000Z-16kHz.wav"
+ },
+ {
+  "group": "geophony",
+  "title": "20181115 04:00 UTC, 60 s window",
+  "author": "Monterey Bay Aquarium Research Institute (MBARI)",
+  "license": "CC BY 4.0",
+  "license_url": "https://creativecommons.org/licenses/by/4.0/",
+  "source": "MBARI Pacific Sound (MARS hydrophone, 891 m, Monterey Bay)",
+  "url": "https://pacific-sound-16khz.s3.amazonaws.com/2018/11/MARS-20181115T000000Z-16kHz.wav"
+ },
+ {
+  "group": "geophony",
+  "title": "20181115 13:00 UTC, 60 s window",
+  "author": "Monterey Bay Aquarium Research Institute (MBARI)",
+  "license": "CC BY 4.0",
+  "license_url": "https://creativecommons.org/licenses/by/4.0/",
+  "source": "MBARI Pacific Sound (MARS hydrophone, 891 m, Monterey Bay)",
+  "url": "https://pacific-sound-16khz.s3.amazonaws.com/2018/11/MARS-20181115T000000Z-16kHz.wav"
+ },
+ {
+  "group": "geophony",
+  "title": "20190915 06:00 UTC, 60 s window",
+  "author": "Monterey Bay Aquarium Research Institute (MBARI)",
+  "license": "CC BY 4.0",
+  "license_url": "https://creativecommons.org/licenses/by/4.0/",
+  "source": "MBARI Pacific Sound (MARS hydrophone, 891 m, Monterey Bay)",
+  "url": "https://pacific-sound-16khz.s3.amazonaws.com/2019/09/MARS-20190915T000000Z-16kHz.wav"
+ },
+ {
+  "group": "geophony",
+  "title": "20200401 08:00 UTC, 60 s window",
+  "author": "Monterey Bay Aquarium Research Institute (MBARI)",
+  "license": "CC BY 4.0",
+  "license_url": "https://creativecommons.org/licenses/by/4.0/",
+  "source": "MBARI Pacific Sound (MARS hydrophone, 891 m, Monterey Bay)",
+  "url": "https://pacific-sound-16khz.s3.amazonaws.com/2020/04/MARS-20200401T000000Z-16kHz.wav"
+ },
+ {
+  "group": "geophony",
+  "title": "Medium shower accompanied by thunders.ogg",
+  "author": "CutSomeSlackenstein",
+  "license": "CC BY 4.0",
+  "license_url": "https://creativecommons.org/licenses/by/4.0",
+  "source": "Wikimedia Commons",
+  "url": "https://commons.wikimedia.org/wiki/File:Medium_shower_accompanied_by_thunders.ogg"
+ },
+ {
+  "group": "geophony",
+  "title": "ocean",
+  "author": "U.S. National Park Service",
+  "license": "Public domain (U.S. National Park Service Sound Gallery: 'The files are in the public domain')",
+  "license_url": null,
+  "source": "NPS Sound Gallery",
+  "url": "https://www.nps.gov/subjects/sound/sounds-ocean.htm"
+ },
+ {
+  "group": "geophony",
+  "title": "rain",
+  "author": "U.S. National Park Service",
+  "license": "Public domain (U.S. National Park Service Sound Gallery: 'The files are in the public domain')",
+  "license_url": null,
+  "source": "NPS Sound Gallery",
+  "url": "https://www.nps.gov/subjects/sound/sounds-rain.htm"
+ },
+ {
+  "group": "geophony",
+  "title": "stream",
+  "author": "U.S. National Park Service",
+  "license": "Public domain (U.S. National Park Service Sound Gallery: 'The files are in the public domain')",
+  "license_url": null,
+  "source": "NPS Sound Gallery",
+  "url": "https://www.nps.gov/subjects/sound/sounds-stream.htm"
+ },
+ {
+  "group": "geophony",
+  "title": "thunder",
+  "author": "U.S. National Park Service",
+  "license": "Public domain (U.S. National Park Service Sound Gallery: 'The files are in the public domain')",
+  "license_url": null,
+  "source": "NPS Sound Gallery",
+  "url": "https://www.nps.gov/subjects/sound/sounds-thunder.htm"
+ },
+ {
+  "group": "geophony",
+  "title": "Rain against the window.ogg",
+  "author": "cori",
+  "license": "Public domain",
+  "license_url": null,
+  "source": "Wikimedia Commons",
+  "url": "https://commons.wikimedia.org/wiki/File:Rain_against_the_window.ogg"
+ },
+ {
+  "group": "geophony",
+  "title": "Rhumphries - rbh-thunder-storm.ogg",
+  "author": "RHumphries",
+  "license": "CC BY 3.0",
+  "license_url": "https://creativecommons.org/licenses/by/3.0",
+  "source": "Wikimedia Commons",
+  "url": "https://commons.wikimedia.org/wiki/File:Rhumphries_-_rbh-thunder-storm.ogg"
+ },
+ {
+  "group": "geophony",
+  "title": "Storm thunderbolts.ogg",
+  "author": "stephan",
+  "license": "Public domain",
+  "license_url": null,
+  "source": "Wikimedia Commons",
+  "url": "https://commons.wikimedia.org/wiki/File:Storm_thunderbolts.ogg"
+ },
+ {
+  "group": "geophony",
+  "title": "Thunderstorm after hot summer day 17 minutes 01 of 04.ogg",
+  "author": "stephan",
+  "license": "Public domain",
+  "license_url": null,
+  "source": "Wikimedia Commons",
+  "url": "https://commons.wikimedia.org/wiki/File:Thunderstorm_after_hot_summer_day_17_minutes_01_of_04.ogg"
+ },
+ {
+  "group": "geophony",
+  "title": "Thunderstorm after hot summer day 17 minutes 03 of 04.ogg",
+  "author": "stephan",
+  "license": "Public domain",
+  "license_url": null,
+  "source": "Wikimedia Commons",
+  "url": "https://commons.wikimedia.org/wiki/File:Thunderstorm_after_hot_summer_day_17_minutes_03_of_04.ogg"
+ },
+ {
+  "group": "geophony",
+  "title": "Wind in forest (Gravity Sound).wav",
+  "author": "Gravity Sound",
+  "license": "CC BY 4.0",
+  "license_url": "https://creativecommons.org/licenses/by/4.0",
+  "source": "Wikimedia Commons",
+  "url": "https://commons.wikimedia.org/wiki/File:Wind_in_forest_(Gravity_Sound).wav"
+ },
+ {
+  "group": "anthrophony",
+  "title": "184809 qubodup first-day-of-urban-spring-in-berlin-2013-04-14.flac",
+  "author": "ubodup",
+  "license": "CC0",
+  "license_url": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+  "source": "Wikimedia Commons",
+  "url": "https://commons.wikimedia.org/wiki/File:184809_qubodup_first-day-of-urban-spring-in-berlin-2013-04-14.flac"
+ },
+ {
+  "group": "anthrophony",
+  "title": "Air conditioner hum 2 (Gravity Sound).wav",
+  "author": "Gravity Sound",
+  "license": "CC BY 4.0",
+  "license_url": "https://creativecommons.org/licenses/by/4.0",
+  "source": "Wikimedia Commons",
+  "url": "https://commons.wikimedia.org/wiki/File:Air_conditioner_hum_2_(Gravity_Sound).wav"
+ },
+ {
+  "group": "anthrophony",
+  "title": "Air vent (Gravity Sound).wav",
+  "author": "Gravity Sound",
+  "license": "CC BY 4.0",
+  "license_url": "https://creativecommons.org/licenses/by/4.0",
+  "source": "Wikimedia Commons",
+  "url": "https://commons.wikimedia.org/wiki/File:Air_vent_(Gravity_Sound).wav"
+ },
+ {
+  "group": "anthrophony",
+  "title": "Bundesautobahn A6.flac",
+  "author": "Erdie",
+  "license": "CC BY 3.0",
+  "license_url": "https://creativecommons.org/licenses/by/3.0",
+  "source": "Wikimedia Commons",
+  "url": "https://commons.wikimedia.org/wiki/File:Bundesautobahn_A6.flac"
+ },
+ {
+  "group": "anthrophony",
+  "title": "Fan (Gravity Sound).wav",
+  "author": "Gravity Sound",
+  "license": "CC BY 4.0",
+  "license_url": "https://creativecommons.org/licenses/by/4.0",
+  "source": "Wikimedia Commons",
+  "url": "https://commons.wikimedia.org/wiki/File:Fan_(Gravity_Sound).wav"
+ },
+ {
+  "group": "anthrophony",
+  "title": "synthetic 60 Hz mains/transformer hum",
+  "author": "Earth Jukebox team",
+  "license": "CC0",
+  "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+  "source": "generated by scripts/fetch_corpora.py",
+  "url": null
+ },
+ {
+  "group": "anthrophony",
+  "title": "motorboat",
+  "author": "U.S. National Park Service",
+  "license": "Public domain (U.S. National Park Service Sound Gallery: 'The files are in the public domain')",
+  "license_url": null,
+  "source": "NPS Sound Gallery",
+  "url": "https://www.nps.gov/subjects/sound/sounds-motorboat.htm"
+ },
+ {
+  "group": "anthrophony",
+  "title": "helicopter",
+  "author": "U.S. National Park Service",
+  "license": "Public domain (U.S. National Park Service Sound Gallery: 'The files are in the public domain')",
+  "license_url": null,
+  "source": "NPS Sound Gallery",
+  "url": "https://www.nps.gov/subjects/sound/sounds-helicopter.htm"
+ },
+ {
+  "group": "anthrophony",
+  "title": "jet",
+  "author": "U.S. National Park Service",
+  "license": "Public domain (U.S. National Park Service Sound Gallery: 'The files are in the public domain')",
+  "license_url": null,
+  "source": "NPS Sound Gallery",
+  "url": "https://www.nps.gov/subjects/sound/sounds-jet.htm"
+ },
+ {
+  "group": "anthrophony",
+  "title": "motorcycle",
+  "author": "U.S. National Park Service",
+  "license": "Public domain (U.S. National Park Service Sound Gallery: 'The files are in the public domain')",
+  "license_url": null,
+  "source": "NPS Sound Gallery",
+  "url": "https://www.nps.gov/subjects/sound/sounds-motorcycle.htm"
+ },
+ {
+  "group": "anthrophony",
+  "title": "propeller",
+  "author": "U.S. National Park Service",
+  "license": "Public domain (U.S. National Park Service Sound Gallery: 'The files are in the public domain')",
+  "license_url": null,
+  "source": "NPS Sound Gallery",
+  "url": "https://www.nps.gov/subjects/sound/sounds-propeller.htm"
+ },
+ {
+  "group": "anthrophony",
+  "title": "snowplow",
+  "author": "U.S. National Park Service",
+  "license": "Public domain (U.S. National Park Service Sound Gallery: 'The files are in the public domain')",
+  "license_url": null,
+  "source": "NPS Sound Gallery",
+  "url": "https://www.nps.gov/subjects/sound/sounds-snowplow.htm"
+ },
+ {
+  "group": "anthrophony",
+  "title": "snowmobile",
+  "author": "U.S. National Park Service",
+  "license": "Public domain (U.S. National Park Service Sound Gallery: 'The files are in the public domain')",
+  "license_url": null,
+  "source": "NPS Sound Gallery",
+  "url": "https://www.nps.gov/subjects/sound/sounds-snowmobile.htm"
+ },
+ {
+  "group": "anthrophony",
+  "title": "Sunday in the center of Mexico City (close to Alameda Park), Schoeps MS Setup.flac",
+  "author": "Felix Blume",
+  "license": "CC0",
+  "license_url": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+  "source": "Wikimedia Commons",
+  "url": "https://commons.wikimedia.org/wiki/File:Sunday_in_the_center_of_Mexico_City_(close_to_Alameda_Park),_Schoeps_MS_Setup.flac"
+ },
+ {
+  "group": "anthrophony",
+  "title": "Train passing by in the Wirikuta Desert (Mexico, SLP).wav",
+  "author": "https://freesound.org/people/felix.blume/",
+  "license": "CC0",
+  "license_url": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+  "source": "Wikimedia Commons",
+  "url": "https://commons.wikimedia.org/wiki/File:Train_passing_by_in_the_Wirikuta_Desert_(Mexico,_SLP).wav"
+ },
+ {
+  "group": "anthrophony",
+  "title": "Two Lane Road in Kelowna at Midnight.flac",
+  "author": "Extemporalist",
+  "license": "CC0",
+  "license_url": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+  "source": "Wikimedia Commons",
+  "url": "https://commons.wikimedia.org/wiki/File:Two_Lane_Road_in_Kelowna_at_Midnight.flac"
+ },
+ {
+  "group": "anthrophony",
+  "title": "Urban Street on a Rainy Afternoon.flac",
+  "author": "Extemporalist",
+  "license": "CC0",
+  "license_url": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+  "source": "Wikimedia Commons",
+  "url": "https://commons.wikimedia.org/wiki/File:Urban_Street_on_a_Rainy_Afternoon.flac"
+ },
+ {
+  "group": "anthrophony",
+  "title": "WWS City Bus MAN SG 220 – engine.oga",
+  "author": "Work With Sounds / Technical Museum of Slovenia",
+  "license": "CC BY 4.0",
+  "license_url": "https://creativecommons.org/licenses/by/4.0",
+  "source": "Wikimedia Commons",
+  "url": "https://commons.wikimedia.org/wiki/File:WWS_City_Bus_MAN_SG_220_%E2%80%93_engine.oga"
+ },
+ {
+  "group": "biophony",
+  "title": "BioAcoustica 898 1 Pholidoptera griseoaptera 73r1.flac",
+  "author": "unknown",
+  "license": "CC BY 3.0",
+  "license_url": "https://creativecommons.org/licenses/by/3.0",
+  "source": "Wikimedia Commons",
+  "url": "https://commons.wikimedia.org/wiki/File:BioAcoustica_898_1_Pholidoptera_griseoaptera_73r1.flac"
+ },
+ {
+  "group": "biophony",
+  "title": "Cicada 20200619.wav",
+  "author": "Shyamal",
+  "license": "CC0",
+  "license_url": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+  "source": "Wikimedia Commons",
+  "url": "https://commons.wikimedia.org/wiki/File:Cicada_20200619.wav"
+ },
+ {
+  "group": "biophony",
+  "title": "Dawn chorus at Glencairnie big bungalow Craigmore DM.ogg",
+  "author": "DivyaCM",
+  "license": "CC BY 4.0",
+  "license_url": "https://creativecommons.org/licenses/by/4.0",
+  "source": "Wikimedia Commons",
+  "url": "https://commons.wikimedia.org/wiki/File:Dawn_chorus_at_Glencairnie_big_bungalow_Craigmore_DM.ogg"
+ },
+ {
+  "group": "biophony",
+  "title": "Dawnchorus-uk.ogg",
+  "author": "Silas S. Brown",
+  "license": "Public domain",
+  "license_url": null,
+  "source": "Wikimedia Commons",
+  "url": "https://commons.wikimedia.org/wiki/File:Dawnchorus-uk.ogg"
+ },
+ {
+  "group": "biophony",
+  "title": "HyalessaFuscata KR.flac",
+  "author": "金旻秀 (kim.min.su)",
+  "license": "CC0",
+  "license_url": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+  "source": "Wikimedia Commons",
+  "url": "https://commons.wikimedia.org/wiki/File:HyalessaFuscata_KR.flac"
+ },
+ {
+  "group": "biophony",
+  "title": "alder-flycatcher",
+  "author": "U.S. National Park Service",
+  "license": "Public domain (U.S. National Park Service Sound Gallery: 'The files are in the public domain')",
+  "license_url": null,
+  "source": "NPS Sound Gallery",
+  "url": "https://www.nps.gov/subjects/sound/sounds-alder-flycatcher.htm"
+ },
+ {
+  "group": "biophony",
+  "title": "american-robin",
+  "author": "U.S. National Park Service",
+  "license": "Public domain (U.S. National Park Service Sound Gallery: 'The files are in the public domain')",
+  "license_url": null,
+  "source": "NPS Sound Gallery",
+  "url": "https://www.nps.gov/subjects/sound/sounds-american-robin.htm"
+ },
+ {
+  "group": "biophony",
+  "title": "bee",
+  "author": "U.S. National Park Service",
+  "license": "Public domain (U.S. National Park Service Sound Gallery: 'The files are in the public domain')",
+  "license_url": null,
+  "source": "NPS Sound Gallery",
+  "url": "https://www.nps.gov/subjects/sound/sounds-bee.htm"
+ },
+ {
+  "group": "biophony",
+  "title": "common-poorwill",
+  "author": "U.S. National Park Service",
+  "license": "Public domain (U.S. National Park Service Sound Gallery: 'The files are in the public domain')",
+  "license_url": null,
+  "source": "NPS Sound Gallery",
+  "url": "https://www.nps.gov/subjects/sound/sounds-common-poorwill.htm"
+ },
+ {
+  "group": "biophony",
+  "title": "cspadefoottoad",
+  "author": "U.S. National Park Service",
+  "license": "Public domain (U.S. National Park Service Sound Gallery: 'The files are in the public domain')",
+  "license_url": null,
+  "source": "NPS Sound Gallery",
+  "url": "https://www.nps.gov/subjects/sound/cspadefoottoad.htm"
+ },
+ {
+  "group": "biophony",
+  "title": "crickets",
+  "author": "U.S. National Park Service",
+  "license": "Public domain (U.S. National Park Service Sound Gallery: 'The files are in the public domain')",
+  "license_url": null,
+  "source": "NPS Sound Gallery",
+  "url": "https://www.nps.gov/subjects/sound/sounds-crickets.htm"
+ },
+ {
+  "group": "biophony",
+  "title": "dawnchorus_bryce",
+  "author": "U.S. National Park Service",
+  "license": "Public domain (U.S. National Park Service Sound Gallery: 'The files are in the public domain')",
+  "license_url": null,
+  "source": "NPS Sound Gallery",
+  "url": "https://www.nps.gov/subjects/sound/sounds-dawnchorus_bryce.htm"
+ },
+ {
+  "group": "biophony",
+  "title": "grasshopper",
+  "author": "U.S. National Park Service",
+  "license": "Public domain (U.S. National Park Service Sound Gallery: 'The files are in the public domain')",
+  "license_url": null,
+  "source": "NPS Sound Gallery",
+  "url": "https://www.nps.gov/subjects/sound/sounds-grasshopper.htm"
+ },
+ {
+  "group": "biophony",
+  "title": "green-treefrog",
+  "author": "U.S. National Park Service",
+  "license": "Public domain (U.S. National Park Service Sound Gallery: 'The files are in the public domain')",
+  "license_url": null,
+  "source": "NPS Sound Gallery",
+  "url": "https://www.nps.gov/subjects/sound/sounds-green-treefrog.htm"
+ },
+ {
+  "group": "biophony",
+  "title": "hermit-thrush",
+  "author": "U.S. National Park Service",
+  "license": "Public domain (U.S. National Park Service Sound Gallery: 'The files are in the public domain')",
+  "license_url": null,
+  "source": "NPS Sound Gallery",
+  "url": "https://www.nps.gov/subjects/sound/sounds-hermit-thrush.htm"
+ },
+ {
+  "group": "biophony",
+  "title": "olivesidedflycatcher",
+  "author": "U.S. National Park Service",
+  "license": "Public domain (U.S. National Park Service Sound Gallery: 'The files are in the public domain')",
+  "license_url": null,
+  "source": "NPS Sound Gallery",
+  "url": "https://www.nps.gov/subjects/sound/sounds-olivesidedflycatcher.htm"
+ },
+ {
+  "group": "biophony",
+  "title": "pigfrog",
+  "author": "U.S. National Park Service",
+  "license": "Public domain (U.S. National Park Service Sound Gallery: 'The files are in the public domain')",
+  "license_url": null,
+  "source": "NPS Sound Gallery",
+  "url": "https://www.nps.gov/subjects/sound/sounds-pigfrog.htm"
+ },
+ {
+  "group": "biophony",
+  "title": "nuthatch",
+  "author": "U.S. National Park Service",
+  "license": "Public domain (U.S. National Park Service Sound Gallery: 'The files are in the public domain')",
+  "license_url": null,
+  "source": "NPS Sound Gallery",
+  "url": "https://www.nps.gov/subjects/sound/sounds-nuthatch.htm"
+ },
+ {
+  "group": "biophony",
+  "title": "white-crowned-sparrow",
+  "author": "U.S. National Park Service",
+  "license": "Public domain (U.S. National Park Service Sound Gallery: 'The files are in the public domain')",
+  "license_url": null,
+  "source": "NPS Sound Gallery",
+  "url": "https://www.nps.gov/subjects/sound/sounds-white-crowned-sparrow.htm"
+ },
+ {
+  "group": "biophony",
+  "title": "yellow-rumped-warbler",
+  "author": "U.S. National Park Service",
+  "license": "Public domain (U.S. National Park Service Sound Gallery: 'The files are in the public domain')",
+  "license_url": null,
+  "source": "NPS Sound Gallery",
+  "url": "https://www.nps.gov/subjects/sound/sounds-yellow-rumped-warbler.htm"
+ },
+ {
+  "group": "biophony",
+  "title": "Pseudacris triseriata chorus.wav",
+  "author": "Dawn VanDeman",
+  "license": "CC0",
+  "license_url": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+  "source": "Wikimedia Commons",
+  "url": "https://commons.wikimedia.org/wiki/File:Pseudacris_triseriata_chorus.wav"
+ },
+ {
+  "group": "biophony",
+  "title": "Réveil des oiseaux.ogg",
+  "author": "Joseph Sardin",
+  "license": "CC0",
+  "license_url": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+  "source": "Wikimedia Commons",
+  "url": "https://commons.wikimedia.org/wiki/File:R%C3%A9veil_des_oiseaux.ogg"
+ },
+ {
+  "group": "biophony",
+  "title": "Reggelirigók.ogg",
+  "author": "Ödönke",
+  "license": "Public domain",
+  "license_url": null,
+  "source": "Wikimedia Commons",
+  "url": "https://commons.wikimedia.org/wiki/File:Reggelirig%C3%B3k.ogg"
+ },
+ {
+  "group": "biophony",
+  "title": "Royal Natal National Park dawn chorus (W1CDR0001146 BD3).ogg",
+  "author": "unknown",
+  "license": "CC BY 4.0",
+  "license_url": "https://creativecommons.org/licenses/by/4.0",
+  "source": "Wikimedia Commons",
+  "url": "https://commons.wikimedia.org/wiki/File:Royal_Natal_National_Park_dawn_chorus_(W1CDR0001146_BD3).ogg"
+ },
+ {
+  "group": "biophony",
+  "title": "Stridulation of Chorthippus albomarginatus.wav",
+  "author": "Natural History Museum, London",
+  "license": "CC BY 3.0",
+  "license_url": "https://creativecommons.org/licenses/by/3.0",
+  "source": "Wikimedia Commons",
+  "url": "https://commons.wikimedia.org/wiki/File:Stridulation_of_Chorthippus_albomarginatus.wav"
+ },
+ {
+  "group": "biophony",
+  "title": "americancoots",
+  "author": "U.S. National Park Service (Yellowstone NP; many with MSU Acoustic Atlas)",
+  "license": "Public domain (Yellowstone NP Sound Library: 'The files available here were recorded in the park and are in the public domain')",
+  "license_url": null,
+  "source": "NPS Yellowstone Sound Library",
+  "url": "https://www.nps.gov/yell/learn/photosmultimedia/sounds-americancoots.htm"
+ },
+ {
+  "group": "biophony",
+  "title": "americanrobins",
+  "author": "U.S. National Park Service (Yellowstone NP; many with MSU Acoustic Atlas)",
+  "license": "Public domain (Yellowstone NP Sound Library: 'The files available here were recorded in the park and are in the public domain')",
+  "license_url": null,
+  "source": "NPS Yellowstone Sound Library",
+  "url": "https://www.nps.gov/yell/learn/photosmultimedia/sounds-americanrobins.htm"
+ },
+ {
+  "group": "biophony",
+  "title": "birdchorus",
+  "author": "U.S. National Park Service (Yellowstone NP; many with MSU Acoustic Atlas)",
+  "license": "Public domain (Yellowstone NP Sound Library: 'The files available here were recorded in the park and are in the public domain')",
+  "license_url": null,
+  "source": "NPS Yellowstone Sound Library",
+  "url": "https://www.nps.gov/yell/learn/photosmultimedia/sounds-birdchorus.htm"
+ },
+ {
+  "group": "biophony",
+  "title": "chorusfrogs",
+  "author": "U.S. National Park Service (Yellowstone NP; many with MSU Acoustic Atlas)",
+  "license": "Public domain (Yellowstone NP Sound Library: 'The files available here were recorded in the park and are in the public domain')",
+  "license_url": null,
+  "source": "NPS Yellowstone Sound Library",
+  "url": "https://www.nps.gov/yell/learn/photosmultimedia/sounds-chorusfrogs.htm"
+ },
+ {
+  "group": "biophony",
+  "title": "commonloon",
+  "author": "U.S. National Park Service (Yellowstone NP; many with MSU Acoustic Atlas)",
+  "license": "Public domain (Yellowstone NP Sound Library: 'The files available here were recorded in the park and are in the public domain')",
+  "license_url": null,
+  "source": "NPS Yellowstone Sound Library",
+  "url": "https://www.nps.gov/yell/learn/photosmultimedia/sounds-commonloon.htm"
+ },
+ {
+  "group": "biophony",
+  "title": "commonyellowthroat",
+  "author": "U.S. National Park Service (Yellowstone NP; many with MSU Acoustic Atlas)",
+  "license": "Public domain (Yellowstone NP Sound Library: 'The files available here were recorded in the park and are in the public domain')",
+  "license_url": null,
+  "source": "NPS Yellowstone Sound Library",
+  "url": "https://www.nps.gov/yell/learn/photosmultimedia/sounds-commonyellowthroat.htm"
+ },
+ {
+  "group": "biophony",
+  "title": "dawnchorus",
+  "author": "U.S. National Park Service (Yellowstone NP; many with MSU Acoustic Atlas)",
+  "license": "Public domain (Yellowstone NP Sound Library: 'The files available here were recorded in the park and are in the public domain')",
+  "license_url": null,
+  "source": "NPS Yellowstone Sound Library",
+  "url": "https://www.nps.gov/yell/learn/photosmultimedia/sounds-dawnchorus.htm"
+ },
+ {
+  "group": "biophony",
+  "title": "lazulibunting",
+  "author": "U.S. National Park Service (Yellowstone NP; many with MSU Acoustic Atlas)",
+  "license": "Public domain (Yellowstone NP Sound Library: 'The files available here were recorded in the park and are in the public domain')",
+  "license_url": null,
+  "source": "NPS Yellowstone Sound Library",
+  "url": "https://www.nps.gov/yell/learn/photosmultimedia/lazulibunting.htm"
+ },
+ {
+  "group": "biophony",
+  "title": "mountainbluebird",
+  "author": "U.S. National Park Service (Yellowstone NP; many with MSU Acoustic Atlas)",
+  "license": "Public domain (Yellowstone NP Sound Library: 'The files available here were recorded in the park and are in the public domain')",
+  "license_url": null,
+  "source": "NPS Yellowstone Sound Library",
+  "url": "https://www.nps.gov/yell/learn/photosmultimedia/sounds-mountainbluebird.htm"
+ },
+ {
+  "group": "biophony",
+  "title": "redwingedblackbird",
+  "author": "U.S. National Park Service (Yellowstone NP; many with MSU Acoustic Atlas)",
+  "license": "Public domain (Yellowstone NP Sound Library: 'The files available here were recorded in the park and are in the public domain')",
+  "license_url": null,
+  "source": "NPS Yellowstone Sound Library",
+  "url": "https://www.nps.gov/yell/learn/photosmultimedia/sounds-redwingedblackbird.htm"
+ },
+ {
+  "group": "biophony",
+  "title": "savannahsparrow",
+  "author": "U.S. National Park Service (Yellowstone NP; many with MSU Acoustic Atlas)",
+  "license": "Public domain (Yellowstone NP Sound Library: 'The files available here were recorded in the park and are in the public domain')",
+  "license_url": null,
+  "source": "NPS Yellowstone Sound Library",
+  "url": "https://www.nps.gov/yell/learn/photosmultimedia/sounds-savannahsparrow.htm"
+ }
+]

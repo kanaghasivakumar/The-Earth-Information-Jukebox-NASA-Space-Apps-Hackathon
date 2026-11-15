@@ -1,0 +1,20 @@
+{
+ "id": "5669",
+ "duration_s": 45.0,
+ "versions": [
+  {
+   "id": "mix",
+   "label": "Deterministic mix",
+   "kind": "deterministic",
+   "file": "mix.mp3",
+   "line": "The data melody and bands (FluidSynth), model-written harmony and the three recorded Earth voices. The reference.",
+   "fidelity": {
+    "r2": null,
+    "within_half_semitone": null,
+    "control_r2": null,
+    "control_kind": "lead stem, shuffled",
+    "note": "Measured on the full mix."
+   }
+  }
+ ]
+}

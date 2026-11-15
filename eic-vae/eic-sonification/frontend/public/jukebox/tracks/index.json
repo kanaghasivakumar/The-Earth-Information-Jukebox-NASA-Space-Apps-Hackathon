@@ -1,0 +1,68 @@
+{
+ "tracks": [
+  {
+   "id": "5209",
+   "title": "Zonal Climate Anomalies 1880-2023",
+   "voice": "geophony",
+   "summary": "144 years of warming in eight latitude zones, checked against the GISS CSV (r 0.9997). The proof track.",
+   "duration_s": 30.0,
+   "order": 1
+  },
+  {
+   "id": "5313",
+   "title": "Change in Night Lights between 2012 and 2023 - EIC Version",
+   "voice": "anthrophony",
+   "summary": "Night lights 2012 to 2023: the city hum grows and the birds and insects fade. Anthrophony vs biophony.",
+   "duration_s": 43.333,
+   "order": 2
+  },
+  {
+   "id": "3912",
+   "title": "Global Sea Surface Currents and Temperature",
+   "voice": "geophony",
+   "summary": "Ocean temperature, frame by frame, over a Pacific hydrophone; model-written strings and bass. Geophony.",
+   "duration_s": 66.5,
+   "order": 3
+  },
+  {
+   "id": "5011",
+   "title": "Lightning Events Detected from the International Space Station (ISS) 2017-2023",
+   "voice": "geophony",
+   "summary": "Six years of lightning seen from the ISS: drums where the storms are, thunder at every burst, a flute for the storm belt's latitude.",
+   "duration_s": 100.033,
+   "order": 4
+  },
+  {
+   "id": "4950",
+   "title": "GEDI Forest Height",
+   "voice": "biophony",
+   "summary": "Forest canopy height from the GEDI lidar as the globe turns; a forest chorus swells over the rainforests. Biophony.",
+   "duration_s": 51.5,
+   "order": 5
+  },
+  {
+   "id": "5669",
+   "title": "GEOS Aerosols (2025)",
+   "voice": "geophony",
+   "summary": "One snapshot of the world's aerosols swept west to east: one instrument per type (sea salt, dust, sulfate, smoke).",
+   "duration_s": 45.0,
+   "order": 6
+  },
+  {
+   "id": "5058",
+   "title": "Florida Nighttime Lights Before and After Hurricane Ian",
+   "voice": "anthrophony",
+   "summary": "Southwest Florida's lights before and after Hurricane Ian: the city hum fades and frogs and insects take over.",
+   "duration_s": 15.0,
+   "order": 7
+  },
+  {
+   "id": "5176",
+   "title": "Sea Surface Temperature (SST) Anomaly - Near Real Time",
+   "voice": "geophony",
+   "summary": "Daily sea surface temperature anomaly, 2024 to 2026, updated by NASA every day. Geophony.",
+   "duration_s": 30.033,
+   "order": 8
+  }
+ ]
+}

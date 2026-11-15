@@ -1,0 +1,292 @@
+{
+ "id": "5669",
+ "title": "GEOS Aerosols (2025)",
+ "svs_url": "https://svs.gsfc.nasa.gov/5669",
+ "video_url": null,
+ "duration_s": 45.0,
+ "units": "aerosol type share of each 2-degree longitude column (0..1); latitude in degrees",
+ "description": "A single snapshot of the GEOS model's aerosols on 19 August 2025, played as a sweep from west to east. Each aerosol type is its own instrument: sea salt is a low double bass, dust a clarinet, sulfate an oboe and smoke (black carbon) a harp. An instrument gets louder where its type covers more of the map at that longitude, and higher where it sits further north; a type in both hemispheres plays two notes. Listen for the Saharan dust over the Atlantic and the African smoke plume, loudest near 55 deg W and 17 deg E.",
+ "legend": [
+  {
+   "voice": "double bass (sea salt)",
+   "meaning": "sea salt (grey-teal); loudness = share of the column, pitch = latitude"
+  },
+  {
+   "voice": "clarinet (dust)",
+   "meaning": "mineral dust (lilac); loudness = share of the column, pitch = latitude"
+  },
+  {
+   "voice": "oboe (sulfate)",
+   "meaning": "sulfate (green); loudness = share, pitch = latitude"
+  },
+  {
+   "voice": "harp (black carbon)",
+   "meaning": "smoke / black carbon (orange-red); loudness = share, pitch = latitude"
+  },
+  {
+   "voice": "wind and surf (geophony)",
+   "meaning": "sea salt + dust share"
+  },
+  {
+   "voice": "city hum (anthrophony)",
+   "meaning": "sulfate + black carbon share"
+  },
+  {
+   "voice": "birds and insects (biophony)",
+   "meaning": "clean air (little aerosol in the column)"
+  }
+ ],
+ "fidelity": {
+  "r2": null,
+  "pearson_r": null,
+  "mae": null,
+  "n": null,
+  "control_r2": null,
+  "mix_r2": null,
+  "pitch_within_half_semitone": null,
+  "mix_pitch_within_half_semitone": null,
+  "method": "note-level register-bounded pyin on the final rendered audio",
+  "series": "black carbon",
+  "detail": {
+   "black carbon": {
+    "voices": [
+     "black carbon"
+    ],
+    "final_stem": {
+     "n": 17,
+     "r2": -1.4861444495824756,
+     "pearson_r": 0.6872466871022168,
+     "mae": 3.0623529411764623,
+     "pitch_within_half_semitone": 1.0,
+     "voiced": 1.0
+    },
+    "before_stem": {
+     "n": 17,
+     "r2": -1.3194471101270313,
+     "pearson_r": 0.6962152807927473,
+     "mae": 2.915294117647059,
+     "pitch_within_half_semitone": 1.0,
+     "voiced": 1.0
+    }
+   },
+   "dust": {
+    "voices": [
+     "dust"
+    ],
+    "final_stem": {
+     "n": 15,
+     "r2": 0.9740682513760053,
+     "pearson_r": 0.9907709312974097,
+     "mae": 4.087000000000032,
+     "pitch_within_half_semitone": 1.0,
+     "voiced": 1.0
+    },
+    "before_stem": {
+     "n": 15,
+     "r2": 0.9674738833262368,
+     "pearson_r": 0.9893782301409628,
+     "mae": 4.535666666666713,
+     "pitch_within_half_semitone": 0.8666666666666667,
+     "voiced": 1.0
+    }
+   },
+   "sea salt": {
+    "voices": [
+     "sea salt"
+    ],
+    "final_stem": {
+     "n": 4,
+     "r2": 0.1945735933531625,
+     "pearson_r": 0.9318783515261874,
+     "mae": 1.579999999999968,
+     "pitch_within_half_semitone": 1.0,
+     "voiced": 1.0
+    },
+    "before_stem": {
+     "n": 4,
+     "r2": -5.813989696787024,
+     "pearson_r": 0.3598178120104723,
+     "mae": 3.9474999999999927,
+     "pitch_within_half_semitone": 0.5,
+     "voiced": 1.0
+    }
+   },
+   "sulfate": {
+    "voices": [
+     "sulfate"
+    ],
+    "final_stem": {
+     "n": 14,
+     "r2": 0.7906507915171265,
+     "pearson_r": 0.931408511455401,
+     "mae": 4.040357142857151,
+     "pitch_within_half_semitone": 1.0,
+     "voiced": 1.0
+    },
+    "before_stem": {
+     "n": 14,
+     "r2": 0.8915622396949912,
+     "pearson_r": 0.958661035625431,
+     "mae": 2.740892857142849,
+     "pitch_within_half_semitone": 0.35714285714285715,
+     "voiced": 1.0
+    }
+   }
+  }
+ },
+ "data_source": {
+  "kind": "pixels",
+  "image": "https://svs.gsfc.nasa.gov/vis/a000000/a005600/a005669/Aerosols_2025-08-19T20_00_00_1920x1080.png",
+  "colorbar": "https://svs.gsfc.nasa.gov/vis/a000000/a005600/a005669/Aerosols_cbar.png",
+  "underlying": "NASA GEOS model aerosols (GEOS-FP), 2025-08-19T20:00Z",
+  "scale": "categorical; brightness used only as a clean-air threshold"
+ },
+ "media_type": "image",
+ "image_url": "https://svs.gsfc.nasa.gov/vis/a000000/a005600/a005669/Aerosols_2025-08-19T20_00_00_1920x1080.png",
+ "sweep": {
+  "lon_start": -180,
+  "lon_end": 180,
+  "duration_s": 45.0,
+  "x_of_lon": "x = (lon + 180) / 360 * image_width"
+ },
+ "voice_groups": {
+  "black carbon": "bands",
+  "dust": "bands",
+  "sea salt": "bands",
+  "sulfate": "bands"
+ },
+ "lead_voices": [],
+ "fidelity_builder": {
+  "black carbon": {
+   "loudness_vs_fraction_r": 0.9364257623300127,
+   "pitch_vs_latitude": {
+    "n": 17,
+    "r2": -1.3194471101269807,
+    "pearson_r": 0.6962152807927473,
+    "mae": 2.915294117647004
+   },
+   "notes": 27
+  },
+  "dust": {
+   "loudness_vs_fraction_r": 0.9074707007685977,
+   "pitch_vs_latitude": {
+    "n": 15,
+    "r2": 0.9674738833262368,
+    "pearson_r": 0.9893782301409629,
+    "mae": 4.53566666666671
+   },
+   "notes": 17
+  },
+  "sea salt": {
+   "loudness_vs_fraction_r": 0.5905416649348321,
+   "pitch_vs_latitude": {
+    "n": 4
+   },
+   "notes": 103
+  },
+  "sulfate": {
+   "loudness_vs_fraction_r": 0.47456410186280834,
+   "pitch_vs_latitude": {
+    "n": 14,
+    "r2": 0.8934968302555999,
+    "pearson_r": 0.9600435944181045,
+    "mae": 2.6826785714285597
+   },
+   "notes": 89
+  }
+ },
+ "arrangement": {
+  "engine": "FluidSynth + FluidR3_GM (MIT)",
+  "instruments": {
+   "black carbon": "harp",
+   "dust": "clarinet",
+   "sea salt": "GM 43",
+   "sulfate": "oboe"
+  },
+  "harmony": null,
+  "form": null,
+  "voices": [
+   {
+    "group": "geophony",
+    "curve": "geophony",
+    "sources": [
+     "wind",
+     "ocean"
+    ],
+    "tune_mix": 0.35,
+    "mean_level": 0.38539277777777775
+   },
+   {
+    "group": "anthrophony",
+    "curve": "anthrophony",
+    "sources": [
+     "city",
+     "traffic"
+    ],
+    "tune_mix": 0.45,
+    "mean_level": 0.3529838888888889
+   },
+   {
+    "group": "biophony",
+    "curve": "biophony",
+    "sources": [
+     "birds",
+     "insects"
+    ],
+    "tune_mix": 0.2,
+    "mean_level": 0.5064383333333333
+   }
+  ],
+  "loudness_lufs": -16.0,
+  "notes": "no lead melody; each aerosol type is its own stem, checked as pitch -> latitude on solo notes"
+ },
+ "stems": [
+  {
+   "name": "bands_black-carbon",
+   "file": "bands_black-carbon.mp3",
+   "group": "bands",
+   "label": "Bands (data): black carbon"
+  },
+  {
+   "name": "bands_dust",
+   "file": "bands_dust.mp3",
+   "group": "bands",
+   "label": "Bands (data): dust"
+  },
+  {
+   "name": "bands_sea-salt",
+   "file": "bands_sea-salt.mp3",
+   "group": "bands",
+   "label": "Bands (data): sea salt"
+  },
+  {
+   "name": "bands_sulfate",
+   "file": "bands_sulfate.mp3",
+   "group": "bands",
+   "label": "Bands (data): sulfate"
+  },
+  {
+   "name": "geophony",
+   "file": "geophony.mp3",
+   "group": "geophony",
+   "label": "Geophony (recorded Earth sounds)"
+  },
+  {
+   "name": "anthrophony",
+   "file": "anthrophony.mp3",
+   "group": "anthrophony",
+   "label": "Anthrophony (recorded human sounds)"
+  },
+  {
+   "name": "biophony",
+   "file": "biophony.mp3",
+   "group": "biophony",
+   "label": "Biophony (recorded living sounds)"
+  }
+ ],
+ "mix": "mix.mp3",
+ "timeline": "timeline.json",
+ "controls": "controls.json",
+ "voice": "geophony",
+ "summary": "One snapshot of the world's aerosols swept west to east: one instrument per type (sea salt, dust, sulfate, smoke)."
+}
