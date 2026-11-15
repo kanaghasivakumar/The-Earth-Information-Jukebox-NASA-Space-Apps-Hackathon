@@ -13,6 +13,7 @@ Writes, under eic-vae/eic-sonification/frontend/:
   public/jukebox/tracks/<id>/versions.json
                                           the versions the Compare view offers, with their fidelity numbers
   lib/data/voice-credits.json             the recordings in jukebox/voices/ATTRIBUTION.md, for /credits
+  lib/data/catalogue.json                 per track: title, voice, length, fidelity and version count (chooser)
 
 The plain-JS web/ app is left as it is. MP3 only; video stays linked from NASA SVS.
 """
@@ -102,6 +103,15 @@ def versions_for(tid: str, track: dict, has_control_mix: bool) -> list[dict]:
     return out
 
 
+def data_credit(ds) -> str:
+    """The underlying dataset, in one line, for the credits page."""
+    if isinstance(ds, str):
+        return ds.split(". ")[0]
+    if isinstance(ds, dict):
+        return ds.get("underlying") or ds.get("music") or ""
+    return ""
+
+
 def voice_credits() -> list[dict]:
     text = (ROOT / "jukebox" / "voices" / "ATTRIBUTION.md").read_text()
     link = re.compile(r"^\[([^\]]+)\]\((.*)\)$")  # one link per cell; URLs may contain ()
@@ -132,6 +142,7 @@ def main():
     OUT.mkdir(parents=True, exist_ok=True)
     shutil.copy2(WEB / "index.json", OUT / "index.json")
     index = json.loads((WEB / "index.json").read_text())["tracks"]
+    catalogue = []
     for entry in index:
         tid = str(entry["id"])
         src, dst = WEB / tid, OUT / tid
@@ -152,7 +163,16 @@ def main():
         track = json.loads((dst / "track.json").read_text())
         vs = versions_for(tid, track, ctl.exists())
         (dst / "versions.json").write_text(json.dumps({"id": tid, "duration_s": track["duration_s"], "versions": vs}, indent=1))
+        f = track.get("fidelity") or {}
+        catalogue.append({
+            "id": tid, "title": track["title"], "voice": track.get("voice"), "summary": entry.get("summary"),
+            "duration_s": track["duration_s"], "svs_url": track.get("svs_url"),
+            "r2": r(f.get("mix_r2") if f.get("mix_r2") is not None else f.get("r2")), "control_r2": r(f.get("control_r2")),
+            "versions": len(vs), "learned": any(v["kind"] == "learned" for v in vs),
+            "data": data_credit(track.get("data_source")),
+        })
         print(f"{tid}: {len(vs)} versions")
+    (APP / "lib" / "data" / "catalogue.json").write_text(json.dumps(catalogue, indent=1, ensure_ascii=False))
     credits = voice_credits()
     (APP / "lib" / "data" / "voice-credits.json").write_text(json.dumps(credits, indent=1, ensure_ascii=False))
     size = sum(p.stat().st_size for p in OUT.rglob("*") if p.is_file())
