@@ -46,3 +46,5 @@ A new track (e.g. 5046): add its prompt wording to `DESC` in `jukebox/learned/bp
 
 - commit demo/<id>_mclbplus per track as post jobs finish; update `demo/learned/README.md` B+ section
 - run/verify the final checks, commit the exported frontend data
+
+Track 5046 (Arctic sea ice) build notes, merged from three-voices-m1: `git show 74846c6:STATUS.md`.

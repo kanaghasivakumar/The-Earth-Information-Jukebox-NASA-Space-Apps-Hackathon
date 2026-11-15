@@ -160,7 +160,10 @@ export function DataPlayer({ id }: { id: string }) {
     const v = video.current;
     const eng = engine.current;
     if (!v || !eng || !v.querySelector("source")) return;
-    const t = eng.time;
+    // video_rate < 1: the music runs slower than the movie (5046), so the video plays slowed down
+    const rate = Number(v.dataset.rate) || 1;
+    const t = eng.time * rate;
+    if (v.playbackRate !== rate) v.playbackRate = rate;
     if (eng.playing && S.current.motion) {
       if (v.paused) v.play().catch(() => {});
       if (force || Math.abs(v.currentTime - t) > 0.3) {
@@ -636,6 +639,7 @@ export function DataPlayer({ id }: { id: string }) {
               <video
                 key={track.id}
                 ref={video}
+                data-rate={track.video_rate ?? 1}
                 muted
                 playsInline
                 preload="metadata"
