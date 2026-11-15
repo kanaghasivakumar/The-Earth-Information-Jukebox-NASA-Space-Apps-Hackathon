@@ -224,3 +224,6 @@ data/raw/
 data/catalog/
 outputs/
 *.part
+
+# MuseControlLite pilot logs
+logs_mcl/

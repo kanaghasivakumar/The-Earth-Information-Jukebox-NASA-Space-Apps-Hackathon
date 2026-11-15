@@ -1,0 +1,309 @@
+{
+ "id": "3912",
+ "variant": "wosdd-all_g1.5",
+ "prompt": "Oceanic ambient, flowing, soft pads and strings, gentle waves, flute melody",
+ "fidelity_spec": {
+  "label": "global mean SST",
+  "voices": [
+   "lead"
+  ],
+  "pitch_map": {
+   "vmin": 18.882267621666927,
+   "vmax": 19.838978458204167,
+   "low": 60,
+   "span": 24,
+   "root": 2,
+   "scale": "major_pent",
+   "polarity": 1
+  },
+  "win": 0.3,
+  "offset": 0.03
+ },
+ "reference": {
+  "integrated_mix": {
+   "n": 43,
+   "r2": 0.9868675317328968,
+   "pearson_r": 0.9935322224703205,
+   "mae": 0.02347295629942404,
+   "pitch_within_half_semitone": 0.9767441860465116,
+   "voiced": 1.0,
+   "richness": {
+    "non_lead_energy_share": 0.06035726682599973,
+    "spectral_flatness": 4.051794530823827e-05
+   }
+  },
+  "integrated_mix_control": {
+   "n": 43,
+   "r2": -1.0262225057737284,
+   "pearson_r": -0.005619583460293393,
+   "mae": 0.26800006137335886,
+   "pitch_within_half_semitone": 1.0,
+   "voiced": 1.0,
+   "richness": {
+    "non_lead_energy_share": 0.7984742070068656,
+    "spectral_flatness": 5.400529698817991e-05
+   }
+  },
+  "lead_stem": {
+   "n": 43,
+   "r2": 0.9868615203261365,
+   "pearson_r": 0.99348909449059,
+   "mae": 0.023438230893318705,
+   "pitch_within_half_semitone": 0.9767441860465116,
+   "voiced": 1.0,
+   "richness": {
+    "non_lead_energy_share": 0.011990187777377842,
+    "spectral_flatness": 3.77401192963589e-06
+   }
+  },
+  "cond_real": {
+   "n": 43,
+   "r2": 0.9848132158557216,
+   "pearson_r": 0.9925191926297873,
+   "mae": 0.025338673931013744,
+   "pitch_within_half_semitone": 1.0,
+   "voiced": 1.0,
+   "richness": {
+    "non_lead_energy_share": 0.018982454963861986,
+    "spectral_flatness": 5.235398816694214e-07
+   }
+  }
+ },
+ "result": {
+  "runs": [
+   {
+    "variant": "wosdd-all_g1.5",
+    "which": "real",
+    "adapter": "wosdd-all",
+    "guidance_con": 1.5,
+    "guidance_text": 7.0,
+    "steps": 50,
+    "seed": 42,
+    "dtype": "fp16",
+    "device": "NVIDIA A100-SXM4-80GB",
+    "segments": [
+     [
+      0.0,
+      36.0
+     ],
+     [
+      32.0,
+      68.0
+     ]
+    ],
+    "audio_s": 68.0,
+    "gen_seconds": 10.5,
+    "seconds_per_audio_minute": 9.2,
+    "load_seconds": 17.6,
+    "prompt": "Oceanic ambient, flowing, soft pads and strings, gentle waves, flute melody"
+   },
+   {
+    "variant": "wosdd-all_g1.5",
+    "which": "control",
+    "adapter": "wosdd-all",
+    "guidance_con": 1.5,
+    "guidance_text": 7.0,
+    "steps": 50,
+    "seed": 42,
+    "dtype": "fp16",
+    "device": "NVIDIA A100-SXM4-80GB",
+    "segments": [
+     [
+      0.0,
+      36.0
+     ],
+     [
+      32.0,
+      68.0
+     ]
+    ],
+    "audio_s": 68.0,
+    "gen_seconds": 10.4,
+    "seconds_per_audio_minute": 9.2,
+    "load_seconds": 17.6,
+    "prompt": "Oceanic ambient, flowing, soft pads and strings, gentle waves, flute melody"
+   }
+  ],
+  "audio_s": 68.0,
+  "n_lead_notes": 43,
+  "A": {
+   "real": {
+    "n": 43,
+    "r2": 0.9851442861114512,
+    "pearson_r": 0.9927225150274759,
+    "mae": 0.02486352437578631,
+    "pitch_within_half_semitone": 1.0,
+    "voiced": 1.0,
+    "octave_folded": {
+     "voiced": 1.0,
+     "pc_within_half_semitone": 1.0,
+     "exact_within_half_semitone": 1.0,
+     "median_octave_offset": 0.0
+    }
+   },
+   "control": {
+    "n": 43,
+    "r2": -1.117600980550745,
+    "pearson_r": -0.12017718740908662,
+    "mae": 0.2780815500343824,
+    "pitch_within_half_semitone": 0.9767441860465116,
+    "voiced": 1.0
+   },
+   "chroma_accuracy_vs_condition": 0.995049082373026,
+   "richness": {
+    "non_lead_energy_share": 0.055226244959286803,
+    "spectral_flatness": 0.00019560151849873364
+   },
+   "chroma_accuracy_control_vs_its_condition": 0.997609901835254
+  },
+  "B": {
+   "replace": {
+    "stems": [
+     "bands",
+     "generated"
+    ],
+    "generated_gain_db_vs_lead": -10.0,
+    "ducking": {
+     "mean_gr_db": 0.5378659442067146,
+     "max_gr_db": 9.000000357627869
+    },
+    "lufs": -16.000000131172897,
+    "limiter_gr_db": -0.0,
+    "norm_gain_db": -0.06906256020725932,
+    "mix": {
+     "n": 43,
+     "r2": 0.9867281410060249,
+     "pearson_r": 0.9934325993106894,
+     "mae": 0.023623639970166987,
+     "pitch_within_half_semitone": 1.0,
+     "voiced": 1.0
+    },
+    "control": {
+     "n": 41,
+     "r2": -0.6895271910048741,
+     "pearson_r": -0.028916520240580786,
+     "mae": 0.2463513475927883,
+     "pitch_within_half_semitone": 0.8780487804878049,
+     "voiced": 0.9534883720930233
+    },
+    "control_e2e": {
+     "n": 43,
+     "r2": -1.111131921129871,
+     "pearson_r": -0.11754721052190725,
+     "mae": 0.27738626599620136,
+     "pitch_within_half_semitone": 0.9767441860465116,
+     "voiced": 1.0
+    }
+   },
+   "augment": {
+    "stems": [
+     "bands",
+     "generated",
+     "geophony",
+     "harmony"
+    ],
+    "generated_gain_db_vs_lead": -13.0,
+    "ducking": {
+     "mean_gr_db": 0.9177528321743011,
+     "max_gr_db": 9.000000357627869
+    },
+    "lufs": -15.999999842953871,
+    "limiter_gr_db": -0.0,
+    "norm_gain_db": -0.08418101101100256,
+    "mix": {
+     "n": 43,
+     "r2": 0.986877078480789,
+     "pearson_r": 0.9935294501891256,
+     "mae": 0.02347295629942404,
+     "pitch_within_half_semitone": 1.0,
+     "voiced": 1.0
+    },
+    "control": {
+     "n": 43,
+     "r2": -0.6542723801094845,
+     "pearson_r": 0.08906167170582562,
+     "mae": 0.2389371885773874,
+     "pitch_within_half_semitone": 0.9069767441860465,
+     "voiced": 1.0
+    },
+    "control_e2e": {
+     "n": 43,
+     "r2": -1.02836018502627,
+     "pearson_r": -0.007446729511907912,
+     "mae": 0.26800006137335886,
+     "pitch_within_half_semitone": 1.0,
+     "voiced": 1.0
+    }
+   }
+  }
+ },
+ "controls": {
+  "id": "3912",
+  "prompt": "Oceanic ambient, flowing, soft pads and strings, gentle waves, flute melody",
+  "duration_s": 66.5,
+  "total_s": 68.0,
+  "segments": [
+   [
+    0.0,
+    36.0
+   ],
+   [
+    32.0,
+    68.0
+   ]
+  ],
+  "crossfade_s": 4.0,
+  "melody": {
+   "source": "legato tone of the data lead notes (fidelity voices only)",
+   "voices": [
+    "lead"
+   ],
+   "n_notes": 43,
+   "format": "top-4 CQT bins per channel (8 x frames), MIDI+1, hop 512",
+   "seconds": 17.3
+  },
+  "full_condition": {
+   "stems": [
+    "harmony.wav",
+    "bands.wav"
+   ],
+   "db_vs_lead": -6
+  },
+  "control_melody": "arrange's shuffled control lead (seed 0), same slots, pitches permuted",
+  "dynamics": {
+   "lead_weight": 0.5,
+   "curves": [
+    "geophony"
+   ],
+   "range_db": [
+    -26.062667380824845,
+    -4.5413518572231535
+   ],
+   "frames": 18743,
+   "hop": 160
+  },
+  "rhythm": {
+   "plan": "beat every data frame (0.50 s), downbeat every 4",
+   "n_beats": 133,
+   "n_downbeats": 34,
+   "fps": 100
+  },
+  "fidelity_spec": {
+   "label": "global mean SST",
+   "voices": [
+    "lead"
+   ],
+   "pitch_map": {
+    "vmin": 18.882267621666927,
+    "vmax": 19.838978458204167,
+    "low": 60,
+    "span": 24,
+    "root": 2,
+    "scale": "major_pent",
+    "polarity": 1
+   },
+   "win": 0.3,
+   "offset": 0.03
+  }
+ }
+}
