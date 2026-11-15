@@ -1937,3 +1937,578 @@ body:has(.jb) {
 
 @keyframes jb-arrow-in { from { opacity: 0; } to { opacity: var(--o, 1); } }
 @media (prefers-reduced-motion: reduce) { .jb-dive-flow line { animation: none !important; opacity: var(--o, 1); } }
+
+/* =====================================================================
+   Data tracks (the Three Voices pipeline), Compare and Credits.
+   Built only from the tokens above. Seven stem groups map onto the pen
+   and the four group hues plus ink; each carries its key number 1–7,
+   the way a pattern group carries its letter (see DESIGN.md).
+   ===================================================================== */
+.jb {
+  --g-melody: var(--accent);
+  --g-bands: var(--r2);
+  --g-events: var(--r1);
+  --g-harmony: var(--ink-3);
+  --g-geophony: var(--r0);
+  --g-anthrophony: var(--ink);
+  --g-biophony: var(--r3);
+}
+.g-melody { --g: var(--g-melody); }
+.g-bands { --g: var(--g-bands); }
+.g-events { --g: var(--g-events); }
+.g-harmony { --g: var(--g-harmony); }
+.g-geophony { --g: var(--g-geophony); }
+.g-anthrophony { --g: var(--g-anthrophony); }
+.g-biophony { --g: var(--g-biophony); }
+
+/* ---- track chooser: one row of quiet tiles above the player ---- */
+.jb-tracks {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 8px;
+  margin: 0 0 28px;
+}
+.jb-track {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 2px;
+  min-height: 56px;
+  padding: 8px 12px;
+  text-align: left;
+  background: var(--panel);
+  color: var(--ink);
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  font-family: var(--font);
+  cursor: pointer;
+  transition: background-color 0.15s ease-out, border-color 0.15s ease-out;
+}
+.jb-track:hover {
+  background: rgb(255 255 255 / 0.12);
+  border-color: rgb(255 255 255 / 0.4);
+}
+.jb-track[aria-checked="true"] {
+  background: rgb(200 220 235 / 0.12);
+  border-color: var(--ink);
+}
+.jb-track:focus-visible {
+  outline-offset: -3px;
+}
+.jb-track-name {
+  font-size: 1rem;
+  font-weight: 800;
+  line-height: 1.2;
+}
+.jb-track-tag {
+  font-size: 0.8rem;
+  color: var(--ink-3);
+}
+.jb-track-tag .jb-code {
+  font-size: 0.75rem;
+}
+@media (max-width: 719px) {
+  .jb-tracks {
+    grid-auto-flow: column;
+    grid-template-columns: none;
+    grid-auto-columns: minmax(160px, 62%);
+    overflow-x: auto;
+    padding-bottom: 6px;
+    margin-bottom: 20px;
+  }
+}
+
+/* ---- data player: same stage, wider footage ---- */
+.jb-video.jb-wide {
+  aspect-ratio: 16 / 9;
+}
+.jb-still {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+.jb-still img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.jb-sweep-line {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 2px;
+  margin-left: -1px;
+  background: var(--accent);
+  pointer-events: none;
+}
+.jb-tag {
+  margin: 0 0 10px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--ink-2);
+}
+.jb-ab {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 14px;
+}
+.jb-data .jb-chip-btn,
+.jb-data-more .jb-chip-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.jb-chip-btn kbd {
+  font-size: 0.72rem;
+}
+.jb-chip-btn[aria-pressed="true"] {
+  background: rgb(200 220 235 / 0.12);
+  color: var(--ink);
+  border-color: var(--ink);
+}
+.jb-chip-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+.jb-settings {
+  display: flex;
+  flex-direction: column;
+  margin-top: 8px;
+}
+.jb-select {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 10px;
+  min-height: 44px;
+  font-size: 0.9rem;
+  color: var(--ink-2);
+}
+.jb-select select {
+  min-height: 44px;
+  padding: 0 10px;
+  background: var(--well);
+  color: var(--ink);
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  font: 500 0.9rem var(--font);
+}
+.jb-narrate input:disabled + span {
+  color: var(--ink-3);
+}
+
+/* ---- stem groups as channels (same row language as the style list) ---- */
+.jb-mixer-h {
+  margin: 0 0 2px;
+}
+.jb-group-row {
+  display: grid;
+  grid-template-columns: 32px minmax(0, 1fr) minmax(88px, 140px) auto;
+  grid-template-areas: "chip name vol key" "chip line line line";
+  column-gap: 14px;
+  align-items: center;
+  padding: 6px 14px 10px 12px;
+  background: var(--panel);
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+}
+.jb-gchip {
+  grid-area: chip;
+  align-self: center;
+  width: 32px;
+  height: 32px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  background: var(--g);
+  color: var(--deep);
+  font: 800 0.95rem var(--code);
+}
+.jb-group-row.off .jb-gchip {
+  background: transparent;
+  color: var(--ink-3);
+  box-shadow: inset 0 0 0 2px var(--ink-3);
+}
+.jb-group-name {
+  grid-area: name;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 44px;
+  font-size: 1.1rem;
+  font-weight: 800;
+  cursor: pointer;
+}
+.jb-group-name input {
+  width: 20px;
+  height: 20px;
+  accent-color: var(--accent);
+}
+.jb-group-row.off .jb-group-name span {
+  color: var(--ink-3);
+}
+.jb-group-line {
+  grid-area: line;
+  font-size: 0.9rem;
+  color: var(--ink-2);
+}
+.jb-group-vol {
+  grid-area: vol;
+  width: 100%;
+  min-height: 44px;
+  accent-color: var(--accent);
+  cursor: pointer;
+}
+.jb-group-row kbd {
+  grid-area: key;
+  justify-self: end;
+}
+.jb-mixer-absent {
+  margin: 4px 0 0;
+}
+@media (max-width: 719px) {
+  .jb-group-row {
+    grid-template-columns: 32px minmax(0, 1fr) auto;
+    grid-template-areas: "chip name key" "chip line line" "chip vol vol";
+  }
+}
+
+/* ---- timeline lanes for data ---- */
+.jb-curve .jb-voice-line {
+  fill: none;
+  stroke: var(--g);
+  stroke-width: 2;
+  vector-effect: non-scaling-stroke;
+  stroke-linejoin: round;
+}
+.jb-gchip-sm {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  border-radius: 4px;
+  background: var(--g);
+  color: var(--deep);
+  font: normal 800 0.7rem var(--code);
+  vertical-align: 1px;
+}
+.jb-voice-key {
+  white-space: nowrap;
+}
+.jb-segs {
+  background-image: none;
+}
+.jb-seg {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  padding: 0 8px;
+  overflow: hidden;
+  white-space: nowrap;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--ink-2);
+  background: rgb(200 220 235 / 0.1);
+  border-right: 1px solid var(--deep);
+}
+
+/* ---- right now ---- */
+.jb-readout {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 12px;
+  color: var(--ink) !important;
+}
+.jb-readout-value {
+  font-size: 2.25rem;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+.jb-readout strong {
+  display: block;
+  font-weight: 700;
+}
+.jb-tools {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 16px;
+}
+
+/* ---- below the stage: score, fidelity, legend ---- */
+.jb-panel {
+  padding: 20px 22px;
+  border: 1px solid var(--rule);
+  border-radius: 8px;
+  background: var(--panel);
+}
+.jb-panel > p {
+  max-width: 72ch;
+  color: var(--ink-2);
+}
+.jb-data-more {
+  display: grid;
+  gap: 24px;
+  margin-top: 32px;
+}
+@media (min-width: 980px) {
+  .jb-data-more {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 24px 32px;
+  }
+  .jb-score,
+  .jb-data-more .jb-explore-link {
+    grid-column: 1 / -1;
+  }
+}
+.jb-roll {
+  display: block;
+  width: 100%;
+  height: 240px;
+  background: var(--well);
+  border-radius: 4px;
+  cursor: pointer;
+}
+.jb-roll-text {
+  margin: 12px 0;
+}
+.jb-details summary {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.jb-table-wrap {
+  max-height: 320px;
+  overflow: auto;
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  background: var(--well);
+}
+.jb-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+.jb-table th,
+.jb-table td {
+  padding: 6px 12px;
+  text-align: left;
+  border-bottom: 1px solid var(--rule);
+}
+.jb-table thead th {
+  position: sticky;
+  top: 0;
+  background: var(--deep);
+  font-weight: 700;
+}
+.jb-table td {
+  color: var(--ink-2);
+}
+.jb-fid-head {
+  color: var(--ink) !important;
+  font-weight: 600;
+}
+.jb-fid {
+  display: grid;
+  gap: 10px;
+  margin: 14px 0;
+}
+.jb-fid-row {
+  display: grid;
+  grid-template-columns: 132px minmax(0, 1fr) 56px;
+  gap: 12px;
+  align-items: center;
+  font-size: 0.9rem;
+}
+.jb-fid-row .jb-code {
+  text-align: right;
+}
+.jb-fid-track {
+  display: block;
+  height: 10px;
+  background: var(--well);
+  border-radius: 3px;
+  overflow: hidden;
+}
+.jb-fid-fill {
+  display: block;
+  height: 100%;
+  background: var(--accent);
+}
+.jb-fid-fill.ctrl {
+  background: var(--ink-3);
+}
+.jb-fid-all {
+  margin-top: 32px;
+}
+.jb-fid-table td {
+  white-space: nowrap;
+}
+.jb-fid-table .jb-fid-track {
+  display: inline-block;
+  width: calc(100% - 64px);
+  min-width: 60px;
+  margin-right: 10px;
+  vertical-align: middle;
+}
+.jb-legend {
+  display: grid;
+  gap: 10px;
+  margin: 0 0 14px;
+}
+.jb-legend div {
+  border-top: 1px solid var(--rule);
+  padding-top: 8px;
+}
+.jb-legend dt {
+  font-weight: 700;
+}
+.jb-legend dd {
+  margin: 2px 0 0;
+  color: var(--ink-2);
+}
+.jb-fallback {
+  width: 100%;
+}
+
+/* ---- shortcut dialog ---- */
+.jb-help {
+  width: calc(100% - 32px);
+  max-width: 720px;
+  max-height: 85vh;
+  overflow: auto;
+  padding: 24px;
+  color: var(--ink);
+  background: var(--deep);
+  border: 1px solid var(--rule);
+  border-radius: 8px;
+}
+.jb-help::backdrop {
+  background: rgb(2 6 10 / 0.7);
+}
+.jb-help-close {
+  margin-top: 18px;
+}
+
+/* ---- compare ---- */
+.jb-cmp {
+  display: grid;
+  gap: 32px;
+}
+@media (min-width: 980px) {
+  .jb-cmp {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 400px);
+    gap: 32px 56px;
+    align-items: start;
+  }
+}
+.jb-cmp-pos {
+  max-width: none;
+  margin: 14px 0 0;
+}
+.jb-versions {
+  margin-top: 8px;
+}
+.jb-versions .jb-style {
+  align-items: start;
+}
+.jb-versions .jb-style-icon {
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+.jb-kind {
+  margin-left: 10px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--ink-3);
+}
+.jb-ver-fid {
+  display: block;
+  margin-top: 2px;
+  font-size: 0.85rem;
+  color: var(--ink-3);
+}
+.jb-rate .jb-checks .jb-link {
+  min-height: 44px;
+}
+.jb-notes {
+  display: grid;
+  gap: 6px;
+  font-weight: 700;
+}
+.jb-notes textarea {
+  width: 100%;
+  min-height: 96px;
+  padding: 10px 12px;
+  background: var(--well);
+  color: var(--ink);
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  font: 400 1rem/1.5 var(--font);
+  resize: vertical;
+}
+.jb-export {
+  gap: 8px;
+  margin-top: 8px;
+  background: transparent;
+  color: var(--ink);
+  font: 700 1rem var(--font);
+}
+
+/* ---- credits ---- */
+.jb-powered {
+  margin: 0 0 8px;
+}
+.jb-credits {
+  max-width: 70ch;
+  margin-top: 8px;
+}
+.jb-credits .jb-list {
+  margin-top: 8px;
+}
+.jb-credits .jb-list li {
+  font-size: 0.92rem;
+}
+.jb-credits-note {
+  margin-top: 12px;
+}
+
+/* ---- Windows high contrast and other forced colours ---- */
+@media (forced-colors: active) {
+  .jb-gchip,
+  .jb-gchip-sm,
+  .jb-chip {
+    border: 2px solid CanvasText;
+  }
+  .jb-track[aria-checked="true"],
+  .jb-style[aria-checked="true"],
+  .jb-chip-btn[aria-checked="true"],
+  .jb-chip-btn[aria-pressed="true"] {
+    outline: 2px solid Highlight;
+    outline-offset: -2px;
+  }
+  .jb-playhead,
+  .jb-sweep-line,
+  .jb-fid-fill {
+    forced-color-adjust: none;
+    background: Highlight;
+  }
+  .jb-fid-track,
+  .jb-lane-body {
+    border: 1px solid CanvasText;
+  }
+  .jb :focus-visible {
+    outline-color: Highlight;
+  }
+}

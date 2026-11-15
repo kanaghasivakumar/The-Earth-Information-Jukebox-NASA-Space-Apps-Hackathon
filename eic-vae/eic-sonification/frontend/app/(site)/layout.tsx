@@ -33,10 +33,12 @@ export default function SiteLayout({ children }: LayoutProps<"/">) {
         <div className="jb-foot-in">
           <p>
             Built for the NASA Space Apps Challenge. This is an independent project and is not endorsed by NASA. Animation
-            credit: NASA/Goddard Space Flight Center Scientific Visualization Studio.
+            credit: NASA/Goddard Space Flight Center Scientific Visualization Studio. The eight data tracks use NASA SVS
+            visualizations, open music models and shared field recordings. Powered by Stability AI.
           </p>
           <p>
-            <Link href="/how-it-works">How it works</Link> · <Link href="/accessibility">Accessibility</Link>
+            <Link href="/how-it-works">How it works</Link> · <Link href="/accessibility">Accessibility</Link> ·{" "}
+            <Link href="/compare">Compare versions</Link> · <Link href="/credits">Credits</Link>
           </p>
         </div>
       </footer>
