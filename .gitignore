@@ -239,3 +239,6 @@ node_modules/
 
 # macOS
 .DS_Store
+
+# The Next.js app keeps its TypeScript helpers in lib/ (the Python "lib/" rule above hid them from git)
+!eic-vae/eic-sonification/frontend/lib/
