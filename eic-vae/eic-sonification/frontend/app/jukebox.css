@@ -2873,3 +2873,22 @@ body:has(.jb) {
     border: 1px solid CanvasText;
   }
 }
+
+/* About this track: a main section above the video (was a side-column disclosure) */
+.jb-about {
+  margin-bottom: 16px;
+  padding: 14px 18px;
+}
+.jb-about .jb-h2 {
+  margin-bottom: 6px;
+}
+.jb-about > p {
+  margin: 4px 0 0;
+}
+.jb-about-lede {
+  color: var(--ink);
+}
+/* the score canvas now sits in the main column, right under the data strip */
+.jb-deck-main .jb-score {
+  padding: 14px 18px;
+}

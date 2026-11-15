@@ -6,7 +6,6 @@ import { ChevronLeft, ChevronRight, Pause, Play, RotateCcw, RotateCw } from "luc
 import { createTimeStore, useTime, useTimeSelector, type TimeStore } from "@/lib/timeStore";
 import { fmt } from "@/lib/jukebox";
 import { CATALOGUE, TRACK_COPY } from "@/lib/data/copy";
-import { fidelityTag } from "@/lib/data/fidelity";
 import { loadTrack, prepare, sweepVoices, groupOf } from "@/lib/data/load";
 import { Engine, audioSupported, type GroupState } from "@/lib/data/engine";
 import { Announcer, canSpeak, cancelSpeech, sleep, speak, toggleSame } from "@/lib/data/speech";
@@ -17,7 +16,7 @@ import { Roll } from "@/lib/data/roll";
 import { GROUPS, type Group, type LoadedTrack, type TimelineNote } from "@/lib/data/types";
 import { DataTimeline } from "./DataTimeline";
 import { Footage, syncFootage } from "./Footage";
-import { FidelityPanel, HelpDialog, LegendPanel, ScorePanel, StemMixer } from "./Panels";
+import { HelpDialog, LegendPanel, ScorePanel, StemMixer } from "./Panels";
 
 const TIME_HZ = 20;
 type Cadence = "0" | "5" | "10" | "note";
@@ -582,11 +581,32 @@ export function DataPlayer({ id }: { id: string }) {
           : "steady"
       : "";
   const units = track ? shortUnits(track.units) : "";
-  const tag = fidelityTag(entry?.r2 ?? null);
   const base = loaded?.base ?? `/jukebox/tracks/${id}/`;
 
   return (
     <>
+      <section className="jb-panel jb-about" aria-labelledby="about-h">
+        <h2 id="about-h" className="jb-h2">
+          About this track
+        </h2>
+        <p className="jb-about-lede">
+          <strong>{copy.heading}</strong> {copy.lede}
+        </p>
+        {track?.description ? <p>{track.description}</p> : null}
+        {track?.caveat ? <p className="jb-fine">Note: {track.caveat}</p> : null}
+        <p className="jb-fine">
+          Visualization: NASA Scientific Visualization Studio
+          {track?.svs_url ? (
+            <>
+              , <a href={track.svs_url} target="_blank" rel="noopener noreferrer">SVS {track.id} (opens in a new tab)</a>
+            </>
+          ) : null}
+          . The video has no sound. {track?.mix ? <a href={`/jukebox/tracks/${id}/${track.mix}`} download>Download the mix (MP3)</a> : null}
+          {" · "}
+          <Link href={`/compare?track=${id}`}>Compare versions of this track</Link>
+        </p>
+      </section>
+
       <div className="jb-deck jb-data">
         <div className="jb-deck-main">
           {track ? <Footage track={track} base={base} videoRef={video} sweepRef={sweepLine} /> : <div className="jb-video jb-frame" aria-hidden="true" />}
@@ -608,6 +628,8 @@ export function DataPlayer({ id }: { id: string }) {
               </>
             ) : null}
           </section>
+
+          {track && prep ? <ScorePanel track={track} prep={prep} canvasRef={canvas} onSeek={(t) => seek(t, true)} /> : null}
         </div>
 
         <aside className="jb-side" aria-label="Player controls">
@@ -721,32 +743,6 @@ export function DataPlayer({ id }: { id: string }) {
             </div>
           </details>
 
-          <details className="jb-details jb-side-more">
-            <summary>About this track</summary>
-            <p className="jb-side-lede">
-              <strong>{copy.heading}</strong> {copy.lede}
-            </p>
-            {entry?.r2 != null ? (
-              <p className="jb-fine">
-                The melody follows the data: <span className="jb-code">{tag.value}</span>.
-              </p>
-            ) : null}
-            <p className="jb-fine">{track?.description}</p>
-            {track?.caveat ? <p className="jb-fine">Note: {track.caveat}</p> : null}
-            <p className="jb-fine">
-              Visualization: NASA Scientific Visualization Studio
-              {track?.svs_url ? (
-                <>
-                  , <a href={track.svs_url}>SVS {track.id}</a>
-                </>
-              ) : null}
-              . The video has no sound. {track?.mix ? <a href={`/jukebox/tracks/${id}/${track.mix}`} download>Download the mix (MP3)</a> : null}
-            </p>
-            <p className="jb-fine">
-              <Link href={`/compare?track=${id}`}>Compare versions of this track</Link>
-            </p>
-          </details>
-
           {fallback ? (
             <audio controls preload="none" src={fallback} className="jb-fallback">
               <a href={fallback}>Download the mix</a>
@@ -757,8 +753,6 @@ export function DataPlayer({ id }: { id: string }) {
 
       {track && prep ? (
         <div className="jb-data-more">
-          <ScorePanel track={track} prep={prep} canvasRef={canvas} onSeek={(t) => seek(t, true)} />
-          <FidelityPanel track={track} />
           <LegendPanel track={track} prep={prep} onLegend={() => void legend()} />
         </div>
       ) : null}

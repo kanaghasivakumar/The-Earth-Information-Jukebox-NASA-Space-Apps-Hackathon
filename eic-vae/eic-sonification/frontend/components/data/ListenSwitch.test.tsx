@@ -33,8 +33,15 @@ test("a data track: title bar with the hamburger, big footage with the local vid
   expect(screen.getByRole("button", { name: "Tracks" }).getAttribute("aria-expanded")).toBe("false");
   await waitFor(() => expect(container.querySelector(".jb-deck .jb-deck-main .jb-frame video")).toBeTruthy());
   const main = container.querySelector(".jb-deck-main")!;
-  // order: footage first, then the score strip
-  expect([...main.children].map((c) => c.className)).toEqual(["jb-video jb-frame", "jb-strip"]);
+  // order: footage first, then the score strip, then the score panel
+  await waitFor(() => expect([...main.children].map((c) => c.className)).toEqual(["jb-video jb-frame", "jb-strip", "jb-panel jb-score"]));
+  // "About this track" is a visible section above the video, not a disclosure in the side column
+  const about = container.querySelector("section.jb-about")!;
+  expect(about).toBeTruthy();
+  expect(about.compareDocumentPosition(container.querySelector(".jb-deck")!) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+  expect([...container.querySelectorAll(".jb-side summary")].map((s) => s.textContent)).not.toContain("About this track");
+  // the "Does the music follow the data?" panel is gone
+  expect(container.querySelector("#fid-h")).toBeNull();
   expect(container.querySelector(".jb-deck > .jb-side")).toBeTruthy();
   // the web copy plays first, NASA's own file stays as a fallback
   const srcs = [...container.querySelectorAll(".jb-frame source")].map((s) => s.getAttribute("src"));
