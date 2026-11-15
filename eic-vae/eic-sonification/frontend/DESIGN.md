@@ -131,7 +131,7 @@ components:
 
 # Design System: Earth Jukebox
 
-Scope: the home route only (Listen, Upload, How it works, Accessibility). The `/lab` route keeps its own system and is not governed here. All rules are scoped under the `.jb` root in `app/jukebox.css`. Token names above map to `--ink`, `--ink-2`, `--ink-3`, `--rule`, `--deep`, `--ground-2`, `--panel`, `--well`, `--accent`, `--accent-hi`, `--on-accent`, `--r0` to `--r3`.
+Scope: the home route only (Listen, Upload, How it works, Accessibility, plus Compare and Credits). The `/lab` route keeps its own system and is not governed here. All rules are scoped under the `.jb` root in `app/jukebox.css`. Token names above map to `--ink`, `--ink-2`, `--ink-3`, `--rule`, `--deep`, `--ground-2`, `--panel`, `--well`, `--accent`, `--accent-hi`, `--on-accent`, `--r0` to `--r3`.
 
 ## Overview
 
@@ -238,6 +238,34 @@ Dashed drop zone in a Well, ghost "choose" button, fieldset of check chips (44px
 ### Navigation
 Top bar on near-black with a hairline bottom border; wordmark with a line-drawn globe-waveform mark; links 500 weight, 44px minimum, 2px vermilion underline on hover. Skip link turns vermilion on focus.
 
+## Data tracks (stem groups)
+
+The eight data tracks (the "Three Voices" pipeline: colour-bar inversion, data notes, model harmony, recorded Earth voices, fidelity check) play in the same stage as the hurricane season. They add no new colours: their seven stem groups map onto the pen, the four group hues and ink. The tokens live on `.jb` as `--g-<group>`; the class `g-<group>` sets `--g` for a chip, a lane line or a roll note.
+
+| Key | Group | Token | Colour | Why |
+|---|---|---|---|---|
+| 1 | Melody | `--g-melody: var(--accent)` | Pen Vermilion | The melody is the data line the recorder draws: every note is a value. |
+| 2 | Bands | `--g-bands: var(--r2)` | Group C Lilac | Latitude bands and per-series voices, also data. |
+| 3 | Events | `--g-events: var(--r1)` | Group B Amber | Hits and ticks for discrete events. |
+| 4 | Harmony | `--g-harmony: var(--ink-3)` | Ink 3 | Written by a model and carries no data, so it gets no hue. |
+| 5 | Geophony | `--g-geophony: var(--r0)` | Group A Sky | Wind, water, rain, thunder. |
+| 6 | Anthrophony | `--g-anthrophony: var(--ink)` | Ink | Traffic, city hum, engines. |
+| 7 | Biophony | `--g-biophony: var(--r3)` | Group D Sage | Birds, frogs, insects. |
+
+### Named Rules
+**The Number Beside Color Rule.** A stem-group colour never appears without its key number 1–7 (the mute shortcut) and its name, the way a pattern group carries its letter. Pattern groups keep A–D; stem groups use numbers, so the two never collide on one screen.
+**The Pen Draws The Data.** On a data track the melody takes the pen colour. Everywhere else the One Pen Rule holds: selection of a track, a version, a group or a pressed tool is the quiet blue-grey tint with an Ink border. The roll keeps the played part at full strength and dims the rest, like the played loudness curve.
+
+### Components
+- **Track chooser.** One radiogroup above the stage: tiles in the style-row language (6px, Panel, Rule border, 56px), quiet tint when chosen, name in 800 over a small Ink 3 tag ("Artistic sonification" for the hurricane season, "Data-faithful" plus R² in mono for the data tracks). A single scrolling row under 720px.
+- **Group rows (mixer).** The style list's row, with a 32px group chip carrying the key number in mono, a checkbox (vermilion accent), the group name, a volume slider and the key hint. A muted group's chip turns to an Ink 3 outline so the number stays legible.
+- **Data timeline.** The hurricane timeline's parts: melody value as the sky area with its played part in vermilion, the Earth voices as 2px lines in their group colours with numbered mini chips in the lane label, sections as neutral blocks. Same slider layer and playhead.
+- **Right now.** A Panel with the current value in mono (2.25rem), units, trend and spoken date, then listening tools as chip buttons with key hints; pressed tools use `aria-pressed` and the quiet tint.
+- **Score, fidelity, legend.** Panels below the stage. The roll is a canvas in a Well (no chart paper: the paper stays under the lanes), with a text summary and a table of melody notes. Fidelity bars are 10px Wells with a vermilion fill for the real data and an Ink 3 fill for the shuffled control, numbers in mono.
+- **Compare.** The style list again, one row per version, the icon tile carrying the version number. Ratings are native radios in check chips plus a textarea in a Well; Export is a ghost button.
+- **Shortcut dialog.** A native dialog on Deep with a Rule border and 8px corners, holding the shortcut table.
+- **Forced colours.** Chips keep a CanvasText outline and their number; chosen and pressed states get a Highlight outline; the playhead, sweep line and fidelity fills use Highlight.
+
 ## Do's and Don'ts
 
 ### Do:
@@ -248,6 +276,7 @@ Top bar on near-black with a hairline bottom border; wordmark with a line-drawn 
 - **Do** use 3px vermilion focus rings with 3px offset (inset on the style list).
 - **Do** set every number in JetBrains Mono, tabular.
 - **Do** disable transitions and animation under `prefers-reduced-motion`.
+- **Do** pair every stem-group colour with its key number and name.
 
 ### Don't:
 - **Don't** add a second action colour, glass, glow or a starfield image.

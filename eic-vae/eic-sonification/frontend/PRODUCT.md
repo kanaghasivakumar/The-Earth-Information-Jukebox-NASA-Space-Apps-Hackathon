@@ -22,6 +22,8 @@ Earth Jukebox turns frames from NASA scientific visualizations into learned visu
 
 The music is generated from temporal features and learned patterns in NASA visualization frames, with musical style choices shaping the arrangement. It is an artistic sonification of imagery, not an original soundtrack, physical sound, weather forecast, or automated emotion reading.
 
+Alongside it, eight data-faithful tracks (NASA SVS 5209, 5313, 3912, 5011, 4950, 5669, 5058, 5176) work the other way round: values are read back out of each visualization through its colour bar, every melody note is one value, and a pitch tracker checks that the finished mix gives the data back (R² 0.97–0.99, against about −0.3 to −1.3 for the same notes shuffled). Keep the two labels apart: "artistic sonification" for the hurricane season, "data-faithful" with its measured fidelity for the data tracks.
+
 ## Operating Context
 
 The VAE and score generator run locally from command-line tools. Generated audio, MIDI, latent arrays, and diagnostic images are saved in `results/`. The web app plays the saved outputs without any server; uploading a new visualization needs the local generator running.
